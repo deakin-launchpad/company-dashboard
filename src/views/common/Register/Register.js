@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useContext } from "react";
 import {
   TextField,
@@ -14,6 +15,13 @@ import { notify } from "components";
 import { Link as RouterLink } from "react-router-dom";
 import { DeviceInfoContext } from "contexts/index";
 import { API } from "helpers/index";
+import MyAlgoConnect from "@randlabs/myalgo-connect";
+const myAlgoWallet = new MyAlgoConnect();
+const myAlgoWalletSettings = {
+  shouldSelectOneAccount: true,
+  openManager: false,
+};
+const logicSigBase64 = "BTEQgQQSMRQxABIQMRKBABIQRIEBQw==";
 
 export const Register = () => {
   const { deviceData } = useContext(DeviceInfoContext);
@@ -23,15 +31,25 @@ export const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [accountAddress, setAccountAddress] = useState("");
+  const [logicSignature, setLogicSignature] = useState(null);
+
   const register = () => {
-    // TODO : Update Register API
-    API.register({
+    const userData = {
       deviceData,
       emailId,
       password,
       firstName,
       lastName,
-    });
+      accountAddress,
+      logicSignature,
+    };
+
+    console.log(userData);
+
+    // API.register({
+    //   userData
+    // });
   };
   const validationCheck = () => {
     if (
@@ -40,11 +58,13 @@ export const Register = () => {
       confirmPassword.length < 0 ||
       firstName.length < 0 ||
       lastName.length < 0 ||
+      accountAddress.length < 0 ||
       emailId === "" ||
       password === "" ||
       confirmPassword === "" ||
       firstName === "" ||
-      lastName === ""
+      lastName === "" ||
+      accountAddress === ""
     ) {
       return notify("Please fill in all the details.");
     }
@@ -57,10 +77,39 @@ export const Register = () => {
     if (password !== confirmPassword) {
       return notify("Passwords don't match.");
     }
+    if (logicSignature === null) {
+      return notify("Please Connect and Sign into Logic Signature");
+    }
     if (emailPatternTest) {
       return register();
     }
   };
+
+  // HANDLE WALLET CONNECT
+  const handleConnectWalletClick = () => {
+    myAlgoWallet
+      .connect(myAlgoWalletSettings)
+      .then((account) => {
+        setAccountAddress(account[0].address);
+        console.log("Here");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const signLogicSig = () => {
+    myAlgoWallet
+      .signLogicSig(logicSigBase64, accountAddress)
+      .then(async (signedLogicSigFromWallet) => {
+        let data = { signedLogicSig: Array.from(signedLogicSigFromWallet) };
+        setLogicSignature(data.signedLogicSig);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   let form = (
     <form noValidate>
       <TextField
@@ -121,6 +170,22 @@ export const Register = () => {
         onChange={(e) => setConfirmPassword(e.target.value)}
         autoComplete="current-password"
       />
+
+      <Box sx={{ mt: 2 }}>
+        {accountAddress ? (
+          <Button size="middle" variant="contained" onClick={signLogicSig}>
+            {"Sign MyAlgo Wallet"}
+          </Button>
+        ) : (
+          <Button
+            size="middle"
+            variant="contained"
+            onClick={handleConnectWalletClick}
+          >
+            {"Connect MyAlgo Wallet"}
+          </Button>
+        )}
+      </Box>
       <Box sx={{ mt: 2 }}>
         <Button
           fullWidth
@@ -156,7 +221,6 @@ export const Register = () => {
                 alignItems: "center",
                 display: "flex",
                 justifyContent: "space-between",
-                mb: 3,
               }}
             >
               <div>
@@ -171,7 +235,7 @@ export const Register = () => {
             <Box
               sx={{
                 flexGrow: 1,
-                mt: 3,
+                mt: 1,
               }}
             >
               {form}
