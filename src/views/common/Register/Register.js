@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   TextField,
   Typography,
@@ -33,8 +34,9 @@ export const Register = () => {
   const [lastName, setLastName] = useState("");
   const [accountAddress, setAccountAddress] = useState("");
   const [logicSignature, setLogicSignature] = useState(null);
+  const navigate = useNavigate();
 
-  const register = () => {
+  const register = async () => {
     const userData = {
       deviceData,
       emailId,
@@ -45,9 +47,11 @@ export const Register = () => {
       logicSignature,
     };
 
-    console.log(userData);
-
-    API.register(userData);
+    const response = await API.register(userData);
+    if (response.success) {
+      notify("Registered Successfully");
+      navigate("/login");
+    }
   };
   const validationCheck = () => {
     if (
@@ -89,7 +93,6 @@ export const Register = () => {
       .connect(myAlgoWalletSettings)
       .then((account) => {
         setAccountAddress(account[0].address);
-        console.log("Here");
       })
       .catch((error) => {
         console.log(error);
