@@ -1,9 +1,11 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import { Box, Container, Button, TextField } from "@mui/material";
 import { LayoutConfig } from "constants/index";
 import { EnhancedModal } from "components/index";
 import * as Yup from "yup";
 import { Formik, Form, Field } from "formik";
+import { API } from "helpers/index";
 
 export const Home = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -22,7 +24,17 @@ export const Home = () => {
   const validationSchema = () => {
     return Yup.object().shape({
       companyName: Yup.string().max(255).required("Company Name Is Required"),
-      founders: Yup.string().required("Founders must be added"),
+      founders: Yup.string()
+        .required("Founders must be added")
+        .test("Email Exists", async function (value) {
+          return await API.doesUserExist(value)
+            .then((response) => {
+              return response.data.exists;
+            })
+            .catch((error) => {
+              return error;
+            });
+        }),
       directors: Yup.string(),
       admins: Yup.string(),
       shareCount: Yup.number()
@@ -50,10 +62,10 @@ export const Home = () => {
       founders: values.founders,
       directors: values.directors,
       admins: values.admins,
-      shareCount: values.shareCount,
-      sharePrice: values.sharePrice,
-      stablecoinCount: values.stablecoinCount,
-      stablecoinPrice: values.stablecoinPrice,
+      shareCount: parseInt(values.shareCount),
+      sharePrice: parseInt(values.sharePrice),
+      stablecoinCount: parseInt(values.stablecoinCount),
+      stablecoinPrice: parseInt(values.stablecoinPrice),
     };
     console.log(data);
     resetForm();
@@ -65,6 +77,8 @@ export const Home = () => {
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
+        validateOnChange={false}
+        validateOnBlur={false}
       >
         {({ errors, touched, isSubmitting }) => (
           <Form>
