@@ -47,9 +47,7 @@ export const Register = () => {
 
     console.log(userData);
 
-    // API.register({
-    //   userData
-    // });
+    API.register(userData);
   };
   const validationCheck = () => {
     if (

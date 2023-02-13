@@ -78,7 +78,7 @@ class API {
    * @returns {Promise<Object>}
    */
   async register(data) {
-    return axiosInstance.post(`register`, data)
+    return axiosInstance.post(`user/register`, data)
       .then((response) => generateSuccess(response.data.data))
       .catch(error => errorHelper(error));
   }
