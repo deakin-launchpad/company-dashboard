@@ -4,27 +4,24 @@ import { Box, Container, Button, TextField } from "@mui/material";
 import { LayoutConfig } from "constants/index";
 import { EnhancedModal } from "components/index";
 import * as Yup from "yup";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, FieldArray } from "formik";
 import { API } from "helpers/index";
 
 export const Home = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-
   const initialValues = {
     companyName: "",
     founders: "",
     directors: "",
     admins: "",
     shareCount: "",
-    sharePrice: "",
     stablecoinCount: "",
-    stablecoinPrice: "",
   };
 
   const validationSchema = () => {
     return Yup.object().shape({
       companyName: Yup.string().max(255).required("Company Name Is Required"),
-      founders: Yup.string()
+      founders: Yup.array()
         .required("Founders must be added")
         .test("Email Exists", async function (value) {
           return await API.doesUserExist(value)
@@ -35,24 +32,32 @@ export const Home = () => {
               return error;
             });
         }),
-      directors: Yup.string(),
-      admins: Yup.string(),
+      directors: Yup.array().test("Email Exists", async function (value) {
+        return await API.doesUserExist(value)
+          .then((response) => {
+            return response.data.exists;
+          })
+          .catch((error) => {
+            return error;
+          });
+      }),
+      admins: Yup.array().test("Email Exists", async function (value) {
+        return await API.doesUserExist(value)
+          .then((response) => {
+            return response.data.exists;
+          })
+          .catch((error) => {
+            return error;
+          });
+      }),
       shareCount: Yup.number()
         .positive()
         .integer()
         .required("Share count must be added"),
-      sharePrice: Yup.number()
-        .positive()
-        .integer()
-        .required("Share price must be added"),
       stablecoinCount: Yup.number()
         .positive()
         .integer()
         .required("Stablecoin count must be added"),
-      stablecoinPrice: Yup.number()
-        .positive()
-        .integer()
-        .required("Stablecoin price must be added"),
     });
   };
 
@@ -63,9 +68,7 @@ export const Home = () => {
       directors: values.directors,
       admins: values.admins,
       shareCount: parseInt(values.shareCount),
-      sharePrice: parseInt(values.sharePrice),
       stablecoinCount: parseInt(values.stablecoinCount),
-      stablecoinPrice: parseInt(values.stablecoinPrice),
     };
     console.log(data);
     resetForm();
@@ -93,39 +96,162 @@ export const Home = () => {
               error={touched.companyName && Boolean(errors.companyName)}
               helperText={touched.companyName && errors.companyName}
             />
-            <Field
-              as={TextField}
-              fullWidth
-              label="Founder ID"
-              margin="normal"
-              name="founders"
-              type="text"
-              variant="outlined"
-              error={touched.founders && Boolean(errors.founders)}
-              helperText={touched.founders && errors.founders}
-            />
-            <Field
-              as={TextField}
-              fullWidth
-              label="Director IDs"
-              margin="normal"
-              name="directors"
-              type="text"
-              variant="outlined"
-              error={touched.directors && Boolean(errors.directors)}
-              helperText={touched.directors && errors.directors}
-            />
-            <Field
-              as={TextField}
-              fullWidth
-              label="Admin IDs"
-              margin="normal"
-              name="admins"
-              type="text"
-              variant="outlined"
-              error={touched.admins && Boolean(errors.admins)}
-              helperText={touched.admins && errors.admins}
-            />
+            <FieldArray name="founders">
+              {({ remove, insert }) => (
+                <Box>
+                  {touched.founders && touched.founders.length > 0 ? (
+                    touched.founders.map((friend, index) => (
+                      <Box key={index} sx={{ display: "flex", mt: 1 }}>
+                        <Field
+                          as={TextField}
+                          label={`Founder ID ${index + 1}`}
+                          name={`founders.${index}`}
+                          type="text"
+                          variant="outlined"
+                          error={touched.founders && Boolean(errors.founders)}
+                          helperText={touched.founders && errors.founders}
+                        />
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: 1,
+                          }}
+                        >
+                          <Button
+                            sx={{ height: 24 }}
+                            variant="contained"
+                            onClick={() => remove(index)}
+                          >
+                            -
+                          </Button>
+                          <Button
+                            sx={{ height: 24 }}
+                            variant="contained"
+                            onClick={() => insert(index + 1, "")}
+                          >
+                            +
+                          </Button>
+                        </Box>
+                      </Box>
+                    ))
+                  ) : (
+                    <Button
+                      sx={{ mt: 1, width: 135 }}
+                      variant="contained"
+                      onClick={() => insert("")}
+                    >
+                      Add a Founder
+                    </Button>
+                  )}
+                </Box>
+              )}
+            </FieldArray>
+            <FieldArray name="directors">
+              {({ remove, insert }) => (
+                <Box>
+                  {touched.directors && touched.directors.length > 0 ? (
+                    touched.directors.map((friend, index) => (
+                      <Box key={index} sx={{ display: "flex", mt: 1 }}>
+                        <Field
+                          as={TextField}
+                          label={`Directors ID ${index + 1}`}
+                          name={`directors.${index}`}
+                          type="text"
+                          variant="outlined"
+                          error={touched.directors && Boolean(errors.directors)}
+                          helperText={touched.directors && errors.directors}
+                        />
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: 1,
+                          }}
+                        >
+                          <Button
+                            sx={{ height: 24 }}
+                            variant="contained"
+                            onClick={() => remove(index)}
+                          >
+                            -
+                          </Button>
+                          <Button
+                            sx={{ height: 24 }}
+                            variant="contained"
+                            onClick={() => insert(index + 1, "")}
+                          >
+                            +
+                          </Button>
+                        </Box>
+                      </Box>
+                    ))
+                  ) : (
+                    <Button
+                      sx={{ mt: 1, width: 135 }}
+                      variant="contained"
+                      onClick={() => insert("")}
+                    >
+                      Add a Director
+                    </Button>
+                  )}
+                </Box>
+              )}
+            </FieldArray>
+            {/* FINAL BELOW */}
+            <FieldArray name="admins">
+              {({ remove, insert }) => (
+                <Box>
+                  {touched.admins && touched.admins.length > 0 ? (
+                    touched.admins.map((friend, index) => (
+                      <Box key={index} sx={{ display: "flex", mt: 1 }}>
+                        <Field
+                          as={TextField}
+                          label={`Admins ID ${index + 1}`}
+                          name={`admins.${index}`}
+                          type="text"
+                          variant="outlined"
+                          error={touched.admins && Boolean(errors.admins)}
+                          helperText={touched.admins && errors.admins}
+                        />
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: 1,
+                          }}
+                        >
+                          <Button
+                            sx={{ height: 24 }}
+                            variant="contained"
+                            onClick={() => remove(index)}
+                          >
+                            -
+                          </Button>
+                          <Button
+                            sx={{ height: 24 }}
+                            variant="contained"
+                            onClick={() => insert(index + 1, "")}
+                          >
+                            +
+                          </Button>
+                        </Box>
+                      </Box>
+                    ))
+                  ) : (
+                    <Button
+                      sx={{ mt: 1, width: 135 }}
+                      variant="contained"
+                      onClick={() => insert("")}
+                    >
+                      Add an Admin
+                    </Button>
+                  )}
+                </Box>
+              )}
+            </FieldArray>
+
+            {/* FINAL ABOVE */}
             <Box
               sx={{
                 display: "grid",
@@ -148,17 +274,6 @@ export const Home = () => {
               <Field
                 as={TextField}
                 fullWidth
-                label="Share Price"
-                margin="normal"
-                name="sharePrice"
-                type="text"
-                variant="outlined"
-                error={touched.sharePrice && Boolean(errors.sharePrice)}
-                helperText={touched.sharePrice && errors.sharePrice}
-              />
-              <Field
-                as={TextField}
-                fullWidth
                 label="Stablecoin Count"
                 margin="normal"
                 name="stablecoinCount"
@@ -169,21 +284,7 @@ export const Home = () => {
                 }
                 helperText={touched.stablecoinCount && errors.stablecoinCount}
               />
-              <Field
-                as={TextField}
-                fullWidth
-                label="Stablecoin Price"
-                margin="normal"
-                name="stablecoinPrice"
-                type="text"
-                variant="outlined"
-                error={
-                  touched.stablecoinPrice && Boolean(errors.stablecoinPrice)
-                }
-                helperText={touched.stablecoinPrice && errors.stablecoinPrice}
-              />
             </Box>
-
             <Box sx={{ mt: 2 }}>
               <Button
                 color="primary"

@@ -125,7 +125,7 @@ class API {
     return axiosInstance
       .get("user/doesUserExist", {
         headers: { authorization: "Bearer " + AccessToken },
-        params: { email },
+        params: email,
       })
       .then((response) => generateSuccess(response.data.data))
       .catch((error) => errorHelper(error));
