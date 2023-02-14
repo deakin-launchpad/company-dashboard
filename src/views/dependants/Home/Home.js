@@ -198,7 +198,6 @@ export const Home = () => {
                 </Box>
               )}
             </FieldArray>
-            {/* FINAL BELOW */}
             <FieldArray name="admins">
               {({ remove, insert }) => (
                 <Box>
@@ -250,8 +249,6 @@ export const Home = () => {
                 </Box>
               )}
             </FieldArray>
-
-            {/* FINAL ABOVE */}
             <Box
               sx={{
                 display: "grid",
