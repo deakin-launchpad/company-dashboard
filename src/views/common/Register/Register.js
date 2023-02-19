@@ -39,7 +39,6 @@ export const Register = () => {
   const [checked, setChecked] = useState(false);
   const navigate = useNavigate();
 
-  console.log(checked);
   const register = async () => {
     const userData = {
       deviceData,
