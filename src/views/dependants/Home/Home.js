@@ -74,7 +74,7 @@ export const Home = () => {
     resetForm();
   };
 
-  let createServiceModal = (
+  let createCompanyModal = (
     <Box>
       <Formik
         initialValues={initialValues}
@@ -309,7 +309,7 @@ export const Home = () => {
       <EnhancedModal
         isOpen={modalIsOpen}
         dialogTitle={`Create a Company`}
-        dialogContent={createServiceModal}
+        dialogContent={createCompanyModal}
         options={{
           onClose: () => setModalIsOpen(false),
           disableSubmit: true,
