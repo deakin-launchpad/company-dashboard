@@ -11,6 +11,8 @@ import {
   Card,
   CardContent,
   Link,
+  Checkbox,
+  FormControlLabel,
 } from "@mui/material";
 import { notify } from "components";
 import { Link as RouterLink } from "react-router-dom";
@@ -34,8 +36,10 @@ export const Register = () => {
   const [lastName, setLastName] = useState("");
   const [accountAddress, setAccountAddress] = useState("");
   const [logicSignature, setLogicSignature] = useState(null);
+  const [checked, setChecked] = useState(false);
   const navigate = useNavigate();
 
+  console.log(checked);
   const register = async () => {
     const userData = {
       deviceData,
@@ -83,7 +87,11 @@ export const Register = () => {
       return notify("Please Connect and Sign into Logic Signature");
     }
     if (emailPatternTest) {
-      return register();
+      if (checked) {
+        return register();
+      } else {
+        alert("Please tick the Terms and Conditions to register");
+      }
     }
   };
 
@@ -187,7 +195,24 @@ export const Register = () => {
           </Button>
         )}
       </Box>
-      <Box sx={{ mt: 2 }}>
+      <Box sx={{ my: 1 }}>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={checked}
+              onChange={(event) => setChecked(event.target.checked)}
+            />
+          }
+          label={
+            <Typography sx={{ fontSize: 12, fontWeight: "bold" }}>
+              Please confirm terms and conditions to allow control on your
+              behalf.
+            </Typography>
+          }
+        />
+      </Box>
+
+      <Box sx={{ mt: 0 }}>
         <Button
           fullWidth
           variant="contained"
