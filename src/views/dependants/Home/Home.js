@@ -10,7 +10,7 @@ import { API } from "helpers/index";
 export const Home = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const initialValues = {
-    companyName: "",
+    name: "",
     founders: "",
     directors: "",
     founderAmountOfShares: "",
@@ -24,7 +24,7 @@ export const Home = () => {
 
   const validationSchema = () => {
     return Yup.object().shape({
-      companyName: Yup.string().max(255).required("Company Name Is Required"),
+      name: Yup.string().max(255).required("Company Name Is Required"),
       founders: Yup.array()
         .required("Founders must be added")
         .test("Email Exists", async function (value) {
@@ -110,27 +110,31 @@ export const Home = () => {
     if (totalSum === parseInt(values.shareCount)) {
       console.log("SAME");
       const data = {
-        companyName: values.companyName,
-        companyFunding: null,
+        name: values.name,
+        companyFunding: 309000,
         founders: founders,
         directors: directors,
         admins: admins,
-        shareCount: {
-          name: values.companyName,
+        shares: {
+          name: values.name,
           unitName: values.shareCountName,
           quantity: parseInt(values.shareCount),
         },
-        stablecoinCount: {
-          name: values.companyName,
+        coins: {
+          name: values.name,
           unitName: values.shareCountName,
           quantity: parseInt(values.stablecoinCount),
         },
+        vaultName: values.name,
+        vaultFunding: 205000,
       };
       console.log(data);
+      await API.createCompany(data);
       resetForm();
     } else {
       alert("Make sure all shares are accounted for!");
     }
+    resetForm();
   };
 
   let createCompanyModal = (
@@ -148,11 +152,11 @@ export const Home = () => {
             fullWidth
             label="Company Name"
             margin="normal"
-            name="companyName"
+            name="name"
             type="text"
             variant="outlined"
-            error={touched.companyName && Boolean(errors.companyName)}
-            helperText={touched.companyName && errors.companyName}
+            error={touched.name && Boolean(errors.name)}
+            helperText={touched.name && errors.name}
           />
 
           <Box
