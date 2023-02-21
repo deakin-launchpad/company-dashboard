@@ -90,23 +90,31 @@ export const Home = () => {
 
     // Ensure thhat the sum of all shares are attributed to FOUNDERS and ADMINS
     // Convert array of strings to array of integers
-    var founderAmountOfShares = values.founderAmountOfShares.map((x) => {
+    let founderAmountOfShares = values.founderAmountOfShares.map((x) => {
       return parseInt(x);
     });
-    console.log(values.directorAmountOfShares);
-    var directorAmountOfShares = values.directorAmountOfShares.map((x) => {
-      return parseInt(x);
-    });
+    let founderSum = founderAmountOfShares.reduce(
+      (partialSum, a) => partialSum + a
+    );
+
+    if (values.directorAmountOfShares.length !== 0) {
+      let directorAmountOfShares = values.directorAmountOfShares.map((x) => {
+        return parseInt(x);
+      });
+      var directorSum = directorAmountOfShares.reduce(
+        (partialSum, a) => partialSum + a
+      );
+    }
 
     // Add the sum of the array
-    const founderSum = founderAmountOfShares.reduce(
-      (partialSum, a) => partialSum + a
-    );
-    const directorSum = directorAmountOfShares.reduce(
-      (partialSum, a) => partialSum + a
-    );
-    const totalSum = founderSum + directorSum;
+    let totalSum;
+    if (directorSum === undefined) {
+      totalSum = founderSum;
+    } else {
+      totalSum = founderSum + directorSum;
+    }
 
+    console.log(totalSum);
     if (totalSum === parseInt(values.shareCount)) {
       console.log("SAME");
       const data = {
@@ -119,11 +127,13 @@ export const Home = () => {
           name: values.name,
           unitName: values.shareCountName,
           quantity: parseInt(values.shareCount),
+          decimal: 2,
         },
         coins: {
           name: values.name,
           unitName: values.shareCountName,
           quantity: parseInt(values.stablecoinCount),
+          decimal: 2,
         },
         vaultName: values.name,
         vaultFunding: 205000,
