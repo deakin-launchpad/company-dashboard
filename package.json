@@ -16,6 +16,7 @@
     "date-fns": "~2.28.0",
     "eslint": "~7.11.0",
     "eslint-utils": "~2.1.0",
+    "firebase": "^9.17.1",
     "formik": "~2.2.9",
     "idb": "~6.0.0",
     "lodash": "~4.17.21",
