@@ -114,9 +114,7 @@ export const Home = () => {
       totalSum = founderSum + directorSum;
     }
 
-    console.log(totalSum);
     if (totalSum === parseInt(values.shareCount)) {
-      console.log("SAME");
       const data = {
         name: values.name,
         companyFunding: 309000,
@@ -138,13 +136,11 @@ export const Home = () => {
         vaultName: values.name,
         vaultFunding: 205000,
       };
-      console.log(data);
       await API.createCompany(data);
       resetForm();
     } else {
       alert("Make sure all shares are accounted for!");
     }
-    resetForm();
   };
 
   let createCompanyModal = (
@@ -238,7 +234,7 @@ export const Home = () => {
                     >
                       <Field
                         as={TextField}
-                        label={`Founder ID ${index + 1}`}
+                        label={`Founder Email ${index + 1}`}
                         name={`founders.${index}`}
                         type="text"
                         variant="outlined"
@@ -311,7 +307,7 @@ export const Home = () => {
                     >
                       <Field
                         as={TextField}
-                        label={`Directors ID ${index + 1}`}
+                        label={`Directors Email ${index + 1}`}
                         name={`directors.${index}`}
                         type="text"
                         variant="outlined"
@@ -377,7 +373,7 @@ export const Home = () => {
                     <Box key={index} sx={{ display: "flex", mt: 1 }}>
                       <Field
                         as={TextField}
-                        label={`Admins ID ${index + 1}`}
+                        label={`Admins Email ${index + 1}`}
                         name={`admins.${index}`}
                         type="text"
                         variant="outlined"
