@@ -14,24 +14,29 @@ var firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const messaging = getMessaging(firebaseApp);
 
-export const fetchToken = (setTokenFound) => {
-  return getToken(messaging, {
-    vapidKey: process.env.FIREBASE_WEB_PUSH_KEY,
-  })
-    .then((currentToken) => {
-      if (currentToken) {
-        setTokenFound(currentToken);
-      } else {
-        console.log(
-          "No registration token available. Request permission to generate one."
-        );
-        setTokenFound(false);
-      }
-    })
-    .catch((err) => {
-      console.log("An error occurred while retrieving token. ", err);
+export async function requestPermission() {
+  console.log("Requesting permission...");
+  const permission = await Notification.requestPermission();
+  console.log(permission);
+  if (permission === "granted") {
+    console.log("Notification permission granted.");
+  }
+}
+
+export async function fetchToken(setTokenFound) {
+  try {
+    requestPermission();
+    const token = await getToken(messaging, {
+      vapidKey: process.env.FIREBASE_WEB_PUSH_KEY,
     });
-};
+    console.log(token);
+    setTokenFound(true);
+    return token;
+  } catch (error) {
+    setTokenFound(false);
+    console.log(error);
+  }
+}
 
 export const onMessageListener = () =>
   new Promise((resolve) => {

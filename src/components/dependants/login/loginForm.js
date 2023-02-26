@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useFormik } from "formik";
@@ -5,16 +6,27 @@ import * as Yup from "yup";
 import { Box, Button, FormHelperText, TextField } from "@mui/material";
 import { LoginContext } from "contexts";
 import { ConnectionConfig, DeveloperConfig } from "constants/index";
-import { fetchToken } from "../../../firebase";
+import { fetchToken, onMessageListener } from "../../../firebase";
 
 export const LoginForm = (props) => {
   const { devMode, setAccessToken } = useContext(LoginContext);
+  const [notification, setNotification] = useState({ title: "", body: "" });
   const [isTokenFound, setTokenFound] = useState(false);
 
   useEffect(() => {
     fetchToken(setTokenFound);
   }, []);
   console.log(isTokenFound);
+
+  onMessageListener()
+    .then((payload) => {
+      console.log("payload", payload);
+      setNotification({
+        title: payload?.notification?.title,
+        body: payload?.notification?.body,
+      });
+    })
+    .catch((err) => console.log("failed: ", err));
 
   const formik = useFormik({
     initialValues: {

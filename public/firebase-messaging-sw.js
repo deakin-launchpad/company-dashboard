@@ -23,10 +23,14 @@ const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage(function (payload) {
   console.log("Received background message ", payload);
-  const notificationTitle = "Background Message Title";
+
+  const notificationTitle = payload.notification.title;
   const notificationOptions = {
-    body: "Background Message body.",
-    icon: "/firebase-logo.png",
+    body: payload.notification.body,
   };
-  self.registration.showNotification(notificationTitle, notificationOptions);
+
+  return self.registration.showNotification(
+    notificationTitle,
+    notificationOptions
+  );
 });
