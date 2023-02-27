@@ -47,6 +47,13 @@ export const Login = () => {
     } else return false;
   }, [setCurrentUserRole]);
 
+  const firebaseToken = useCallback(async (data) => {
+    const response = await API.refreshFirebaseMessageToken(data);
+    if (response.success) {
+      return true;
+    } else return false;
+  }, []);
+
   let content = (
     <Box
       sx={{
@@ -82,7 +89,11 @@ export const Login = () => {
               </div>
             </Box>
             <Box sx={{ flexGrow: 1, mt: 3 }}>
-              <LoginForm login={performLogin} onSuccess={getUserRole} />
+              <LoginForm
+                login={performLogin}
+                onSuccess={getUserRole}
+                token={firebaseToken}
+              />
             </Box>
             {ConnectionConfig.useDeakinSSO && (
               <Box sx={{ mt: 2 }}>

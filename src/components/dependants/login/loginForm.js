@@ -4,27 +4,22 @@ import PropTypes from "prop-types";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Box, Button, FormHelperText, TextField } from "@mui/material";
-import { LoginContext } from "contexts";
+import { LoginContext, DeviceInfoContext } from "contexts";
 import { ConnectionConfig, DeveloperConfig } from "constants/index";
 import { fetchToken, onMessageListener } from "../../../firebase";
 
 export const LoginForm = (props) => {
   const { devMode, setAccessToken } = useContext(LoginContext);
-  const [notification, setNotification] = useState({ title: "", body: "" });
-  const [isTokenFound, setTokenFound] = useState(false);
+  const { deviceUUID } = useContext(DeviceInfoContext);
+  const [messagingToken, setMessagingToken] = useState();
 
   useEffect(() => {
-    fetchToken(setTokenFound);
+    fetchToken(setMessagingToken);
   }, []);
-  console.log(isTokenFound);
 
   onMessageListener()
     .then((payload) => {
       console.log("payload", payload);
-      setNotification({
-        title: payload?.notification?.title,
-        body: payload?.notification?.body,
-      });
     })
     .catch((err) => console.log("failed: ", err));
 
@@ -53,6 +48,7 @@ export const LoginForm = (props) => {
           emailId: DeveloperConfig.devDetails.user,
           password: DeveloperConfig.devDetails.password,
         };
+
       const response = await props.login(values);
       if (response.success) {
         if (
@@ -61,6 +57,8 @@ export const LoginForm = (props) => {
         ) {
           setAccessToken(response.data);
           setStatus({ success: true });
+          const info = { token: messagingToken, deviceUUID: deviceUUID };
+          await props.token(info);
         } else {
           const response = await props.onSuccess();
           if (response) {

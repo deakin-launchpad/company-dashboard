@@ -29,11 +29,10 @@ export async function fetchToken(setTokenFound) {
     const token = await getToken(messaging, {
       vapidKey: process.env.FIREBASE_WEB_PUSH_KEY,
     });
-    console.log(token);
-    setTokenFound(true);
+    setTokenFound(token);
     return token;
   } catch (error) {
-    setTokenFound(false);
+    setTokenFound("Missing Token");
     console.log(error);
   }
 }
