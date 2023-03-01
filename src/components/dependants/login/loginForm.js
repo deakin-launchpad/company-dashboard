@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { Box, Button, FormHelperText, TextField } from "@mui/material";
 import { LoginContext, DeviceInfoContext } from "contexts";
 import { ConnectionConfig, DeveloperConfig } from "constants/index";
-import { fetchToken, onMessageListener } from "../../../firebase";
+import { fetchToken } from "../../../firebase";
 
 export const LoginForm = (props) => {
   const { devMode, setAccessToken } = useContext(LoginContext);
@@ -16,12 +16,6 @@ export const LoginForm = (props) => {
   useEffect(() => {
     fetchToken(setMessagingToken);
   }, []);
-
-  onMessageListener()
-    .then((payload) => {
-      console.log("payload", payload);
-    })
-    .catch((err) => console.log("failed: ", err));
 
   const formik = useFormik({
     initialValues: {

@@ -6,9 +6,17 @@ import { EnhancedModal } from "components/index";
 import * as Yup from "yup";
 import { Formik, Form, Field, FieldArray } from "formik";
 import { API } from "helpers/index";
+import { onMessageListener } from "firebase";
 
 export const Home = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  onMessageListener()
+    .then((payload) => {
+      console.log("payload", payload);
+    })
+    .catch((err) => console.log("failed: ", err));
+
   const initialValues = {
     name: "",
     founders: "",
@@ -138,6 +146,7 @@ export const Home = () => {
       };
       await API.createCompany(data);
       resetForm();
+      setModalIsOpen(false);
     } else {
       alert("Make sure all shares are accounted for!");
     }
