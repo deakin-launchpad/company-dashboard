@@ -1,24 +1,30 @@
-# base image
-FROM node:12.2.0-alpine
+# pull official base image
+FROM node:16-alpine
+
 
 # set working directory
-WORKDIR /usr/src/app
+WORKDIR /build
 
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
+# Copies package.json and package-lock.json to Docker environment
+#COPY package*.json ./
 
-# install and cache app dependencies
-COPY package*.json ./
-ADD package.json /usr/src/app/package.json
-RUN npm install --silent
-RUN npm install react-scripts@3.0.1 -g --silent
+# Installs all node packages
+#RUN npm install
 
-# Bundle app source
-COPY . .
+# Copies everything over to Docker environment
+COPY build .
 
-# Specify port
-EXPOSE 3000
+# Build for production.
+#RUN npm run build --production
 
-# start app
-CMD ["npm", "start"]
+# Install `serve` to run the application.
+RUN npm install -g serve
 
+# Uses port which is used by the actual application
+EXPOSE 8080
+
+# Run application
+#CMD [ "npm", "start" ]
+#WORKDIR /build/web
+
+CMD serve -l 8080 
