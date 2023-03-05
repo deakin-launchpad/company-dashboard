@@ -15,11 +15,18 @@ import {
   Login,
   MobileMenu,
   Register,
-  UsersManager,
 } from "views";
 import { Layout } from "./layout";
+import { onMessageListener } from "firebase";
+import { notify } from "components/common/Notification";
 
 const AuthRoute = ({ children, redirectTo, parentProps, loginStatus }) => {
+  onMessageListener()
+    .then((payload) => {
+      console.log("payload", payload);
+      notify(payload.notification.body);
+    })
+    .catch((err) => console.log("failed: ", err));
   return loginStatus === false ? (
     <Navigate to={redirectTo} {...parentProps} />
   ) : (
@@ -155,22 +162,6 @@ export const AppRoutes = (props) => {
             <Layout>
               {" "}
               <Example {...props} />
-            </Layout>
-          </AuthRoute>
-        }
-      />
-      <Route
-        exact
-        path="/users"
-        element={
-          <AuthRoute
-            redirectTo="/login"
-            loginStatus={loginStatus}
-            parentProps={props}
-          >
-            <Layout>
-              {" "}
-              <UsersManager {...props} />
             </Layout>
           </AuthRoute>
         }

@@ -6,18 +6,18 @@ import { EnhancedModal } from "components/index";
 import * as Yup from "yup";
 import { Formik, Form, Field, FieldArray } from "formik";
 import { API } from "helpers/index";
-import { onMessageListener } from "firebase";
-import { notify } from "components/common/Notification";
+// import { onMessageListener } from "firebase";
+// import { notify } from "components/common/Notification";
 
 export const Home = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  onMessageListener()
-    .then((payload) => {
-      console.log("payload", payload);
-      notify(payload.notification.body);
-    })
-    .catch((err) => console.log("failed: ", err));
+  // onMessageListener()
+  //   .then((payload) => {
+  //     console.log("payload", payload);
+  //     notify(payload.notification.body);
+  //   })
+  //   .catch((err) => console.log("failed: ", err));
 
   const initialValues = {
     name: "",
