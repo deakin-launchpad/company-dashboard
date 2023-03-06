@@ -6,9 +6,23 @@ import { EnhancedModal } from "components/index";
 import * as Yup from "yup";
 import { Formik, Form, Field, FieldArray } from "formik";
 import { API } from "helpers/index";
+import { onMessageListener } from "firebase";
+import { notify } from "components/common/Notification";
+import { Typography } from "../../../../node_modules/@mui/material/index";
 
 export const Home = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [notificationData, setNotificationData] = useState("");
+
+  onMessageListener()
+    .then((payload) => {
+      setNotificationData(payload.notification.body);
+      setOpen(true);
+      console.log("payload", payload);
+    })
+    .catch((err) => console.log("failed: ", err));
+
   const initialValues = {
     name: "",
     founders: "",
@@ -143,6 +157,12 @@ export const Home = () => {
       alert("Make sure all shares are accounted for!");
     }
   };
+
+  let companyData = (
+    <Box>
+      <Typography>{notificationData}</Typography>
+    </Box>
+  );
 
   let createCompanyModal = (
     <Formik
@@ -440,12 +460,23 @@ export const Home = () => {
           Create Company
         </Button>
       </Container>
+      {/* NOTIFICATION MODAL */}
       <EnhancedModal
         isOpen={modalIsOpen}
         dialogTitle={`Create a Company`}
         dialogContent={createCompanyModal}
         options={{
           onClose: () => setModalIsOpen(false),
+          disableSubmit: true,
+        }}
+      />
+      {/* CREATE COMPANY MODAL */}
+      <EnhancedModal
+        isOpen={open}
+        dialogTitle={`Create a Company`}
+        dialogContent={companyData}
+        options={{
+          onClose: () => setOpen(false),
           disableSubmit: true,
         }}
       />
