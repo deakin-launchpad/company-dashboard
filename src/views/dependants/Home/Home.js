@@ -6,19 +6,9 @@ import { EnhancedModal } from "components/index";
 import * as Yup from "yup";
 import { Formik, Form, Field, FieldArray } from "formik";
 import { API } from "helpers/index";
-// import { onMessageListener } from "firebase";
-// import { notify } from "components/common/Notification";
 
 export const Home = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-
-  // onMessageListener()
-  //   .then((payload) => {
-  //     console.log("payload", payload);
-  //     notify(payload.notification.body);
-  //   })
-  //   .catch((err) => console.log("failed: ", err));
-
   const initialValues = {
     name: "",
     founders: "",
@@ -98,7 +88,7 @@ export const Home = () => {
       admins.push(values.admins[i]);
     }
 
-    // Ensure thhat the sum of all shares are attributed to FOUNDERS and ADMINS
+    // Ensure that the sum of all shares are attributed to FOUNDERS and ADMINS
     // Convert array of strings to array of integers
     let founderAmountOfShares = values.founderAmountOfShares.map((x) => {
       return parseInt(x);
@@ -234,7 +224,7 @@ export const Home = () => {
             {({ remove, insert }) => (
               <Box>
                 {touched.founders && touched.founders.length > 0 ? (
-                  touched.founders.map((friend, index) => (
+                  touched.founders.map((founders, index) => (
                     <Box
                       key={index}
                       sx={{
