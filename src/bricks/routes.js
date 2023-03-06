@@ -9,7 +9,6 @@ import { useContext } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import {
   AuthCallback,
-  Example,
   FourOFour,
   Home,
   Login,
@@ -146,22 +145,6 @@ export const AppRoutes = (props) => {
             <Layout>
               {" "}
               <MobileMenu {...props} />
-            </Layout>
-          </AuthRoute>
-        }
-      />
-      <Route
-        exact
-        path="/examples"
-        element={
-          <AuthRoute
-            redirectTo="/login"
-            loginStatus={loginStatus}
-            parentProps={props}
-          >
-            <Layout>
-              {" "}
-              <Example {...props} />
             </Layout>
           </AuthRoute>
         }
