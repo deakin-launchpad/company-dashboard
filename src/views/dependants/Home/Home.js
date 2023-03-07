@@ -33,7 +33,8 @@ export const Home = () => {
     shareCount: "",
     stablecoinName: "",
     stablecoinCount: "",
-    decimal: "",
+    decimalShares: "",
+    decimalCoins: "",
   };
 
   const validationSchema = () => {
@@ -50,26 +51,8 @@ export const Home = () => {
               return error;
             });
         }),
-      // directors: Yup.array()
-      //   .when("$exist")
-      //   .test("Email Exists", async function (value) {
-      //     return await API.doesUserExist(value)
-      //       .then((response) => {
-      //         return response.data.exists;
-      //       })
-      //       .catch((error) => {
-      //         return error;
-      //       });
-      //   }),
-      // admins: Yup.array().test("Email Exists", async function (value) {
-      //   return await API.doesUserExist(value)
-      //     .then((response) => {
-      //       return response.data.exists;
-      //     })
-      //     .catch((error) => {
-      //       return error;
-      //     });
-      // }),
+      directors: Yup.array(),
+      admins: Yup.array(),
       shareCount: Yup.number()
         .positive()
         .integer()
@@ -78,7 +61,11 @@ export const Home = () => {
         .positive()
         .integer()
         .required("Stablecoin count must be added"),
-      decimal: Yup.number()
+      decimalShares: Yup.number()
+        .positive()
+        .integer()
+        .required("Decimal is required"),
+      decimalCoins: Yup.number()
         .positive()
         .integer()
         .required("Decimal is required"),
@@ -136,8 +123,11 @@ export const Home = () => {
     let finalShareCount = values.shareCount;
     let finalCoinCount = values.stablecoinCount;
 
-    for (let i = 0; i < values.decimal; i++) {
+    for (let i = 0; i < values.decimalShares; i++) {
       finalShareCount *= 10;
+    }
+
+    for (let i = 0; i < values.decimalCoins; i++) {
       finalCoinCount *= 10;
     }
 
@@ -152,13 +142,13 @@ export const Home = () => {
           name: values.name,
           unitName: values.shareCountName,
           quantity: finalShareCount,
-          decimal: parseInt(values.decimal),
+          decimal: parseInt(values.decimalShares),
         },
         coins: {
           name: values.name,
           unitName: values.shareCountName,
           quantity: finalCoinCount,
-          decimal: parseInt(values.decimal),
+          decimal: parseInt(values.decimalCoins),
         },
         vaultName: values.name,
         vaultFunding: 205000,
@@ -203,7 +193,7 @@ export const Home = () => {
           <Box
             sx={{
               display: "grid",
-              gridTemplateColumns: "48% 48%",
+              gridTemplateColumns: "31% 31% 31%",
               gridRow: "auto auto",
               justifyContent: "space-between",
             }}
@@ -230,10 +220,19 @@ export const Home = () => {
               error={touched.shareCount && Boolean(errors.shareCount)}
               helperText={touched.shareCount && errors.shareCount}
             />
+            <Field
+              as={TextField}
+              label="Decimal Shares"
+              margin="normal"
+              name="decimalShares"
+              type="text"
+              variant="outlined"
+              error={touched.decimalShares && Boolean(errors.decimalShares)}
+              helperText={touched.decimalShares && errors.decimalShares}
+            />
 
             <Field
               as={TextField}
-              fullWidth
               label="Stablecoin Name"
               margin="normal"
               name="stablecoinName"
@@ -244,7 +243,6 @@ export const Home = () => {
             />
             <Field
               as={TextField}
-              fullWidth
               label="Stablecoin Count"
               margin="normal"
               name="stablecoinCount"
@@ -253,17 +251,17 @@ export const Home = () => {
               error={touched.stablecoinCount && Boolean(errors.stablecoinCount)}
               helperText={touched.stablecoinCount && errors.stablecoinCount}
             />
+            <Field
+              as={TextField}
+              label="Decimal Coins"
+              margin="normal"
+              name="decimalCoins"
+              type="text"
+              variant="outlined"
+              error={touched.decimalCoins && Boolean(errors.decimalCoins)}
+              helperText={touched.decimalCoins && errors.decimalCoins}
+            />
           </Box>
-          <Field
-            as={TextField}
-            label="Decimal"
-            margin="normal"
-            name="decimal"
-            type="text"
-            variant="outlined"
-            error={touched.decimal && Boolean(errors.decimal)}
-            helperText={touched.decimal && errors.decimal}
-          />
           <FieldArray name="founders">
             {({ remove, insert }) => (
               <Box>
