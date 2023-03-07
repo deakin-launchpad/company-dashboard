@@ -33,6 +33,7 @@ export const Home = () => {
     shareCount: "",
     stablecoinName: "",
     stablecoinCount: "",
+    decimal: "",
   };
 
   const validationSchema = () => {
@@ -77,6 +78,10 @@ export const Home = () => {
         .positive()
         .integer()
         .required("Stablecoin count must be added"),
+      decimal: Yup.number()
+        .positive()
+        .integer()
+        .required("Decimal is required"),
     });
   };
 
@@ -127,6 +132,15 @@ export const Home = () => {
       totalSum = founderSum + directorSum;
     }
 
+    // THIS IS WHERE DECIMAL LOGIC GOES
+    let finalShareCount = values.shareCount;
+    let finalCoinCount = values.stablecoinCount;
+
+    for (let i = 0; i < values.decimal; i++) {
+      finalShareCount *= 10;
+      finalCoinCount *= 10;
+    }
+
     if (totalSum === parseInt(values.shareCount)) {
       const data = {
         name: values.name,
@@ -137,14 +151,14 @@ export const Home = () => {
         shares: {
           name: values.name,
           unitName: values.shareCountName,
-          quantity: parseInt(values.shareCount),
-          decimal: 2,
+          quantity: finalShareCount,
+          decimal: parseInt(values.decimal),
         },
         coins: {
           name: values.name,
           unitName: values.shareCountName,
-          quantity: parseInt(values.stablecoinCount),
-          decimal: 2,
+          quantity: finalCoinCount,
+          decimal: parseInt(values.decimal),
         },
         vaultName: values.name,
         vaultFunding: 205000,
@@ -240,6 +254,16 @@ export const Home = () => {
               helperText={touched.stablecoinCount && errors.stablecoinCount}
             />
           </Box>
+          <Field
+            as={TextField}
+            label="Decimal"
+            margin="normal"
+            name="decimal"
+            type="text"
+            variant="outlined"
+            error={touched.decimal && Boolean(errors.decimal)}
+            helperText={touched.decimal && errors.decimal}
+          />
           <FieldArray name="founders">
             {({ remove, insert }) => (
               <Box>
