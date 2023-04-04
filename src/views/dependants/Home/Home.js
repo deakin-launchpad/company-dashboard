@@ -41,16 +41,16 @@ export const Home = () => {
     return Yup.object().shape({
       name: Yup.string().max(255).required("Company Name Is Required"),
       founders: Yup.array()
-        .required("Founders must be added")
-        .test("Email Exists", async function (value) {
-          return await API.doesUserExist(value)
-            .then((response) => {
-              return response.data.exists;
-            })
-            .catch((error) => {
-              return error;
-            });
-        }),
+        .required("Founders must be added"),
+      // .test("Email Exists", async function (value) {
+      //   return await API.doesUserExist(value)
+      //     .then((response) => {
+      //       return response.data.exists;
+      //     })
+      //     .catch((error) => {
+      //       return error;
+      //     });
+      // }),
       directors: Yup.array(),
       admins: Yup.array(),
       shareCount: Yup.number()
