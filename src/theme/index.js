@@ -106,7 +106,7 @@ const themesOptions = {
         active: '#6b778c'
       },
       background: {
-        default: '#f4f5f7',
+        default: '#122433',
         paper: '#ffffff'
       },
       error: {

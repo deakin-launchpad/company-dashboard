@@ -11,6 +11,7 @@ import {
   AuthCallback,
   FourOFour,
   Home,
+  Landing,
   Login,
   MobileMenu,
   Register,
@@ -67,7 +68,7 @@ export const AppRoutes = (props) => {
             loginStatus={loginStatus}
             parentProps={props}
           >
-            <Navigate to={{ pathname: "/login" }} {...props} />
+            <Landing {...props} />
           </UnauthRoute>
         }
       />
