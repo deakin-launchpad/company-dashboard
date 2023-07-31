@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import logoImage from "../../../assets/logo.png";
 import welcomeImage from "../../../assets/welcome.png";
 
@@ -8,51 +8,69 @@ export const Landing = () => {
       sx={{
         backgroundColor: "background.default",
         minHeight: "100vh",
-        position: "relative",
       }}
     >
+      {/* Logo */}
       <Box
         component="img"
         src={logoImage}
         alt="Image Not Found"
-        sx={{
+        style={{
           width: "152px",
           height: "32px",
-          position: "absolute",
-          top: "30px",
-          left: "53px",
+          marginTop: "30px",
+          marginLeft: "53px",
         }}
       />
+
       {/* Box 3 */}
       <Box
-        sx={{
-          width: "90%",
-          height: "45%",
-          position: "absolute",
-          top: "57%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          border: "1px solid black",
-          display: "flex",
-          alignItems: "center",
-          padding: "0 20px", // Adjust left and right padding
-          gap: "62.5px", // Create space between the box and image
+        style={{
+          width: "1020px",
+          height: "300px",
+
+          textAlign: "left",
+          margin: "120px 125px 199px 120px",
+          position: "relative", // Make the container relatively positioned
         }}
       >
-        {/* Image on the far right */}
+        {/* Contents of Box 3 */}
         <Box
           component="img"
           src={welcomeImage}
           alt="Welcome Image"
-          sx={{
-            width: "35%",
-            height: "100%",
-            position: "absolute",
-            top: "50%",
-            right: 0,
-            transform: "translateY(-50%)",
+          style={{
+            position: "absolute", // Position the image absolutely
+            top: 0, // Align the image to the top of the container
+            right: 0, // Align the image to the right of the container
+            height: "100%", // Make sure the image takes the full height of the container
           }}
         />
+        <Typography
+          variant="h1"
+          sx={{ margin: "24px 0px 5px 0px", lineHeight: 1.2 }}
+        >
+          Vote for the company<br></br>of your choice!
+        </Typography>
+
+        <Typography variant="h6">
+          Serving company principals/shareholders to vote for the company
+        </Typography>
+
+        <Button
+          variant="contained"
+          sx={{
+            marginTop: "30px",
+            width: "240px",
+            borderRadius: "8px",
+            backgroundColor: "#0D539B",
+            typography: {
+              fontFamily: "Roboto, sans-serif", // Use "Roboto" instead of "roboto"
+            },
+          }}
+        >
+          Get started &gt;
+        </Button>
       </Box>
     </Box>
   );

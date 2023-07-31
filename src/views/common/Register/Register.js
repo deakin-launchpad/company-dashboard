@@ -6,16 +6,12 @@ import {
   Typography,
   Button,
   Box,
-  Divider,
-  Container,
-  Card,
-  CardContent,
-  Link,
   Checkbox,
   FormControlLabel,
 } from "@mui/material";
+import logoImage from "../../../assets/logo.png";
+import registerImage from "../../../assets/register.png";
 import { notify } from "components";
-import { Link as RouterLink } from "react-router-dom";
 import { DeviceInfoContext } from "contexts/index";
 import { API } from "helpers/index";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
@@ -232,51 +228,31 @@ export const Register = () => {
         minHeight: "100vh",
       }}
     >
-      <Container maxWidth="sm" sx={{ py: "80px" }}>
-        <Card>
-          <CardContent
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              p: 4,
-            }}
-          >
-            <Box
-              sx={{
-                alignItems: "center",
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <div>
-                <Typography color="textPrimary" gutterBottom variant="h4">
-                  {pageHeading}
-                </Typography>
-                <Typography color="textSecondary" variant="body2">
-                  Register for the Company Platform
-                </Typography>
-              </div>
-            </Box>
-            <Box
-              sx={{
-                flexGrow: 1,
-                mt: 1,
-              }}
-            >
-              {form}
-            </Box>
-            <Divider sx={{ my: 3 }} />
-            <Link
-              color="textSecondary"
-              component={RouterLink}
-              to="/login"
-              variant="body2"
-            >
-              Have an account?
-            </Link>
-          </CardContent>
-        </Card>
-      </Container>
+      <Box
+        component="img"
+        src={logoImage}
+        alt="Image Not Found"
+        style={{
+          width: "152px",
+          height: "32px",
+          marginTop: "30px",
+          marginLeft: "53px",
+        }}
+      />
+
+      <Box
+        component="img"
+        src={registerImage}
+        alt="Welcome Image"
+        style={{
+          position: "absolute", // Position the image absolutely
+          top: 0, // Align the image to the top of the container
+          right: 0, // Align the image to the right of the container
+          height: "100%",
+          width: "50%", // Make sure the image takes the full height of the container
+        }}
+      />
+      {form}
     </Box>
   );
   return content;

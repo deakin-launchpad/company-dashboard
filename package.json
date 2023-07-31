@@ -6,6 +6,7 @@
     "@babel/core": "~7.17.5",
     "@emotion/react": "~11.5.0",
     "@emotion/styled": "~11.3.0",
+    "@fontsource/montserrat": "^5.0.5",
     "@iconify/react-with-api": "~1.0.0-rc.7",
     "@mui/icons-material": "~5.4.2",
     "@mui/material": "~5.4.2",
