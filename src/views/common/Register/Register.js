@@ -140,18 +140,44 @@ export const Register = () => {
         marginLeft: "9%",
       }}
     >
-      <CustomInputLabel htmlFor="username">Username</CustomInputLabel>
+      <CustomInputLabel htmlFor="firstname">First Name</CustomInputLabel>
       <TextField
         variant="outlined"
         margin="normal"
         required
         fullWidth
-        id="username"
-        name="username"
-        autoComplete="username"
+        id="firstname"
+        name="firstname"
+        autoComplete="firstname"
         onChange={(e) => setFirstName(e.target.value)}
         autoFocus
         size="small"
+        InputProps={{ style: inputStyles }}
+      />
+
+      <CustomInputLabel htmlFor="lastname">Last Name</CustomInputLabel>
+      <TextField
+        variant="outlined"
+        margin="normal"
+        required
+        fullWidth
+        id="lastname"
+        name="lastname"
+        autoComplete="lastname"
+        onChange={(e) => setLastName(e.target.value)}
+        InputProps={{ style: inputStyles }}
+      />
+
+      <CustomInputLabel htmlFor="email">Email</CustomInputLabel>
+      <TextField
+        variant="outlined"
+        margin="normal"
+        required
+        fullWidth
+        id="email"
+        name="email"
+        autoComplete="email"
+        onChange={(e) => setEmailId(e.target.value)}
         InputProps={{ style: inputStyles }}
       />
 
@@ -162,43 +188,14 @@ export const Register = () => {
         required
         fullWidth
         id="password"
+        type="password"
         name="password"
-        type="password"
-        autoComplete="current-password"
-        onChange={(e) => setLastName(e.target.value)}
-        InputProps={{ style: inputStyles }}
-      />
-
-      <CustomInputLabel htmlFor="confirmPassword">
-        Confirm Password
-      </CustomInputLabel>
-      <TextField
-        variant="outlined"
-        margin="normal"
-        required
-        fullWidth
-        id="confirmPassword"
-        name="confirmPassword"
-        type="password"
-        autoComplete="current-password"
-        onChange={(e) => setEmailId(e.target.value)}
-        InputProps={{ style: inputStyles }}
-      />
-
-      <CustomInputLabel htmlFor="email">Email Address</CustomInputLabel>
-      <TextField
-        variant="outlined"
-        margin="normal"
-        required
-        fullWidth
-        id="email"
-        name="email"
-        autoComplete="email"
+        autoComplete="password"
         onChange={(e) => setPassword(e.target.value)}
         InputProps={{ style: inputStyles }}
       />
 
-      <CustomInputLabel htmlFor="accountAddress">
+      <CustomInputLabel htmlFor="confirmpassword">
         Account Address
       </CustomInputLabel>
       <TextField
@@ -206,8 +203,9 @@ export const Register = () => {
         margin="normal"
         required
         fullWidth
-        id="accountAddress"
-        name="accountAddress"
+        id="confirmpassword"
+        name="confirmpassword"
+        type="password"
         onChange={(e) => setConfirmPassword(e.target.value)}
         InputProps={{ style: inputStyles }}
       />
@@ -222,6 +220,12 @@ export const Register = () => {
             size="middle"
             variant="contained"
             onClick={handleConnectWalletClick}
+            style={{
+              backgroundColor: "#0D539B",
+              typography: {
+                fontFamily: "Roboto, sans-serif",
+              },
+            }}
           >
             {"Connect MyAlgo Wallet"}
           </Button>
@@ -236,7 +240,9 @@ export const Register = () => {
             />
           }
           label={
-            <Typography sx={{ fontSize: 12, fontWeight: "bold" }}>
+            <Typography
+              sx={{ fontSize: 12, fontWeight: "bold", color: "white" }}
+            >
               Please confirm terms and conditions to allow control on your
               behalf.
             </Typography>

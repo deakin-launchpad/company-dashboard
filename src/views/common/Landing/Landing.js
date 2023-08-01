@@ -5,8 +5,8 @@ import logoImage from "../../../assets/logo.png";
 import welcomeImage from "../../../assets/welcome.png";
 
 export const Landing = () => {
-  const handleRegisterClick = () => {
-    window.location.href = "/register";
+  const handleLoginClick = () => {
+    window.location.href = "/login";
   };
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -24,8 +24,8 @@ export const Landing = () => {
         src={logoImage}
         alt="Image Not Found"
         style={{
-          width: isSmallScreen ? "100px" : "152px", // Adjust the width based on screen size
-          height: isSmallScreen ? "21px" : "32px", // Adjust the height based on screen size
+          width: isSmallScreen ? "100px" : "152px",
+          height: isSmallScreen ? "21px" : "32px",
           margin: "20px",
         }}
       />
@@ -33,12 +33,12 @@ export const Landing = () => {
       {/* Box 3 */}
       <Box
         sx={{
-          width: "100%", // Set width to 100% to fill the container
+          width: "100%",
           textAlign: "left",
-          margin: "120px auto 199px", // Use auto to horizontally center the content
+          margin: "120px auto 199px",
           position: "relative",
-          maxWidth: "1020px", // Set a maximum width to prevent content from going too wide
-          padding: "0 20px", // Add padding to adjust the content within the container
+          maxWidth: "1020px",
+          padding: "0 20px",
         }}
       >
         {/* Contents of Box 3 */}
@@ -51,8 +51,7 @@ export const Landing = () => {
             top: 0,
             right: 0,
             height: "100%",
-            width: isSmallScreen ? "10%" : "300px", // Adjust the width based on screen size
-            // Preserve the aspect ratio of the image
+            width: isSmallScreen ? "10%" : "300px",
           }}
         />
         <Typography
@@ -70,15 +69,15 @@ export const Landing = () => {
           variant="contained"
           sx={{
             marginTop: "30px",
-            width: "100%", // Set the button width to 100% to fill the container
-            maxWidth: "240px", // Set a maximum width for the button
+            width: "100%",
+            maxWidth: "240px",
             borderRadius: "8px",
             backgroundColor: "#0D539B",
             typography: {
               fontFamily: "Roboto, sans-serif",
             },
           }}
-          onClick={handleRegisterClick}
+          onClick={handleLoginClick}
         >
           Get started &gt;
         </Button>

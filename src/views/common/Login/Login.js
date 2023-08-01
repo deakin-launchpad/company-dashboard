@@ -13,7 +13,7 @@ import { LoginContext, DeviceInfoContext, LayoutContext } from "contexts";
 import { LoginForm /*SsoLogin*/ } from "components";
 import { API } from "helpers";
 import { ConnectionConfig } from "constants/index";
-//import { Link as RouterLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import authImage from "../../../assets/register.png";
 import logoImage from "../../../assets/logo.png";
 export const Login = () => {
@@ -89,6 +89,25 @@ export const Login = () => {
           onSuccess={getUserRole}
           token={firebaseToken}
         />
+
+        <Typography
+          sx={{
+            textAlign: "center",
+            color: "white",
+            mt: "20px",
+            fontSize: "12px",
+          }}
+        >
+          Not a member?{" "}
+          <strong>
+            <Link
+              to="/register"
+              style={{ color: "inherit", textDecoration: "none" }}
+            >
+              Register Now
+            </Link>
+          </strong>
+        </Typography>
       </Box>
 
       <Box
