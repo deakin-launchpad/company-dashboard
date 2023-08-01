@@ -6,6 +6,8 @@ import {
   Typography,
   Button,
   Box,
+  InputLabel,
+  styled,
   Checkbox,
   FormControlLabel,
 } from "@mui/material";
@@ -114,67 +116,101 @@ export const Register = () => {
       });
   };
 
+  const inputStyles = {
+    height: "30px",
+    borderRadius: "2px",
+    marginTop: "-3%",
+    backgroundColor: "#162A3C",
+  };
+
+  const CustomInputLabel = styled(InputLabel)({
+    fontSize: "12px",
+    color: "white",
+    fontWeight: "300",
+  });
+
   let form = (
-    <form noValidate>
+    <form
+      noValidate
+      style={{
+        maxHeight: "90%",
+        overflowY: "hidden",
+        maxWidth: "80%",
+        marginLeft: "9%",
+      }}
+    >
+      <CustomInputLabel htmlFor="username">Username</CustomInputLabel>
       <TextField
-        variant="outlined"
+        // variant="outlined"
         margin="normal"
         required
         fullWidth
-        id="firstName"
-        label="First Name"
-        name="firstName"
-        autoComplete="email"
+        id="username"
+        name="username"
+        autoComplete="username"
         onChange={(e) => setFirstName(e.target.value)}
         autoFocus
+        size="small"
+        InputProps={{ style: inputStyles }}
       />
+
+      <CustomInputLabel htmlFor="password">Password</CustomInputLabel>
       <TextField
         variant="outlined"
         margin="normal"
         required
         fullWidth
-        id="lastName"
-        label="Last Name"
-        name="lastName"
-        autoComplete="email"
+        id="password"
+        name="password"
+        type="password"
+        autoComplete="current-password"
         onChange={(e) => setLastName(e.target.value)}
+        InputProps={{ style: inputStyles }}
       />
+
+      <CustomInputLabel htmlFor="confirmPassword">
+        Confirm Password
+      </CustomInputLabel>
+      <TextField
+        variant="outlined"
+        margin="normal"
+        required
+        fullWidth
+        id="confirmPassword"
+        name="confirmPassword"
+        type="password"
+        autoComplete="current-password"
+        onChange={(e) => setEmailId(e.target.value)}
+        InputProps={{ style: inputStyles }}
+      />
+
+      <CustomInputLabel htmlFor="email">Email Address</CustomInputLabel>
       <TextField
         variant="outlined"
         margin="normal"
         required
         fullWidth
         id="email"
-        label="Email Address"
         name="email"
         autoComplete="email"
-        onChange={(e) => setEmailId(e.target.value)}
-      />
-      <TextField
-        variant="outlined"
-        margin="normal"
-        required
-        fullWidth
-        name="password"
-        label="Password"
-        type="password"
-        id="password"
         onChange={(e) => setPassword(e.target.value)}
-        autoComplete="current-password"
-      />
-      <TextField
-        variant="outlined"
-        margin="normal"
-        required
-        fullWidth
-        name="confirmPassword"
-        label="Confirm Password"
-        type="password"
-        id="confirmPassword"
-        onChange={(e) => setConfirmPassword(e.target.value)}
-        autoComplete="current-password"
+        InputProps={{ style: inputStyles }}
       />
 
+      <CustomInputLabel htmlFor="accountAddress">
+        Account Address
+      </CustomInputLabel>
+      <TextField
+        variant="outlined"
+        margin="normal"
+        required
+        fullWidth
+        id="accountAddress"
+        name="accountAddress"
+        onChange={(e) => setConfirmPassword(e.target.value)}
+        InputProps={{ style: inputStyles }}
+      />
+      {/* 
       <Box sx={{ mt: 2 }}>
         {accountAddress ? (
           <Button size="middle" variant="contained" onClick={signLogicSig}>
@@ -206,15 +242,25 @@ export const Register = () => {
           }
         />
       </Box>
-
+*/}
       <Box sx={{ mt: 0 }}>
         <Button
           fullWidth
           variant="contained"
           color="primary"
+          sx={{
+            marginTop: "20px",
+            width: "100%",
+            height: "27px",
+            borderRadius: "8px",
+            backgroundColor: "#0D539B",
+            typography: {
+              fontFamily: "Roboto, sans-serif",
+            },
+          }}
           onClick={validationCheck}
         >
-          Register
+          Create &gt;
         </Button>
       </Box>
     </form>
@@ -224,36 +270,58 @@ export const Register = () => {
       sx={{
         backgroundColor: "background.default",
         display: "flex",
-        flexDirection: "column",
         minHeight: "100vh",
+        height: "100vh", // This sets the main container to full viewport height
       }}
     >
-      <Box
-        component="img"
-        src={logoImage}
-        alt="Image Not Found"
-        style={{
-          width: "152px",
-          height: "32px",
-          marginTop: "30px",
-          marginLeft: "53px",
-        }}
-      />
+      {/* Left-side container for logo and form */}
+      <Box sx={{ flex: 1, padding: "20px" }}>
+        <Box
+          component="img"
+          src={logoImage}
+          alt="Image Not Found"
+          style={{
+            width: "152px",
+            height: "30px",
+            marginBottom: "20px",
+          }}
+        />
 
+        <Typography
+          variant="h5"
+          style={{ marginBottom: "5%", marginTop: "2%", marginLeft: "9%" }}
+        >
+          Welcome to Blocconi<br></br>
+          Create User to Continue
+        </Typography>
+
+        {/* Form */}
+        {form}
+      </Box>
+
+      {/* Right-side container for the welcome image */}
       <Box
-        component="img"
-        src={registerImage}
-        alt="Welcome Image"
-        style={{
-          position: "absolute", // Position the image absolutely
-          top: 0, // Align the image to the top of the container
-          right: 0, // Align the image to the right of the container
-          height: "100%",
-          width: "50%", // Make sure the image takes the full height of the container
+        sx={{
+          flex: 1,
+          display: "flex",
+          justifyContent: "flex-end",
+          maxHeight: "100%",
+          maxWidth: "150%", // This sets the right-side container to take full width
         }}
-      />
-      {form}
+      >
+        <Box
+          component="img"
+          src={registerImage}
+          alt="Welcome Image"
+          style={{
+            maxHeight: "100%",
+            width: "680px",
+            overflow: "hidden",
+          }}
+        />
+      </Box>
     </Box>
   );
+
   return content;
 };

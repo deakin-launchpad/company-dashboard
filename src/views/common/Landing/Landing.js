@@ -3,6 +3,10 @@ import logoImage from "../../../assets/logo.png";
 import welcomeImage from "../../../assets/welcome.png";
 
 export const Landing = () => {
+  const handleRegisterClick = () => {
+    window.location.href = "/register";
+  };
+
   return (
     <Box
       sx={{
@@ -68,6 +72,7 @@ export const Landing = () => {
               fontFamily: "Roboto, sans-serif", // Use "Roboto" instead of "roboto"
             },
           }}
+          onClick={handleRegisterClick}
         >
           Get started &gt;
         </Button>

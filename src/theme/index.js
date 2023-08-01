@@ -27,6 +27,9 @@ const baseOptions = {
       styleOverrides: {
         root: {
           textTransform: "none",
+          "&:hover": {
+            backgroundColor: "transparent",
+          },
         },
       },
     },
@@ -56,7 +59,8 @@ const baseOptions = {
   },
   typography: {
     button: {
-      fontWeight: 600,
+      fontWeight: 400,
+      fontSize: "12px",
     },
     fontFamily: "Montserrat, sans-serif",
     h1: {
@@ -79,6 +83,7 @@ const baseOptions = {
     h5: {
       fontWeight: 600,
       fontSize: "1.5rem",
+      color: "#ffffff",
     },
     h6: {
       fontWeight: 500,
@@ -99,7 +104,10 @@ const themesOptions = {
           input: {
             "&::placeholder": {
               opacity: 0.86,
-              color: "#42526e",
+              color: "#6b778c",
+            },
+            "&:focus": {
+              borderColor: "transparent",
             },
           },
         },
