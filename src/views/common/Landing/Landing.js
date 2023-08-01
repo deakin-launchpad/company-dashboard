@@ -1,4 +1,6 @@
 import { Box, Typography, Button } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import logoImage from "../../../assets/logo.png";
 import welcomeImage from "../../../assets/welcome.png";
 
@@ -6,12 +8,14 @@ export const Landing = () => {
   const handleRegisterClick = () => {
     window.location.href = "/register";
   };
-
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   return (
     <Box
       sx={{
         backgroundColor: "background.default",
         minHeight: "100vh",
+        minWidth: "100vh",
       }}
     >
       {/* Logo */}
@@ -20,22 +24,21 @@ export const Landing = () => {
         src={logoImage}
         alt="Image Not Found"
         style={{
-          width: "152px",
-          height: "32px",
-          marginTop: "30px",
-          marginLeft: "53px",
+          width: isSmallScreen ? "100px" : "152px", // Adjust the width based on screen size
+          height: isSmallScreen ? "21px" : "32px", // Adjust the height based on screen size
+          margin: "20px",
         }}
       />
 
       {/* Box 3 */}
       <Box
-        style={{
-          width: "1020px",
-          height: "300px",
-
+        sx={{
+          width: "100%", // Set width to 100% to fill the container
           textAlign: "left",
-          margin: "120px 125px 199px 120px",
-          position: "relative", // Make the container relatively positioned
+          margin: "120px auto 199px", // Use auto to horizontally center the content
+          position: "relative",
+          maxWidth: "1020px", // Set a maximum width to prevent content from going too wide
+          padding: "0 20px", // Add padding to adjust the content within the container
         }}
       >
         {/* Contents of Box 3 */}
@@ -43,11 +46,13 @@ export const Landing = () => {
           component="img"
           src={welcomeImage}
           alt="Welcome Image"
-          style={{
-            position: "absolute", // Position the image absolutely
-            top: 0, // Align the image to the top of the container
-            right: 0, // Align the image to the right of the container
-            height: "100%", // Make sure the image takes the full height of the container
+          sx={{
+            position: "absolute",
+            top: 0,
+            right: 0,
+            height: "100%",
+            width: isSmallScreen ? "10%" : "300px", // Adjust the width based on screen size
+            // Preserve the aspect ratio of the image
           }}
         />
         <Typography
@@ -65,11 +70,12 @@ export const Landing = () => {
           variant="contained"
           sx={{
             marginTop: "30px",
-            width: "240px",
+            width: "100%", // Set the button width to 100% to fill the container
+            maxWidth: "240px", // Set a maximum width for the button
             borderRadius: "8px",
             backgroundColor: "#0D539B",
             typography: {
-              fontFamily: "Roboto, sans-serif", // Use "Roboto" instead of "roboto"
+              fontFamily: "Roboto, sans-serif",
             },
           }}
           onClick={handleRegisterClick}

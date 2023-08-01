@@ -1,21 +1,23 @@
-import { useState, useContext, useCallback } from "react";
+import { /*useState*/ useContext, useCallback } from "react";
 import {
   Typography,
   Box,
-  Container,
-  Card,
-  CardContent,
-  Divider,
-  Link,
+  // Container,
+  // Card,
+  // CardContent,
+  // Divider,
+  // Link,
 } from "@mui/material";
+
 import { LoginContext, DeviceInfoContext, LayoutContext } from "contexts";
-import { LoginForm, SsoLogin } from "components";
+import { LoginForm /*SsoLogin*/ } from "components";
 import { API } from "helpers";
 import { ConnectionConfig } from "constants/index";
-import { Link as RouterLink } from "react-router-dom";
-
+//import { Link as RouterLink } from "react-router-dom";
+import authImage from "../../../assets/register.png";
+import logoImage from "../../../assets/logo.png";
 export const Login = () => {
-  const [pageHeading] = useState("Login");
+  // const [pageHeading] = useState("Login");
   const { setAccessToken } = useContext(LoginContext);
   const { deviceUUID, deviceName } = useContext(DeviceInfoContext);
   const { setCurrentUserRole } = useContext(LayoutContext);
@@ -59,59 +61,56 @@ export const Login = () => {
       sx={{
         backgroundColor: "background.default",
         display: "flex",
-        flexDirection: "column",
         minHeight: "100vh",
       }}
     >
-      <Container
-        maxWidth="sm"
+      {/* Left-side container for logo and form */}
+      <Box sx={{ flex: 1, padding: "20px" }}>
+        <Box
+          component="img"
+          src={logoImage}
+          alt="Image Not Found"
+          style={{
+            width: "152px",
+            height: "30px",
+          }}
+        />
+
+        <Typography
+          variant="h5"
+          style={{ marginBottom: "5%", marginTop: "2%", marginLeft: "9%" }}
+        >
+          Welcome to Blocconi<br></br>
+          Login to Continue
+        </Typography>
+
+        <LoginForm
+          login={performLogin}
+          onSuccess={getUserRole}
+          token={firebaseToken}
+        />
+      </Box>
+
+      <Box
         sx={{
-          py: {
-            xs: "80px",
-            sm: window.screen.availHeight / 50,
-          },
+          flex: 1,
+          display: "flex",
+          justifyContent: "flex-end",
+          maxHeight: "100%",
+          maxWidth: "150%",
         }}
       >
-        <Card>
-          <CardContent sx={{ display: "flex", flexDirection: "column", p: 4 }}>
-            <Box
-              sx={{
-                alignItems: "center",
-                display: "flex",
-                justifyContent: "space-between",
-                mb: 3,
-              }}
-            >
-              <div>
-                <Typography color="textPrimary" variant="h4">
-                  {pageHeading}
-                </Typography>
-              </div>
-            </Box>
-            <Box sx={{ flexGrow: 1, mt: 3 }}>
-              <LoginForm
-                login={performLogin}
-                onSuccess={getUserRole}
-                token={firebaseToken}
-              />
-            </Box>
-            {ConnectionConfig.useDeakinSSO && (
-              <Box sx={{ mt: 2 }}>
-                <SsoLogin />
-              </Box>
-            )}
-            <Divider sx={{ my: 3 }} />
-            <Link
-              color="textSecondary"
-              component={RouterLink}
-              to="/register"
-              variant="body2"
-            >
-              Create new account
-            </Link>
-          </CardContent>
-        </Card>
-      </Container>
+        <Box
+          component="img"
+          src={authImage}
+          alt="Welcome Image"
+          style={{
+            maxHeight: "100%",
+            width: "680px",
+            overflow: "hidden",
+          }}
+        />
+      </Box>
     </Box>
   );
   return content;

@@ -12,7 +12,7 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import logoImage from "../../../assets/logo.png";
-import registerImage from "../../../assets/register.png";
+import authImage from "../../../assets/register.png";
 import { notify } from "components";
 import { DeviceInfoContext } from "contexts/index";
 import { API } from "helpers/index";
@@ -120,6 +120,7 @@ export const Register = () => {
     height: "30px",
     borderRadius: "2px",
     marginTop: "-3%",
+    fontSize: "12px",
     backgroundColor: "#162A3C",
   };
 
@@ -141,7 +142,7 @@ export const Register = () => {
     >
       <CustomInputLabel htmlFor="username">Username</CustomInputLabel>
       <TextField
-        // variant="outlined"
+        variant="outlined"
         margin="normal"
         required
         fullWidth
@@ -210,7 +211,7 @@ export const Register = () => {
         onChange={(e) => setConfirmPassword(e.target.value)}
         InputProps={{ style: inputStyles }}
       />
-      {/* 
+
       <Box sx={{ mt: 2 }}>
         {accountAddress ? (
           <Button size="middle" variant="contained" onClick={signLogicSig}>
@@ -242,7 +243,7 @@ export const Register = () => {
           }
         />
       </Box>
-*/}
+
       <Box sx={{ mt: 0 }}>
         <Button
           fullWidth
@@ -271,7 +272,6 @@ export const Register = () => {
         backgroundColor: "background.default",
         display: "flex",
         minHeight: "100vh",
-        height: "100vh", // This sets the main container to full viewport height
       }}
     >
       {/* Left-side container for logo and form */}
@@ -283,7 +283,6 @@ export const Register = () => {
           style={{
             width: "152px",
             height: "30px",
-            marginBottom: "20px",
           }}
         />
 
@@ -299,19 +298,18 @@ export const Register = () => {
         {form}
       </Box>
 
-      {/* Right-side container for the welcome image */}
       <Box
         sx={{
           flex: 1,
           display: "flex",
           justifyContent: "flex-end",
           maxHeight: "100%",
-          maxWidth: "150%", // This sets the right-side container to take full width
+          maxWidth: "150%",
         }}
       >
         <Box
           component="img"
-          src={registerImage}
+          src={authImage}
           alt="Welcome Image"
           style={{
             maxHeight: "100%",

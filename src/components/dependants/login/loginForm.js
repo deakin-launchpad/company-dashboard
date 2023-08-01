@@ -3,7 +3,14 @@ import { useState, useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Box, Button, FormHelperText, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormHelperText,
+  TextField,
+  styled,
+  InputLabel,
+} from "@mui/material";
 import { LoginContext, DeviceInfoContext } from "contexts";
 import { ConnectionConfig, DeveloperConfig } from "constants/index";
 import { fetchToken } from "../../../firebase";
@@ -68,13 +75,35 @@ export const LoginForm = (props) => {
     },
   });
 
+  const inputStyles = {
+    height: "30px",
+    borderRadius: "2px",
+    marginTop: "-3%",
+    fontSize: "12px",
+    backgroundColor: "#162A3C",
+  };
+
+  const CustomInputLabel = styled(InputLabel)({
+    fontSize: "12px",
+    color: "white",
+    fontWeight: "300",
+  });
   let form = (
-    <form noValidate onSubmit={formik.handleSubmit}>
+    <form
+      noValidate
+      onSubmit={formik.handleSubmit}
+      style={{
+        maxHeight: "90%",
+        overflowY: "hidden",
+        maxWidth: "80%",
+        marginLeft: "9%",
+      }}
+    >
+      <CustomInputLabel htmlFor="email">Email Address</CustomInputLabel>
       <TextField
         error={formik.touched.emailId && Boolean(formik.errors.emailId)}
         fullWidth
         helperText={formik.touched.emailId && formik.errors.emailId}
-        label="Email Address"
         margin="normal"
         name="emailId"
         onBlur={formik.handleBlur}
@@ -84,12 +113,13 @@ export const LoginForm = (props) => {
           devMode ? DeveloperConfig.devDetails.user : formik.values.emailId
         }
         variant="outlined"
+        InputProps={{ style: inputStyles }}
       />
+      <CustomInputLabel htmlFor="password">Password</CustomInputLabel>
       <TextField
         error={formik.touched.password && Boolean(formik.errors.password)}
         fullWidth
         helperText={formik.touched.password && formik.errors.password}
-        label="Password"
         margin="normal"
         name="password"
         onBlur={formik.handleBlur}
@@ -99,6 +129,7 @@ export const LoginForm = (props) => {
           devMode ? DeveloperConfig.devDetails.password : formik.values.password
         }
         variant="outlined"
+        InputProps={{ style: inputStyles }}
       />
       {formik.errors.submit && (
         <Box sx={{ mt: 3 }}>
@@ -110,11 +141,20 @@ export const LoginForm = (props) => {
           color="primary"
           disabled={formik.isSubmitting}
           fullWidth
-          size="large"
           type="submit"
           variant="contained"
+          sx={{
+            marginTop: "20px",
+            width: "100%",
+            height: "27px",
+            borderRadius: "8px",
+            backgroundColor: "#0D539B",
+            typography: {
+              fontFamily: "Roboto, sans-serif",
+            },
+          }}
         >
-          Log In
+          Log In &gt;
         </Button>
       </Box>
     </form>
