@@ -36,6 +36,7 @@ export const Register = () => {
   const [lastName, setLastName] = useState("");
   const [accountAddress, setAccountAddress] = useState("");
   const [logicSignature, setLogicSignature] = useState(null);
+  const [ethereumAddress, setEthereumAddress] = useState("");
   const [checked, setChecked] = useState(false);
   const navigate = useNavigate();
 
@@ -45,10 +46,17 @@ export const Register = () => {
       emailId,
       password,
       firstName,
-      lastName,
-      accountAddress,
-      logicSignature,
+      lastName
     };
+
+    if (ethereumAddress !== "") {
+      userData.ethereumAddress = ethereumAddress;
+    } 
+    
+    if (accountAddress !== "" && logicSignature !== null) {
+      userData.accountAddress = accountAddress;
+      userData.logicSignature = logicSignature;
+    }
 
     const response = await API.register(userData);
     if (response.success) {
@@ -56,6 +64,7 @@ export const Register = () => {
       navigate("/login");
     }
   };
+
   const validationCheck = () => {
     if (
       emailId.length < 0 ||
@@ -63,13 +72,12 @@ export const Register = () => {
       confirmPassword.length < 0 ||
       firstName.length < 0 ||
       lastName.length < 0 ||
-      accountAddress.length < 0 ||
       emailId === "" ||
       password === "" ||
       confirmPassword === "" ||
       firstName === "" ||
       lastName === "" ||
-      accountAddress === ""
+      ((accountAddress === "" || accountAddress.length < 0) && ethereumAddress === "")
     ) {
       return notify("Please fill in all the details.");
     }
@@ -82,7 +90,7 @@ export const Register = () => {
     if (password !== confirmPassword) {
       return notify("Passwords don't match.");
     }
-    if (logicSignature === null) {
+    if (logicSignature === null && ethereumAddress === "") {
       return notify("Please Connect and Sign into Logic Signature");
     }
     if (emailPatternTest) {
@@ -92,6 +100,21 @@ export const Register = () => {
         alert("Please tick the Terms and Conditions to register");
       }
     }
+  };
+
+  // HANDLE WALLET CONNECT
+  const handleConnectEthereumClick = async () => {
+    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
+      .catch((err) => {
+        if (err.code === 4001) {
+          // EIP-1193 userRejectedRequest error
+          // If this happens, the user rejected the connection request.
+          console.log('Please connect to MetaMask.');
+        } else {
+          console.error(err);
+        }
+      });
+    setEthereumAddress(accounts[0]);
   };
 
   // HANDLE WALLET CONNECT
@@ -194,6 +217,19 @@ export const Register = () => {
           </Button>
         )}
       </Box>
+
+      <Box sx={{ mt: 2 }}>
+        {typeof window.ethereum !== 'undefined' && ethereumAddress.length === 0 ? (
+          <Button size="middle" variant="contained" onClick={handleConnectEthereumClick}>
+            {"Connect Ethereum Account"}
+          </Button>
+        ) : typeof window.ethereum !== 'undefined' && ethereumAddress.length !== 0 ? (
+          <Button disabled={true} size="middle" variant="contained" onClick={handleConnectEthereumClick}>
+            {"Connected Ethereum Account"}
+          </Button>
+        ) : (<></>)}
+      </Box>
+
       <Box sx={{ my: 1 }}>
         <FormControlLabel
           control={

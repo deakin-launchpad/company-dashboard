@@ -21,6 +21,21 @@ class API {
       .catch((error) => errorHelper(error, "login"));
   }
 
+  getUserProfile() {
+    return axiosInstance
+      .get("user/getProfile", {
+        headers: {
+          authorization: "Bearer " + AccessToken,
+        },
+      })
+      .then((response) => {
+        return generateSuccess(response.data.data);
+      })
+      .catch((error) => {
+        errorHelper(error);
+      });
+  }
+
   getUserRole() {
     return axiosInstance
       .post(
@@ -131,9 +146,19 @@ class API {
       .catch((error) => errorHelper(error));
   }
 
-  async createCompany(data) {
+  async createAlgorandCompany(data) {
     return axiosInstance
-      .put("company/create", data, {
+      .put("company/createAlgorand", data, {
+        headers: { authorization: "Bearer " + AccessToken },
+      })
+      .then((response) => generateSuccess(response.data.data))
+      .catch((error) => errorHelper(error));
+  }
+
+  async createEthereumCompany(data) {
+    console.log(data);
+    return axiosInstance
+      .put("company/createEthereum", data, {
         headers: { authorization: "Bearer " + AccessToken },
       })
       .then((response) => generateSuccess(response.data.data))
