@@ -23,6 +23,7 @@ const baseOptions = {
         },
       },
     },
+
     MuiButton: {
       styleOverrides: {
         root: {
@@ -65,7 +66,7 @@ const baseOptions = {
       styleOverrides: {
         root: {
           fontSize: "12px",
-          color: "#ffffff", // Set the text color for the InputLabel
+          color: "#ffffff",
           fontWeight: "300",
         },
       },
@@ -104,32 +105,32 @@ const baseOptions = {
     h1: {
       fontWeight: 700,
       fontSize: "3.5rem",
-      color: "#ffffff", // Set h1 color to black (#000000)
+      color: "#ffffff",
     },
     h2: {
       fontWeight: 600,
       fontSize: "3rem",
-      color: "#000000", // Set h2 color to black (#000000)
+      color: "#000000",
     },
     h3: {
       fontWeight: 600,
       fontSize: "2.25rem",
-      color: "#000000", // Set h3 color to black (#000000)
+      color: "#000000",
     },
     h4: {
       fontWeight: 600,
       fontSize: "2rem",
-      color: "#000000", // Set h4 color to black (#000000)
+      color: "#000000",
     },
     h5: {
       fontWeight: 600,
       fontSize: "1.5rem",
-      color: "#ffffff", // Set h5 color to black (#000000)
+      color: "#ffffff",
     },
     h6: {
       fontWeight: 500,
       fontSize: "1rem",
-      color: "#717F8B", // Set h6 color to black (#000000)
+      color: "#717F8B",
     },
     overline: {
       fontWeight: 600,
@@ -149,7 +150,7 @@ const themesOptions = {
           input: {
             "&::placeholder": {
               opacity: 0.86,
-              color: "#000000", // Set input placeholder color to black (#000000)
+              color: "#000000",
             },
             "&:focus": {
               borderColor: "transparent",
@@ -160,7 +161,7 @@ const themesOptions = {
     },
     palette: {
       action: {
-        active: "#000000", // Set action color to black (#000000)
+        active: "#000000",
       },
       background: {
         default: "#122433",
@@ -168,25 +169,25 @@ const themesOptions = {
         paper: "#000000",
       },
       error: {
-        contrastText: "#ff0000", // Set error contrast text color to black (#000000)
-        main: "#ff0000", // Set error main color to black (#000000)
+        contrastText: "#ff0000",
+        main: "#ff0000",
       },
       mode: "light",
       primary: {
-        contrastText: "#000000", // Set primary contrast text color to black (#000000)
-        main: "#000000", // Set primary main color to black (#000000)
+        contrastText: "#000000",
+        main: "#000000",
       },
       success: {
-        contrastText: "#000000", // Set success contrast text color to black (#000000)
-        main: "#000000", // Set success main color to black (#000000)
+        contrastText: "#000000",
+        main: "#000000",
       },
       text: {
-        primary: "#ffffff", // Set primary text color to black (#000000)
-        secondary: "#000000", // Set secondary text color to black (#000000)
+        primary: "#ffffff",
+        secondary: "#000000",
       },
       warning: {
-        contrastText: "#000000", // Set warning contrast text color to black (#000000)
-        main: "#000000", // Set warning main color to black (#000000)
+        contrastText: "#000000",
+        main: "#000000",
       },
     },
     shadows: lightShadows,
@@ -203,33 +204,33 @@ const themesOptions = {
     },
     palette: {
       background: {
-        default: "#000000", // Set default background color to black (#000000)
-        paper: "#000000", // Set paper background color to black (#000000)
+        default: "#171c24",
+        paper: "#222b36",
       },
       button: {
-        default: "#000000", // Set button default color to black (#000000)
+        default: "#0D539B",
       },
-      divider: "rgba(0, 0, 0, 0.24)", // Set divider color to black (#000000) with 0.24 opacity
+      divider: "rgba(145, 158, 171, 0.24)",
       error: {
-        contrastText: "#000000", // Set error contrast text color to black (#000000)
-        main: "#000000", // Set error main color to black (#000000)
+        contrastText: "#ffffff",
+        main: "#f44336",
       },
       mode: "dark",
       primary: {
-        contrastText: "#000000", // Set primary contrast text color to black (#000000)
-        main: "#000000", // Set primary main color to black (#000000)
+        contrastText: "#ffffff",
+        main: "#688eff",
       },
       success: {
-        contrastText: "#000000", // Set success contrast text color to black (#000000)
-        main: "#000000", // Set success main color to black (#000000)
+        contrastText: "#ffffff",
+        main: "#4caf50",
       },
       text: {
-        primary: "#000000", // Set primary text color to black (#000000)
-        secondary: "#000000", // Set secondary text color to black (#000000)
+        primary: "#ffffff",
+        secondary: "#717F8B",
       },
       warning: {
-        contrastText: "#000000", // Set warning contrast text color to black (#000000)
-        main: "#000000", // Set warning main color to black (#000000)
+        contrastText: "#ffffff",
+        main: "#ff9800",
       },
     },
     shadows: darkShadows,
@@ -246,30 +247,30 @@ const themesOptions = {
     },
     palette: {
       background: {
-        default: "#000000", // Set default background color to black (#000000)
-        paper: "#000000", // Set paper background color to black (#000000)
+        default: "#1c2531",
+        paper: "#293142",
       },
-      divider: "rgba(0, 0, 0, 0.24)", // Set divider color to black (#000000) with 0.24 opacity
+      divider: "rgba(145, 158, 171, 0.24)",
       error: {
-        contrastText: "#000000", // Set error contrast text color to black (#000000)
-        main: "#000000", // Set error main color to black (#000000)
+        contrastText: "#ffffff",
+        main: "#f44336",
       },
       mode: "dark",
       primary: {
-        contrastText: "#000000", // Set primary contrast text color to black (#000000)
-        main: "#000000", // Set primary main color to black (#000000)
+        contrastText: "#ffffff",
+        main: "#01ab56",
       },
       success: {
-        contrastText: "#000000", // Set success contrast text color to black (#000000)
-        main: "#000000", // Set success main color to black (#000000)
+        contrastText: "#ffffff",
+        main: "#4caf50",
       },
       text: {
-        primary: "#000000", // Set primary text color to black (#000000)
-        secondary: "#000000", // Set secondary text color to black (#000000)
+        primary: "#ffffff",
+        secondary: "#919eab",
       },
       warning: {
-        contrastText: "#000000", // Set warning contrast text color to black (#000000)
-        main: "#000000", // Set warning main color to black (#000000)
+        contrastText: "#ffffff",
+        main: "#ff9800",
       },
     },
     shadows: darkShadows,
@@ -325,3 +326,81 @@ export const ThemeProvider = ({ children }) => {
 ThemeProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
+
+/*Orginal 
+
+ <FieldArray name="directors">
+            {({ remove, insert }) => (
+              <Box>
+                {touched.directors && touched.directors.length > 0 ? (
+                  touched.directors.map((friend, index) => (
+                    <Box
+                      key={index}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        mt: 1,
+                      }}
+                    >
+                      <Field
+                        as={TextField}
+                        label={`Directors Email ${index + 1}`}
+                        name={`directors.${index}`}
+                        type="text"
+                        variant="outlined"
+                        error={touched.directors && Boolean(errors.directors)}
+                        helperText={touched.directors && errors.directors}
+                      />
+                      <Field
+                        as={TextField}
+                        label={`Share amount`}
+                        name={`directorAmountOfShares.${index}`}
+                        type="text"
+                        variant="outlined"
+                        error={
+                          touched.directorAmountOfShares &&
+                          Boolean(errors.directorAmountOfShares)
+                        }
+                        helperText={
+                          touched.directorAmountOfShares &&
+                          errors.directorAmountOfShares
+                        }
+                      />
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: 1,
+                        }}
+                      >
+                        <Button
+                          sx={{ height: 24 }}
+                          variant="contained"
+                          onClick={() => remove(index)}
+                        >
+                          -
+                        </Button>
+                        <Button
+                          sx={{ height: 24 }}
+                          variant="contained"
+                          onClick={() => insert(index + 1, "")}
+                        >
+                          +
+                        </Button>
+                      </Box>
+                    </Box>
+                  ))
+                ) : (
+                  <Button
+                    sx={{ mt: 1, width: 135 }}
+                    variant="contained"
+                    onClick={() => insert("")}
+                  >
+                    Add a Director
+                  </Button>
+                )}
+              </Box>
+            )}
+          </FieldArray>
+
+*/
