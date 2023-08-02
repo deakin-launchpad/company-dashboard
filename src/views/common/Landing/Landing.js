@@ -71,11 +71,6 @@ export const Landing = () => {
             marginTop: "30px",
             width: "100%",
             maxWidth: "240px",
-            borderRadius: "8px",
-            backgroundColor: "#0D539B",
-            typography: {
-              fontFamily: "Roboto, sans-serif",
-            },
           }}
           onClick={handleLoginClick}
         >

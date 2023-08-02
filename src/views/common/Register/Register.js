@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
   TextField,
   Typography,
@@ -116,20 +116,6 @@ export const Register = () => {
       });
   };
 
-  const inputStyles = {
-    height: "30px",
-    borderRadius: "2px",
-    marginTop: "-3%",
-    fontSize: "12px",
-    backgroundColor: "#162A3C",
-  };
-
-  const CustomInputLabel = styled(InputLabel)({
-    fontSize: "12px",
-    color: "white",
-    fontWeight: "300",
-  });
-
   let form = (
     <form
       noValidate
@@ -139,8 +125,9 @@ export const Register = () => {
         maxWidth: "80%",
         marginLeft: "9%",
       }}
+      autoComplete="off"
     >
-      <CustomInputLabel htmlFor="firstname">First Name</CustomInputLabel>
+      <InputLabel htmlFor="firstname">First Name</InputLabel>
       <TextField
         variant="outlined"
         margin="normal"
@@ -148,14 +135,13 @@ export const Register = () => {
         fullWidth
         id="firstname"
         name="firstname"
-        autoComplete="firstname"
+        autoComplete="off"
         onChange={(e) => setFirstName(e.target.value)}
         autoFocus
         size="small"
-        InputProps={{ style: inputStyles }}
       />
 
-      <CustomInputLabel htmlFor="lastname">Last Name</CustomInputLabel>
+      <InputLabel htmlFor="lastname">Last Name</InputLabel>
       <TextField
         variant="outlined"
         margin="normal"
@@ -163,12 +149,11 @@ export const Register = () => {
         fullWidth
         id="lastname"
         name="lastname"
-        autoComplete="lastname"
+        autoComplete="off"
         onChange={(e) => setLastName(e.target.value)}
-        InputProps={{ style: inputStyles }}
       />
 
-      <CustomInputLabel htmlFor="email">Email</CustomInputLabel>
+      <InputLabel htmlFor="email">Email</InputLabel>
       <TextField
         variant="outlined"
         margin="normal"
@@ -176,12 +161,11 @@ export const Register = () => {
         fullWidth
         id="email"
         name="email"
-        autoComplete="email"
+        autoComplete="off"
         onChange={(e) => setEmailId(e.target.value)}
-        InputProps={{ style: inputStyles }}
       />
 
-      <CustomInputLabel htmlFor="password">Password</CustomInputLabel>
+      <InputLabel htmlFor="password">Password</InputLabel>
       <TextField
         variant="outlined"
         margin="normal"
@@ -190,14 +174,11 @@ export const Register = () => {
         id="password"
         type="password"
         name="password"
-        autoComplete="password"
+        autoComplete="off"
         onChange={(e) => setPassword(e.target.value)}
-        InputProps={{ style: inputStyles }}
       />
 
-      <CustomInputLabel htmlFor="confirmpassword">
-        Account Address
-      </CustomInputLabel>
+      <InputLabel htmlFor="confirmpassword">Account Address</InputLabel>
       <TextField
         variant="outlined"
         margin="normal"
@@ -205,9 +186,9 @@ export const Register = () => {
         fullWidth
         id="confirmpassword"
         name="confirmpassword"
+        autoComplete="off"
         type="password"
         onChange={(e) => setConfirmPassword(e.target.value)}
-        InputProps={{ style: inputStyles }}
       />
 
       <Box sx={{ mt: 2 }}>
@@ -220,12 +201,6 @@ export const Register = () => {
             size="middle"
             variant="contained"
             onClick={handleConnectWalletClick}
-            style={{
-              backgroundColor: "#0D539B",
-              typography: {
-                fontFamily: "Roboto, sans-serif",
-              },
-            }}
           >
             {"Connect MyAlgo Wallet"}
           </Button>
@@ -250,26 +225,7 @@ export const Register = () => {
         />
       </Box>
 
-      <Box sx={{ mt: 0 }}>
-        <Button
-          fullWidth
-          variant="contained"
-          color="primary"
-          sx={{
-            marginTop: "20px",
-            width: "100%",
-            height: "27px",
-            borderRadius: "8px",
-            backgroundColor: "#0D539B",
-            typography: {
-              fontFamily: "Roboto, sans-serif",
-            },
-          }}
-          onClick={validationCheck}
-        >
-          Create &gt;
-        </Button>
-      </Box>
+      <Box sx={{ mt: 0 }}></Box>
     </form>
   );
   let content = (
@@ -302,6 +258,25 @@ export const Register = () => {
 
         {/* Form */}
         {form}
+
+        <Typography
+          sx={{
+            textAlign: "center",
+            color: "white",
+            mt: "20px",
+            fontSize: "12px",
+          }}
+        >
+          Already a member?{" "}
+          <strong>
+            <Link
+              to="/login"
+              style={{ color: "inherit", textDecoration: "none" }}
+            >
+              Login Now
+            </Link>
+          </strong>
+        </Typography>
       </Box>
 
       <Box

@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
+import { useTheme } from "@mui/material/styles";
 import { Box, Container, Button, TextField } from "@mui/material";
 import { LayoutConfig } from "constants/index";
 import { EnhancedModal } from "components/index";
@@ -11,6 +12,7 @@ import { onMessageListener } from "firebase";
 import { Typography } from "../../../../node_modules/@mui/material/index";
 
 export const Home = () => {
+  const theme = useTheme();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [notificationData, setNotificationData] = useState([]);
@@ -478,9 +480,9 @@ export const Home = () => {
   return (
     <Box
       sx={{
-        backgroundColor: "#122433",
-        height: "88vh",
-        // width: "100vw",
+        backgroundColor: theme.palette.background.default,
+        height: "89vh",
+
         position: "relative",
       }}
     >
@@ -489,7 +491,7 @@ export const Home = () => {
           width: "93%",
           height: "90%",
           overflowY: "hidden",
-          backgroundColor: "#162A3C80",
+          backgroundColor: theme.palette.background.secondary,
           position: "absolute", // Add this line
           top: "50%",
           borderRadius: "5px",
@@ -523,8 +525,8 @@ export const Home = () => {
             Please create a company now!
           </Typography>
           <Typography
-            variant="body1"
-            color="textSecondary"
+            variant="body2"
+            //color="textSecondary"
             sx={{ fontSize: "12px" }}
           >
             Create a company in just a few minutes
@@ -537,11 +539,6 @@ export const Home = () => {
               mt: "30px",
               width: "100%",
               height: "27px",
-              borderRadius: "8px",
-              backgroundColor: "#0D539B",
-              typography: {
-                fontFamily: "Roboto, sans-serif",
-              },
             }}
           >
             Create Now &gt;

@@ -14,8 +14,10 @@ import {
 import { LoginContext, DeviceInfoContext } from "contexts";
 import { ConnectionConfig, DeveloperConfig } from "constants/index";
 import { fetchToken } from "../../../firebase";
+import { useTheme } from "@mui/material/styles";
 
 export const LoginForm = (props) => {
+  const theme = useTheme();
   const { devMode, setAccessToken } = useContext(LoginContext);
   const { deviceUUID } = useContext(DeviceInfoContext);
   const [messagingToken, setMessagingToken] = useState();
@@ -75,19 +77,6 @@ export const LoginForm = (props) => {
     },
   });
 
-  const inputStyles = {
-    height: "30px",
-    borderRadius: "2px",
-    marginTop: "-3%",
-    fontSize: "12px",
-    backgroundColor: "#162A3C",
-  };
-
-  const CustomInputLabel = styled(InputLabel)({
-    fontSize: "12px",
-    color: "white",
-    fontWeight: "300",
-  });
   let form = (
     <form
       noValidate
@@ -99,13 +88,14 @@ export const LoginForm = (props) => {
         marginLeft: "9%",
       }}
     >
-      <CustomInputLabel htmlFor="email">Email Address</CustomInputLabel>
+      <InputLabel htmlFor="email">Email Address</InputLabel>
       <TextField
         error={formik.touched.emailId && Boolean(formik.errors.emailId)}
         fullWidth
         helperText={formik.touched.emailId && formik.errors.emailId}
         margin="normal"
         name="emailId"
+        autoComplete="off"
         onBlur={formik.handleBlur}
         onChange={formik.handleChange}
         type="email"
@@ -113,15 +103,15 @@ export const LoginForm = (props) => {
           devMode ? DeveloperConfig.devDetails.user : formik.values.emailId
         }
         variant="outlined"
-        InputProps={{ style: inputStyles }}
       />
-      <CustomInputLabel htmlFor="password">Password</CustomInputLabel>
+      <InputLabel htmlFor="password">Password</InputLabel>
       <TextField
         error={formik.touched.password && Boolean(formik.errors.password)}
         fullWidth
         helperText={formik.touched.password && formik.errors.password}
         margin="normal"
         name="password"
+        autoComplete="off"
         onBlur={formik.handleBlur}
         onChange={formik.handleChange}
         type="password"
@@ -129,7 +119,6 @@ export const LoginForm = (props) => {
           devMode ? DeveloperConfig.devDetails.password : formik.values.password
         }
         variant="outlined"
-        InputProps={{ style: inputStyles }}
       />
       {formik.errors.submit && (
         <Box sx={{ mt: 3 }}>
@@ -147,11 +136,6 @@ export const LoginForm = (props) => {
             marginTop: "20px",
             width: "100%",
             height: "27px",
-            borderRadius: "8px",
-            backgroundColor: "#0D539B",
-            typography: {
-              fontFamily: "Roboto, sans-serif",
-            },
           }}
         >
           Log In &gt;

@@ -18,6 +18,7 @@ import authImage from "../../../assets/register.png";
 import logoImage from "../../../assets/logo.png";
 export const Login = () => {
   // const [pageHeading] = useState("Login");
+
   const { setAccessToken } = useContext(LoginContext);
   const { deviceUUID, deviceName } = useContext(DeviceInfoContext);
   const { setCurrentUserRole } = useContext(LayoutContext);
@@ -93,9 +94,9 @@ export const Login = () => {
         <Typography
           sx={{
             textAlign: "center",
-            color: "white",
-            mt: "20px",
+            color: "#ffffff",
             fontSize: "12px",
+            mt: "20px",
           }}
         >
           Not a member?{" "}

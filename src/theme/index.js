@@ -30,9 +30,47 @@ const baseOptions = {
           "&:hover": {
             backgroundColor: "transparent",
           },
+          backgroundColor: "#0D539B",
+          fontFamily: "Roboto, sans-serif",
+          color: "white",
+          borderRadius: "8px",
         },
       },
     },
+    MuiCheckbox: {
+      styleOverrides: {
+        root: {
+          color: "#ffffff",
+          "&$checked": {
+            color: "#ffffff",
+          },
+        },
+      },
+    },
+
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          "& .MuiOutlinedInput-root": {
+            height: "30px",
+            borderRadius: "2px",
+            marginTop: "-3%",
+            fontSize: "12px",
+            backgroundColor: "#162A3C",
+          },
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          fontSize: "12px",
+          color: "#ffffff", // Set the text color for the InputLabel
+          fontWeight: "300",
+        },
+      },
+    },
+
     MuiCardHeader: {
       defaultProps: {
         titleTypographyProps: {
@@ -66,32 +104,39 @@ const baseOptions = {
     h1: {
       fontWeight: 700,
       fontSize: "3.5rem",
-      color: "#ffffff",
+      color: "#ffffff", // Set h1 color to black (#000000)
     },
     h2: {
       fontWeight: 600,
       fontSize: "3rem",
+      color: "#000000", // Set h2 color to black (#000000)
     },
     h3: {
       fontWeight: 600,
       fontSize: "2.25rem",
+      color: "#000000", // Set h3 color to black (#000000)
     },
     h4: {
       fontWeight: 600,
       fontSize: "2rem",
+      color: "#000000", // Set h4 color to black (#000000)
     },
     h5: {
       fontWeight: 600,
       fontSize: "1.5rem",
-      color: "#ffffff",
+      color: "#ffffff", // Set h5 color to black (#000000)
     },
     h6: {
       fontWeight: 500,
       fontSize: "1rem",
-      color: "#717F8B",
+      color: "#717F8B", // Set h6 color to black (#000000)
     },
     overline: {
       fontWeight: 600,
+    },
+    body2: {
+      color: "#717F8B",
+      fontSize: "12px",
     },
   },
 };
@@ -104,7 +149,7 @@ const themesOptions = {
           input: {
             "&::placeholder": {
               opacity: 0.86,
-              color: "#6b778c",
+              color: "#000000", // Set input placeholder color to black (#000000)
             },
             "&:focus": {
               borderColor: "transparent",
@@ -115,32 +160,33 @@ const themesOptions = {
     },
     palette: {
       action: {
-        active: "#6b778c",
+        active: "#000000", // Set action color to black (#000000)
       },
       background: {
         default: "#122433",
-        paper: "#ffffff",
+        secondary: "#162A3C",
+        paper: "#000000",
       },
       error: {
-        contrastText: "#ffffff",
-        main: "#f44336",
+        contrastText: "#ff0000", // Set error contrast text color to black (#000000)
+        main: "#ff0000", // Set error main color to black (#000000)
       },
       mode: "light",
       primary: {
-        contrastText: "#ffffff",
-        main: "#5664d2",
+        contrastText: "#000000", // Set primary contrast text color to black (#000000)
+        main: "#000000", // Set primary main color to black (#000000)
       },
       success: {
-        contrastText: "#ffffff",
-        main: "#4caf50",
+        contrastText: "#000000", // Set success contrast text color to black (#000000)
+        main: "#000000", // Set success main color to black (#000000)
       },
       text: {
-        primary: "#FFFFFF",
-        secondary: "#717F8B",
+        primary: "#ffffff", // Set primary text color to black (#000000)
+        secondary: "#000000", // Set secondary text color to black (#000000)
       },
       warning: {
-        contrastText: "#ffffff",
-        main: "#ff9800",
+        contrastText: "#000000", // Set warning contrast text color to black (#000000)
+        main: "#000000", // Set warning main color to black (#000000)
       },
     },
     shadows: lightShadows,
@@ -157,33 +203,33 @@ const themesOptions = {
     },
     palette: {
       background: {
-        default: "#171c24",
-        paper: "#222b36",
+        default: "#000000", // Set default background color to black (#000000)
+        paper: "#000000", // Set paper background color to black (#000000)
       },
       button: {
-        default: "#0D539B",
+        default: "#000000", // Set button default color to black (#000000)
       },
-      divider: "rgba(145, 158, 171, 0.24)",
+      divider: "rgba(0, 0, 0, 0.24)", // Set divider color to black (#000000) with 0.24 opacity
       error: {
-        contrastText: "#ffffff",
-        main: "#f44336",
+        contrastText: "#000000", // Set error contrast text color to black (#000000)
+        main: "#000000", // Set error main color to black (#000000)
       },
       mode: "dark",
       primary: {
-        contrastText: "#ffffff",
-        main: "#688eff",
+        contrastText: "#000000", // Set primary contrast text color to black (#000000)
+        main: "#000000", // Set primary main color to black (#000000)
       },
       success: {
-        contrastText: "#ffffff",
-        main: "#4caf50",
+        contrastText: "#000000", // Set success contrast text color to black (#000000)
+        main: "#000000", // Set success main color to black (#000000)
       },
       text: {
-        primary: "#ffffff",
-        secondary: "#717F8B",
+        primary: "#000000", // Set primary text color to black (#000000)
+        secondary: "#000000", // Set secondary text color to black (#000000)
       },
       warning: {
-        contrastText: "#ffffff",
-        main: "#ff9800",
+        contrastText: "#000000", // Set warning contrast text color to black (#000000)
+        main: "#000000", // Set warning main color to black (#000000)
       },
     },
     shadows: darkShadows,
@@ -200,30 +246,30 @@ const themesOptions = {
     },
     palette: {
       background: {
-        default: "#1c2531",
-        paper: "#293142",
+        default: "#000000", // Set default background color to black (#000000)
+        paper: "#000000", // Set paper background color to black (#000000)
       },
-      divider: "rgba(145, 158, 171, 0.24)",
+      divider: "rgba(0, 0, 0, 0.24)", // Set divider color to black (#000000) with 0.24 opacity
       error: {
-        contrastText: "#ffffff",
-        main: "#f44336",
+        contrastText: "#000000", // Set error contrast text color to black (#000000)
+        main: "#000000", // Set error main color to black (#000000)
       },
       mode: "dark",
       primary: {
-        contrastText: "#ffffff",
-        main: "#01ab56",
+        contrastText: "#000000", // Set primary contrast text color to black (#000000)
+        main: "#000000", // Set primary main color to black (#000000)
       },
       success: {
-        contrastText: "#ffffff",
-        main: "#4caf50",
+        contrastText: "#000000", // Set success contrast text color to black (#000000)
+        main: "#000000", // Set success main color to black (#000000)
       },
       text: {
-        primary: "#ffffff",
-        secondary: "#919eab",
+        primary: "#000000", // Set primary text color to black (#000000)
+        secondary: "#000000", // Set secondary text color to black (#000000)
       },
       warning: {
-        contrastText: "#ffffff",
-        main: "#ff9800",
+        contrastText: "#000000", // Set warning contrast text color to black (#000000)
+        main: "#000000", // Set warning main color to black (#000000)
       },
     },
     shadows: darkShadows,
