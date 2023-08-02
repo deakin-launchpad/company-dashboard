@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Box, Container, Button, TextField } from "@mui/material";
 import { LayoutConfig } from "constants/index";
 import { EnhancedModal } from "components/index";
+import HomeImage from "../../../assets/home.png";
 import * as Yup from "yup";
 import { Formik, Form, Field, FieldArray } from "formik";
 import { API } from "helpers/index";
@@ -40,8 +41,7 @@ export const Home = () => {
   const validationSchema = () => {
     return Yup.object().shape({
       name: Yup.string().max(255).required("Company Name Is Required"),
-      founders: Yup.array()
-        .required("Founders must be added"),
+      founders: Yup.array().required("Founders must be added"),
       // .test("Email Exists", async function (value) {
       //   return await API.doesUserExist(value)
       //     .then((response) => {
@@ -476,13 +476,129 @@ export const Home = () => {
   );
 
   return (
-    <Box sx={LayoutConfig.defaultContainerSX}>
-      <Container sx={{ mt: 2 }}>
+    <Box
+      sx={{
+        backgroundColor: "#122433",
+        height: "88vh",
+        // width: "100vw",
+        position: "relative",
+      }}
+    >
+      <Box
+        sx={{
+          width: "93%",
+          height: "90%",
+          overflowY: "hidden",
+          backgroundColor: "#162A3C80",
+          position: "absolute", // Add this line
+          top: "50%",
+          borderRadius: "5px",
+          bottom: "50%", // Add this line
+          left: "50%", // Add this line
+          transform: "translate(-50%, -50%)", // Add this line
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            position: "absolute", // Add this line
+            top: "50%", // Add this line
+            left: "50%", // Add this line
+            transform: "translate(-50%, -50%)", // Add this line
+          }}
+        >
+          <img
+            src={HomeImage}
+            alt="Your Image"
+            style={{ width: "150px", height: "170px", marginBottom: "20px" }}
+          />
+          <Typography
+            variant="h6"
+            color="white"
+            sx={{ fontWeight: "800", mb: "2px" }}
+          >
+            Please create a company now!
+          </Typography>
+          <Typography
+            variant="body1"
+            color="textSecondary"
+            sx={{ fontSize: "12px" }}
+          >
+            Create a company in just a few minutes
+          </Typography>
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            sx={{
+              mt: "30px",
+              width: "100%",
+              height: "27px",
+              borderRadius: "8px",
+              backgroundColor: "#0D539B",
+              typography: {
+                fontFamily: "Roboto, sans-serif",
+              },
+            }}
+          >
+            Create Now &gt;
+          </Button>
+        </Box>
+      </Box>
+    </Box>
+  );
+};
+
+{
+  /* CREATE COMPANY MODAL
+
+
+ <Box
+          sx={{
+            width: "80%",
+            height: "40vh",
+            backgroundColor: "white",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <h1>Second Box Content</h1>
+          <p>This is some text inside the second box.</p>
+        </Box>
+        
+      </Box>
+
+*/
+}
+{
+  /* NOTIFICATION MODAL */
+}
+{
+  /* <EnhancedModal
+        isOpen={open}
+        dialogTitle={`Company Notification Details`}
+        dialogContent={companyData}
+        options={{
+          onClose: () => setOpen(false),
+          disableSubmit: true,
+        }}
+      />*/
+}
+
+{
+  /*
+
+
+ <Container sx={{ mt: 2 }}>
         <Button variant="contained" onClick={() => setModalIsOpen(true)}>
           Create Company
         </Button>
       </Container>
-      {/* CREATE COMPANY MODAL */}
+      {
       <EnhancedModal
         isOpen={modalIsOpen}
         dialogTitle={`Create a Company`}
@@ -492,16 +608,6 @@ export const Home = () => {
           disableSubmit: true,
         }}
       />
-      {/* NOTIFICATION MODAL */}
-      <EnhancedModal
-        isOpen={open}
-        dialogTitle={`Company Notification Details`}
-        dialogContent={companyData}
-        options={{
-          onClose: () => setOpen(false),
-          disableSubmit: true,
-        }}
-      />
-    </Box>
-  );
-};
+
+*/
+}
