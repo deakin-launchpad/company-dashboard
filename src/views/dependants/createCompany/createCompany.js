@@ -393,7 +393,7 @@ export const CreateCompany = () => {
               fontFamily: "Roboto",
             }}
           >
-            Founder
+            Founders
           </Typography>
           <FieldArray name="founders">
             {({ push, remove }) => (
@@ -472,7 +472,7 @@ export const CreateCompany = () => {
                 >
                   Add Founder
                 </Button>
-                <Divider sx={{ border: "1px solid", mt: "10px" }} />
+                <Divider sx={{ border: "0.5px solid", mt: "10px" }} />
                 <EnhancedModal
                   isOpen={isFounderModalOpen}
                   dialogTitle={`Add Founder`}
@@ -483,8 +483,9 @@ export const CreateCompany = () => {
                           display: "flex",
                           flexDirection: "row",
                           alignItems: "center",
-                          gap: "100px",
-                          marginTop: "5%", // Adjust the gap between the fields
+                          gap: "20px",
+                          marginLeft: "8%",
+                          marginTop: "5%",
                         }}
                       >
                         <CustomField
@@ -538,32 +539,37 @@ export const CreateCompany = () => {
                             },
                           }}
                         />
-                      </Box>
-                      <Button
-                        type="button"
-                        onClick={() => {
-                          console.log("modalFounderEmail:", modalFounderEmail);
-                          console.log(
-                            "modalFounderAmountOfShares:",
-                            modalFounderAmountOfShares
-                          );
 
-                          setModalFounderEmail((prevEmail) => {
-                            setModalFounderAmountOfShares((prevAmount) => {
-                              push({
-                                email: prevEmail,
-                                founderAmountOfShares: prevAmount,
+                        <Button
+                          sx={{ mt: "12px" }}
+                          type="button"
+                          onClick={() => {
+                            console.log(
+                              "modalFounderEmail:",
+                              modalFounderEmail
+                            );
+                            console.log(
+                              "modalFounderAmountOfShares:",
+                              modalFounderAmountOfShares
+                            );
+
+                            setModalFounderEmail((prevEmail) => {
+                              setModalFounderAmountOfShares((prevAmount) => {
+                                push({
+                                  email: prevEmail,
+                                  founderAmountOfShares: prevAmount,
+                                });
+
+                                setIsFounderModalOpen(false);
+                                return "";
                               });
-
-                              setIsFounderModalOpen(false);
                               return "";
                             });
-                            return "";
-                          });
-                        }}
-                      >
-                        Add
-                      </Button>
+                          }}
+                        >
+                          Add
+                        </Button>
+                      </Box>
                     </Box>
                   }
                   options={{

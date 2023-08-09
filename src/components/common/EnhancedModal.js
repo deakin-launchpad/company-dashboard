@@ -85,7 +85,12 @@ export const EnhancedModal = (props) => {
       onClose={onClose}
       aria-labelledby="form-dialog-title"
     >
-      <DialogTitle id="form-dialog-title">{_DialogTitle}</DialogTitle>
+      <DialogTitle
+        style={{ margin: "0 auto", color: "white" }}
+        id="form-dialog-title"
+      >
+        {_DialogTitle}
+      </DialogTitle>
       <DialogContent>{_DialogContent}</DialogContent>
       <DialogActions>
         {disableSubmit !== true && (
@@ -102,6 +107,7 @@ export const EnhancedModal = (props) => {
             variant="contained"
             onClick={onClose}
             color={swapButtonColors ? "primary" : "secondary"}
+            style={{ margin: "0 auto" }}
           >
             {cancelButtonName}
           </Button>
