@@ -15,19 +15,21 @@ import TrashIcon from "../../../assets/trash.png";
 
 export const CreateCompany = () => {
   const theme = useTheme();
+  //Notfication Modal
   const [, /*modalIsOpen*/ setModalIsOpen] = useState(false);
   const [, /*open*/ setOpen] = useState(false);
   const [notificationData, setNotificationData] = useState([]);
+  //Founder Modal
   const [isFounderModalOpen, setIsFounderModalOpen] = useState(false);
   const [modalFounderEmail, setModalFounderEmail] = useState("");
   const [modalFounderAmountOfShares, setModalFounderAmountOfShares] =
     useState("");
-
+  //Director Modal
   const [modalDirectorEmail, setModalDirectorEmail] = useState("");
   const [modalDirectorAmountOfShares, setModalDirectorAmountOfShares] =
     useState("");
   const [isDirectorModalOpen, setIsDirectorModalOpen] = useState(false);
-
+  //Admin Modal
   const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
   const [modalAdminEmail, setModalAdminEmail] = useState("");
 
@@ -184,6 +186,8 @@ export const CreateCompany = () => {
       <Typography>{notificationData[1]}</Typography>
     </Box>
   );
+
+  //TextFeild styles
   const CustomField = styled(TextField)({
     "& .MuiOutlinedInput-root": {
       backgroundColor: "#1B3347",
@@ -196,6 +200,22 @@ export const CreateCompany = () => {
       width: "px",
     },
   });
+
+  //Input Label style
+  const InputLabelStyle = {
+    shrink: true,
+    disableAnimation: true,
+    style: {
+      color: "white",
+      fontSize: "20px",
+      fontWeight: "400",
+      borderBottom: "black",
+      marginLeft: "-10px",
+      fontFamily: "Roboto",
+    },
+  };
+
+  //IconButton style
   const iconButtonStyles = {
     display: "flex",
     alignItems: "center",
@@ -234,19 +254,7 @@ export const CreateCompany = () => {
               variant="outlined"
               error={touched.name && Boolean(errors.name)}
               helperText={touched.name && errors.name}
-              InputLabelProps={{
-                shrink: true,
-                disableAnimation: true,
-                style: {
-                  color: "white",
-                  fontSize: "20px",
-                  fontWeight: "400",
-                  borderBottom: "black",
-                  marginLeft: "-10px",
-                  fontFamily: "Roboto",
-                  bottom: "-50px",
-                },
-              }}
+              InputLabelProps={InputLabelStyle}
             />
           </Box>
           <Box
@@ -268,18 +276,7 @@ export const CreateCompany = () => {
               variant="outlined"
               error={touched.shareCountName && Boolean(errors.shareCountName)}
               helperText={touched.shareCountName && errors.shareCountName}
-              InputLabelProps={{
-                shrink: true,
-                disableAnimation: true,
-                style: {
-                  color: "white",
-                  fontSize: "20px",
-                  fontWeight: "400",
-                  borderBottom: "black",
-                  marginLeft: "-10px",
-                  fontFamily: "Roboto",
-                },
-              }}
+              InputLabelProps={InputLabelStyle}
             />
             <CustomField
               fullWidth
@@ -290,18 +287,7 @@ export const CreateCompany = () => {
               variant="outlined"
               error={touched.shareCount && Boolean(errors.shareCount)}
               helperText={touched.shareCount && errors.shareCount}
-              InputLabelProps={{
-                shrink: true,
-                disableAnimation: true,
-                style: {
-                  color: "white",
-                  fontSize: "20px",
-                  fontWeight: "400",
-                  borderBottom: "black",
-                  marginLeft: "-10px",
-                  fontFamily: "Roboto",
-                },
-              }}
+              InputLabelProps={InputLabelStyle}
             />
             <CustomField
               label="Decimal Shares"
@@ -311,18 +297,7 @@ export const CreateCompany = () => {
               variant="outlined"
               error={touched.decimalShares && Boolean(errors.decimalShares)}
               helperText={touched.decimalShares && errors.decimalShares}
-              InputLabelProps={{
-                shrink: true,
-                disableAnimation: true,
-                style: {
-                  color: "white",
-                  fontSize: "20px",
-                  fontWeight: "400",
-                  borderBottom: "black",
-                  marginLeft: "-10px",
-                  fontFamily: "Roboto",
-                },
-              }}
+              InputLabelProps={InputLabelStyle}
             />
 
             <CustomField
@@ -333,18 +308,7 @@ export const CreateCompany = () => {
               variant="outlined"
               error={touched.stablecoinName && Boolean(errors.stablecoinName)}
               helperText={touched.stablecoinName && errors.stablecoinName}
-              InputLabelProps={{
-                shrink: true,
-                disableAnimation: true,
-                style: {
-                  color: "white",
-                  fontSize: "20px",
-                  fontWeight: "400",
-                  borderBottom: "black",
-                  marginLeft: "-10px",
-                  fontFamily: "Roboto",
-                },
-              }}
+              InputLabelProps={InputLabelStyle}
             />
             <CustomField
               label="Stablecoin Count"
@@ -354,18 +318,7 @@ export const CreateCompany = () => {
               variant="outlined"
               error={touched.stablecoinCount && Boolean(errors.stablecoinCount)}
               helperText={touched.stablecoinCount && errors.stablecoinCount}
-              InputLabelProps={{
-                shrink: true,
-                disableAnimation: true,
-                style: {
-                  color: "white",
-                  fontSize: "20px",
-                  fontWeight: "400",
-                  borderBottom: "black",
-                  marginLeft: "-10px",
-                  fontFamily: "Roboto",
-                },
-              }}
+              InputLabelProps={InputLabelStyle}
             />
             <CustomField
               label="Decimal Coins"
@@ -375,18 +328,7 @@ export const CreateCompany = () => {
               variant="outlined"
               error={touched.decimalCoins && Boolean(errors.decimalCoins)}
               helperText={touched.decimalCoins && errors.decimalCoins}
-              InputLabelProps={{
-                shrink: true,
-                disableAnimation: true,
-                style: {
-                  color: "white",
-                  fontSize: "20px",
-                  fontWeight: "400",
-                  borderBottom: "black",
-                  marginLeft: "-10px",
-                  fontFamily: "Roboto",
-                },
-              }}
+              InputLabelProps={InputLabelStyle}
             />
           </Box>
           <Typography
@@ -514,18 +456,7 @@ export const CreateCompany = () => {
                           }}
                           error={touched.founders && Boolean(errors.founders)}
                           helperText={touched.founders && errors.founders}
-                          InputLabelProps={{
-                            shrink: true,
-                            disableAnimation: true,
-                            style: {
-                              color: "white",
-                              fontSize: "20px",
-                              fontWeight: "400",
-                              borderBottom: "black",
-                              marginLeft: "-10px",
-                              fontFamily: "Roboto",
-                            },
-                          }}
+                          InputLabelProps={InputLabelStyle}
                         />
 
                         <CustomField
@@ -540,18 +471,7 @@ export const CreateCompany = () => {
                           }}
                           error={touched.founders && Boolean(errors.founders)}
                           helperText={touched.founders && errors.founders}
-                          InputLabelProps={{
-                            shrink: true,
-                            disableAnimation: true,
-                            style: {
-                              color: "white",
-                              fontSize: "20px",
-                              fontWeight: "400",
-                              borderBottom: "black",
-                              marginLeft: "-10px",
-                              fontFamily: "Roboto",
-                            },
-                          }}
+                          InputLabelProps={InputLabelStyle}
                         />
 
                         <Button
@@ -722,18 +642,7 @@ export const CreateCompany = () => {
                           }}
                           error={touched.directors && Boolean(errors.directors)}
                           helperText={touched.directors && errors.directors}
-                          InputLabelProps={{
-                            shrink: true,
-                            disableAnimation: true,
-                            style: {
-                              color: "white",
-                              fontSize: "20px",
-                              fontWeight: "400",
-                              borderBottom: "black",
-                              marginLeft: "-10px",
-                              fontFamily: "Roboto",
-                            },
-                          }}
+                          InputLabelProps={InputLabelStyle}
                         />
 
                         <CustomField
@@ -748,18 +657,7 @@ export const CreateCompany = () => {
                           }}
                           error={touched.directors && Boolean(errors.directors)}
                           helperText={touched.directors && errors.directors}
-                          InputLabelProps={{
-                            shrink: true,
-                            disableAnimation: true,
-                            style: {
-                              color: "white",
-                              fontSize: "20px",
-                              fontWeight: "400",
-                              borderBottom: "black",
-                              marginLeft: "-10px",
-                              fontFamily: "Roboto",
-                            },
-                          }}
+                          InputLabelProps={InputLabelStyle}
                         />
 
                         <Button
@@ -802,7 +700,18 @@ export const CreateCompany = () => {
               </Box>
             )}
           </FieldArray>
-
+          <Typography
+            style={{
+              marginTop: "5px",
+              marginLeft: "3.5%",
+              color: "white",
+              fontSize: "15px",
+              fontWeight: "400",
+              fontFamily: "Roboto",
+            }}
+          >
+            Admins
+          </Typography>
           <FieldArray name="admins">
             {({ push, remove }) => (
               <Box>
@@ -834,7 +743,7 @@ export const CreateCompany = () => {
                                 fontFamily: "Roboto",
                                 color: "white",
                                 fontSize: "13px",
-                                flex: 3,
+                                flex: 6.8,
                               }}
                             >
                               Email: {admin.email}
@@ -903,18 +812,7 @@ export const CreateCompany = () => {
                           }}
                           error={touched.admins && Boolean(errors.admins)}
                           helperText={touched.admins && errors.admins}
-                          InputLabelProps={{
-                            shrink: true,
-                            disableAnimation: true,
-                            style: {
-                              color: "white",
-                              fontSize: "20px",
-                              fontWeight: "400",
-                              borderBottom: "black",
-                              marginLeft: "-10px",
-                              fontFamily: "Roboto",
-                            },
-                          }}
+                          InputLabelProps={InputLabelStyle}
                         />
 
                         <Button
@@ -947,8 +845,8 @@ export const CreateCompany = () => {
             )}
           </FieldArray>
 
-          <pre>{JSON.stringify(values, null, 2)}</pre>
-          <Box sx={{ mt: 2 }}>
+          {/*<pre>{JSON.stringify(values, null, 2)}</pre>*/}
+          <Box sx={{ mt: 2, ml: "40%" }}>
             <Button
               color="primary"
               disabled={isSubmitting}
