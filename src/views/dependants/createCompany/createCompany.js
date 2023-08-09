@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import { useTheme } from "@mui/material/styles";
 import { styled } from "@mui/styles";
@@ -23,7 +23,13 @@ export const CreateCompany = () => {
   const [modalFounderAmountOfShares, setModalFounderAmountOfShares] =
     useState("");
 
-  useEffect(() => {}, [modalFounderEmail, modalFounderAmountOfShares]);
+  const [modalDirectorEmail, setModalDirectorEmail] = useState("");
+  const [modalDirectorAmountOfShares, setModalDirectorAmountOfShares] =
+    useState("");
+  const [isDirectorModalOpen, setIsDirectorModalOpen] = useState(false);
+
+  const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
+  const [modalAdminEmail, setModalAdminEmail] = useState("");
 
   onMessageListener()
     .then((payload) => {
@@ -36,10 +42,10 @@ export const CreateCompany = () => {
   const initialValues = {
     name: "",
     founders: [{ email: "aa", founderAmountOfShares: "yy" }],
-    directors: [],
-    founderAmountOfShares: [],
-    directorAmountOfShares: [],
-    admins: [],
+    directors: [{ email: "ok", directorAmountOfShares: "yes" }],
+    //founderAmountOfShares: [],
+    //directorAmountOfShares: [],
+    admins: [{ email: "no" }],
     shareCountName: "",
     shareCount: "",
     stablecoinName: "",
@@ -398,72 +404,80 @@ export const CreateCompany = () => {
           <FieldArray name="founders">
             {({ push, remove }) => (
               <Box>
-                {values.founders.map((founder, index) => (
-                  <Box
-                    key={index}
-                    style={{
-                      marginLeft: "3.5%",
-                      display: "flex",
-                      gap: "120px",
-                    }}
-                  >
-                    <Typography
-                      style={{
-                        fontFamily: "Roboto",
-                        color: "white",
-                        fontSize: "13px",
-                        flex: 2,
-                      }}
-                    >
-                      {index}.Founder
-                    </Typography>
-                    <Typography
-                      style={{
-                        fontFamily: "Roboto",
-                        color: "white",
-                        fontSize: "13px",
-                        flex: 2,
-                      }}
-                    >
-                      Email: {founder.email}
-                    </Typography>
-                    <Typography
-                      style={{
-                        fontFamily: "Roboto",
-                        color: "white",
-                        fontSize: "13px",
-                        flex: 3,
-                      }}
-                    >
-                      Amount Of Shares: {founder.founderAmountOfShares}
-                    </Typography>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: 1,
-                      }}
-                    >
-                      <IconButton
-                        onClick={() => remove(index)}
-                        aria-label="Delete"
-                        style={iconButtonStyles}
+                {values.founders.length > 0 && (
+                  <>
+                    {values.founders.map((founder, index) => (
+                      <Box
+                        key={index}
+                        style={{
+                          marginLeft: "3.5%",
+                          display: "flex",
+                          gap: "120px",
+                        }}
                       >
-                        <img src={TrashIcon} alt="Image" />
-                        <Typography
-                          variant="body1"
-                          sx={{
-                            color: "#717F8B",
-                            fontFamily: "Roboto",
-                            fontSize: "12px",
-                          }}
-                        >
-                          Delete
-                        </Typography>
-                      </IconButton>
-                    </Box>
-                  </Box>
-                ))}
+                        {index > 0 && (
+                          <>
+                            <Typography
+                              style={{
+                                fontFamily: "Roboto",
+                                color: "white",
+                                fontSize: "13px",
+                                flex: 2,
+                              }}
+                            >
+                              {index}.Founder
+                            </Typography>
+                            <Typography
+                              style={{
+                                fontFamily: "Roboto",
+                                color: "white",
+                                fontSize: "13px",
+                                flex: 2,
+                              }}
+                            >
+                              Email: {founder.email}
+                            </Typography>
+                            <Typography
+                              style={{
+                                fontFamily: "Roboto",
+                                color: "white",
+                                fontSize: "13px",
+                                flex: 3,
+                              }}
+                            >
+                              Amount Of Shares: {founder.founderAmountOfShares}
+                            </Typography>
+                            <Box
+                              sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: 1,
+                              }}
+                            >
+                              <IconButton
+                                onClick={() => remove(index)}
+                                aria-label="Delete"
+                                style={iconButtonStyles}
+                              >
+                                <img src={TrashIcon} alt="Image" />
+                                <Typography
+                                  variant="body1"
+                                  sx={{
+                                    color: "#717F8B",
+                                    fontFamily: "Roboto",
+                                    fontSize: "12px",
+                                  }}
+                                >
+                                  Delete
+                                </Typography>
+                              </IconButton>
+                            </Box>
+                          </>
+                        )}
+                      </Box>
+                    ))}
+                  </>
+                )}
 
                 <Button
                   sx={{ ml: "43%", mt: "1%" }}
@@ -580,167 +594,360 @@ export const CreateCompany = () => {
               </Box>
             )}
           </FieldArray>
-
-          <pre>{JSON.stringify(values, null, 2)}</pre>
+          <Typography
+            style={{
+              marginTop: "5px",
+              marginLeft: "3.5%",
+              color: "white",
+              fontSize: "15px",
+              fontWeight: "400",
+              fontFamily: "Roboto",
+            }}
+          >
+            Directors
+          </Typography>
 
           <FieldArray name="directors">
-            {({ remove, insert }) => (
+            {({ push, remove }) => (
               <Box>
-                {touched.directors && touched.directors.length > 0 ? (
-                  touched.directors.map((friend, index) => (
-                    <Box
-                      key={index}
-                      sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        mt: 1,
-                      }}
-                    >
-                      <CustomField
-                        label={`Directors Email ${index + 1}`}
-                        name={`directors.${index}`}
-                        type="text"
-                        variant="outlined"
-                        error={touched.directors && Boolean(errors.directors)}
-                        helperText={touched.directors && errors.directors}
-                        InputLabelProps={{
-                          shrink: true,
-                          disableAnimation: true,
-                          style: {
-                            color: "white",
-                            fontSize: "20px",
-                            fontWeight: "400",
-                            borderBottom: "black",
-                            marginLeft: "-10px",
-                            fontFamily: "Roboto",
-                          },
+                {values.directors.length > 0 && (
+                  <>
+                    {values.directors.map((director, index) => (
+                      <Box
+                        key={index}
+                        style={{
+                          marginLeft: "3.5%",
+                          display: "flex",
+                          gap: "120px",
                         }}
-                      />
-                      <CustomField
-                        label={`Share amount`}
-                        name={`directorAmountOfShares.${index}`}
-                        type="text"
-                        variant="outlined"
-                        error={
-                          touched.directorAmountOfShares &&
-                          Boolean(errors.directorAmountOfShares)
-                        }
-                        helperText={
-                          touched.directorAmountOfShares &&
-                          errors.directorAmountOfShares
-                        }
-                        InputLabelProps={{
-                          shrink: true,
-                          disableAnimation: true,
-                          style: {
-                            color: "white",
-                            fontSize: "20px",
-                            fontWeight: "400",
-                            borderBottom: "black",
-                            marginLeft: "-10px",
-                            fontFamily: "Roboto",
-                          },
-                        }}
-                      />
+                      >
+                        {index > 0 && (
+                          <>
+                            <Typography
+                              style={{
+                                fontFamily: "Roboto",
+                                color: "white",
+                                fontSize: "13px",
+                                flex: 2,
+                              }}
+                            >
+                              {index}.Director
+                            </Typography>
+                            <Typography
+                              style={{
+                                fontFamily: "Roboto",
+                                color: "white",
+                                fontSize: "13px",
+                                flex: 2,
+                              }}
+                            >
+                              Email: {director.email}
+                            </Typography>
+                            <Typography
+                              style={{
+                                fontFamily: "Roboto",
+                                color: "white",
+                                fontSize: "13px",
+                                flex: 3,
+                              }}
+                            >
+                              Amount Of Shares:{" "}
+                              {director.directorAmountOfShares}
+                            </Typography>
+                            <Box
+                              sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: 1,
+                              }}
+                            >
+                              <IconButton
+                                onClick={() => remove(index)}
+                                aria-label="Delete"
+                                style={iconButtonStyles}
+                              >
+                                <img src={TrashIcon} alt="Image" />
+                                <Typography
+                                  variant="body1"
+                                  sx={{
+                                    color: "#717F8B",
+                                    fontFamily: "Roboto",
+                                    fontSize: "12px",
+                                  }}
+                                >
+                                  Delete
+                                </Typography>
+                              </IconButton>
+                            </Box>
+                          </>
+                        )}
+                      </Box>
+                    ))}
+                  </>
+                )}
 
+                <Button
+                  sx={{ ml: "43%", mt: "1%" }}
+                  type="button"
+                  onClick={() => setIsDirectorModalOpen(true)}
+                >
+                  Add Director
+                </Button>
+
+                <Divider sx={{ border: "0.5px solid", mt: "10px" }} />
+                <EnhancedModal
+                  isOpen={isDirectorModalOpen}
+                  dialogTitle={`Add Director`}
+                  dialogContent={
+                    <Box>
                       <Box
                         sx={{
                           display: "flex",
-                          flexDirection: "column",
-                          gap: 1,
+                          flexDirection: "row",
+                          alignItems: "center",
+                          gap: "20px",
+                          marginLeft: "8%",
+                          marginTop: "5%",
                         }}
                       >
+                        <CustomField
+                          type="text"
+                          label="Director Email"
+                          onChange={(e) => {
+                            console.log(
+                              "Director Email changed:",
+                              e.target.value
+                            );
+                            setModalDirectorEmail(e.target.value);
+                          }}
+                          error={touched.directors && Boolean(errors.directors)}
+                          helperText={touched.directors && errors.directors}
+                          InputLabelProps={{
+                            shrink: true,
+                            disableAnimation: true,
+                            style: {
+                              color: "white",
+                              fontSize: "20px",
+                              fontWeight: "400",
+                              borderBottom: "black",
+                              marginLeft: "-10px",
+                              fontFamily: "Roboto",
+                            },
+                          }}
+                        />
+
+                        <CustomField
+                          type="text"
+                          label="Share Amount"
+                          onChange={(e) => {
+                            console.log(
+                              "Share Amount changed:",
+                              e.target.value
+                            );
+                            setModalDirectorAmountOfShares(e.target.value);
+                          }}
+                          error={touched.directors && Boolean(errors.directors)}
+                          helperText={touched.directors && errors.directors}
+                          InputLabelProps={{
+                            shrink: true,
+                            disableAnimation: true,
+                            style: {
+                              color: "white",
+                              fontSize: "20px",
+                              fontWeight: "400",
+                              borderBottom: "black",
+                              marginLeft: "-10px",
+                              fontFamily: "Roboto",
+                            },
+                          }}
+                        />
+
                         <Button
-                          sx={{ height: 24 }}
-                          variant="contained"
-                          onClick={() => remove(index)}
+                          sx={{ mt: "12px" }}
+                          type="button"
+                          onClick={() => {
+                            console.log(
+                              "modalDirectorEmail:",
+                              modalDirectorEmail
+                            );
+                            console.log(
+                              "modalDirectorAmountOfShares:",
+                              modalDirectorAmountOfShares
+                            );
+
+                            setModalDirectorEmail((prevEmail) => {
+                              setModalDirectorAmountOfShares((prevAmount) => {
+                                push({
+                                  email: prevEmail,
+                                  directorAmountOfShares: prevAmount,
+                                });
+
+                                setIsDirectorModalOpen(false);
+                                return "";
+                              });
+                              return "";
+                            });
+                          }}
                         >
-                          -
-                        </Button>
-                        <Button
-                          sx={{ height: 24 }}
-                          variant="contained"
-                          onClick={() => insert(index + 1, "")}
-                        >
-                          +
+                          Add
                         </Button>
                       </Box>
                     </Box>
-                  ))
-                ) : (
-                  <Button
-                    sx={{ mt: 1, width: 135 }}
-                    variant="contained"
-                    onClick={() => insert("")}
-                  >
-                    Add a Director
-                  </Button>
-                )}
+                  }
+                  options={{
+                    onClose: () => setIsDirectorModalOpen(false),
+                    disableSubmit: true,
+                  }}
+                />
               </Box>
             )}
           </FieldArray>
+
           <FieldArray name="admins">
-            {({ remove, insert }) => (
+            {({ push, remove }) => (
               <Box>
-                {touched.admins && touched.admins.length > 0 ? (
-                  touched.admins.map((friend, index) => (
-                    <Box key={index} sx={{ display: "flex", mt: 1 }}>
-                      <CustomField
-                        label={`Admins Email ${index + 1}`}
-                        name={`admins.${index}`}
-                        type="text"
-                        variant="outlined"
-                        error={touched.admins && Boolean(errors.admins)}
-                        helperText={touched.admins && errors.admins}
-                        InputLabelProps={{
-                          shrink: true,
-                          disableAnimation: true,
-                          style: {
-                            color: "white",
-                            fontSize: "20px",
-                            fontWeight: "400",
-                            borderBottom: "black",
-                            marginLeft: "-10px",
-                            fontFamily: "Roboto",
-                          },
+                {values.admins.length > 0 && (
+                  <>
+                    {values.admins.map((admin, index) => (
+                      <Box
+                        key={index}
+                        style={{
+                          marginLeft: "3.5%",
+                          display: "flex",
+                          gap: "120px",
                         }}
-                      />
+                      >
+                        {index > 0 && (
+                          <>
+                            <Typography
+                              style={{
+                                fontFamily: "Roboto",
+                                color: "white",
+                                fontSize: "13px",
+                                flex: 2,
+                              }}
+                            >
+                              {index}.Admin
+                            </Typography>
+                            <Typography
+                              style={{
+                                fontFamily: "Roboto",
+                                color: "white",
+                                fontSize: "13px",
+                                flex: 3,
+                              }}
+                            >
+                              Email: {admin.email}
+                            </Typography>
+                            <Box
+                              sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: 1,
+                              }}
+                            >
+                              <IconButton
+                                onClick={() => remove(index)}
+                                aria-label="Delete"
+                                style={iconButtonStyles}
+                              >
+                                <img src={TrashIcon} alt="Image" />
+                                <Typography
+                                  variant="body1"
+                                  sx={{
+                                    color: "#717F8B",
+                                    fontFamily: "Roboto",
+                                    fontSize: "12px",
+                                  }}
+                                >
+                                  Delete
+                                </Typography>
+                              </IconButton>
+                            </Box>
+                          </>
+                        )}
+                      </Box>
+                    ))}
+                  </>
+                )}
+
+                <Button
+                  sx={{ ml: "43%", mt: "1%" }}
+                  type="button"
+                  onClick={() => setIsAdminModalOpen(true)}
+                >
+                  Add Admin
+                </Button>
+                <Divider sx={{ border: "0.5px solid", mt: "10px" }} />
+                <EnhancedModal
+                  isOpen={isAdminModalOpen}
+                  dialogTitle={`Add Admin`}
+                  dialogContent={
+                    <Box>
                       <Box
                         sx={{
                           display: "flex",
-                          flexDirection: "column",
-                          gap: 1,
+                          flexDirection: "row",
+                          alignItems: "center",
+                          gap: "20px",
+                          marginLeft: "8%",
+                          marginTop: "5%",
                         }}
                       >
+                        <CustomField
+                          type="text"
+                          label="Admin Email"
+                          onChange={(e) => {
+                            console.log("Admin Email changed:", e.target.value);
+                            setModalAdminEmail(e.target.value);
+                          }}
+                          error={touched.admins && Boolean(errors.admins)}
+                          helperText={touched.admins && errors.admins}
+                          InputLabelProps={{
+                            shrink: true,
+                            disableAnimation: true,
+                            style: {
+                              color: "white",
+                              fontSize: "20px",
+                              fontWeight: "400",
+                              borderBottom: "black",
+                              marginLeft: "-10px",
+                              fontFamily: "Roboto",
+                            },
+                          }}
+                        />
+
                         <Button
-                          sx={{ height: 24 }}
-                          variant="contained"
-                          onClick={() => remove(index)}
+                          sx={{ mt: "12px" }}
+                          type="button"
+                          onClick={() => {
+                            console.log("modalAdminEmail:", modalAdminEmail);
+
+                            setModalAdminEmail((prevEmail) => {
+                              push({
+                                email: prevEmail,
+                              });
+
+                              setIsAdminModalOpen(false);
+                              return "";
+                            });
+                          }}
                         >
-                          -
-                        </Button>
-                        <Button
-                          sx={{ height: 24 }}
-                          variant="contained"
-                          onClick={() => insert(index + 1, "")}
-                        >
-                          +
+                          Add
                         </Button>
                       </Box>
                     </Box>
-                  ))
-                ) : (
-                  <Button
-                    sx={{ mt: 1, width: 135 }}
-                    variant="contained"
-                    onClick={() => insert("")}
-                  >
-                    Add an Admin
-                  </Button>
-                )}
+                  }
+                  options={{
+                    onClose: () => setIsAdminModalOpen(false),
+                    disableSubmit: true,
+                  }}
+                />
               </Box>
             )}
           </FieldArray>
+
+          <pre>{JSON.stringify(values, null, 2)}</pre>
           <Box sx={{ mt: 2 }}>
             <Button
               color="primary"
