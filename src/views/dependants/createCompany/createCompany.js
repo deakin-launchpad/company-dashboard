@@ -422,7 +422,12 @@ export const CreateCompany = () => {
                 )}
 
                 <Button
-                  sx={{ ml: "43%", mt: "1%" }}
+                  sx={{
+                    ml: "43%",
+                    mt: "1%",
+                    paddingLeft: "15px",
+                    paddingRight: "15px",
+                  }}
                   type="button"
                   onClick={() => setIsFounderModalOpen(true)}
                 >
@@ -607,7 +612,12 @@ export const CreateCompany = () => {
                 )}
 
                 <Button
-                  sx={{ ml: "43%", mt: "1%" }}
+                  sx={{
+                    ml: "43%",
+                    mt: "1%",
+                    paddingLeft: "15px",
+                    paddingRight: "15px",
+                  }}
                   type="button"
                   onClick={() => setIsDirectorModalOpen(true)}
                 >
@@ -638,6 +648,7 @@ export const CreateCompany = () => {
                               "Director Email changed:",
                               e.target.value
                             );
+
                             setModalDirectorEmail(e.target.value);
                           }}
                           error={touched.directors && Boolean(errors.directors)}
@@ -781,7 +792,12 @@ export const CreateCompany = () => {
                 )}
 
                 <Button
-                  sx={{ ml: "43%", mt: "1%" }}
+                  sx={{
+                    ml: "43%",
+                    mt: "1%",
+                    paddingLeft: "18px",
+                    paddingRight: "18px",
+                  }}
                   type="button"
                   onClick={() => setIsAdminModalOpen(true)}
                 >
@@ -799,7 +815,7 @@ export const CreateCompany = () => {
                           flexDirection: "row",
                           alignItems: "center",
                           gap: "20px",
-                          marginLeft: "8%",
+                          marginLeft: "25%",
                           marginTop: "5%",
                         }}
                       >
@@ -876,9 +892,9 @@ export const CreateCompany = () => {
         sx={{
           marginTop: "20px",
           width: "93%",
-          minHeight: "80vh",
-          height: "auto",
-          overflowY: "hidden",
+          minHeight: "120vh",
+          marginBottom: "20px",
+          overflowY: "auto",
           backgroundColor: theme.palette.background.secondary,
           borderRadius: "5px",
         }}

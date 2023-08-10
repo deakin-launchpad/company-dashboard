@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
+import { Link } from 'react-router-dom';
 import { useTheme } from "@mui/material/styles";
 import { Box, Container, Button, TextField } from "@mui/material";
 import { LayoutConfig } from "constants/index";
@@ -10,6 +11,7 @@ import { Formik, Form, Field, FieldArray } from "formik";
 import { API } from "helpers/index";
 import { onMessageListener } from "firebase";
 import { Typography } from "../../../../node_modules/@mui/material/index";
+import { values } from "lodash";
 
 export const Home = () => {
   const theme = useTheme();
@@ -301,6 +303,7 @@ export const Home = () => {
                           errors.founderAmountOfShares
                         }
                       />
+
                       <Box
                         sx={{
                           display: "flex",
@@ -500,6 +503,11 @@ export const Home = () => {
           transform: "translate(-50%, -50%)", // Add this line
         }}
       >
+        <Container sx={{ mt: 2 }}>
+          <Button variant="contained" onClick={() => setModalIsOpen(true)}>
+            Create Company
+          </Button>
+        </Container>
         <Box
           sx={{
             display: "flex",
@@ -531,46 +539,48 @@ export const Home = () => {
           >
             Create a company in just a few minutes
           </Typography>
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            sx={{
-              mt: "30px",
-              width: "100%",
-              height: "27px",
+          <Link to="/createCompany" style={{ textDecoration: 'none', color: 'inherit', width: "100%" }}>
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              sx={{
+                mt: "30px",
+                width: "100%",
+                height: "27px",
+              }}
+            
+            >
+              
+              Create Now &gt;
+              
+            </Button>
+          </Link>
+          <EnhancedModal
+            isOpen={open}
+            dialogTitle={`Company Notification Details`}
+            dialogContent={companyData}
+            options={{
+              onClose: () => setOpen(false),
+              disableSubmit: true,
             }}
-          >
-            Create Now &gt;
-          </Button>
+          />
+
+          <EnhancedModal
+            isOpen={modalIsOpen}
+            dialogTitle={`Create a Company`}
+            dialogContent={createCompanyModal}
+            options={{
+              onClose: () => setModalIsOpen(false),
+              disableSubmit: true,
+            }}
+          />
         </Box>
       </Box>
     </Box>
   );
 };
 
-{
-  /* CREATE COMPANY MODAL
-
-
- <Box
-          sx={{
-            width: "80%",
-            height: "40vh",
-            backgroundColor: "white",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <h1>Second Box Content</h1>
-          <p>This is some text inside the second box.</p>
-        </Box>
-        
-      </Box>
-
-*/
-}
 {
   /* NOTIFICATION MODAL */
 }

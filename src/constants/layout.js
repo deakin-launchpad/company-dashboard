@@ -30,7 +30,7 @@ class Layout {
           type: "button",
           icon: "ant-design:home-filled",
           helpingAttribute: "/home",
-          customTitle: "Company Dashboard",
+          customTitle: "Company",
           isFavourite: true,
         }),
         new MenuItem({
@@ -39,6 +39,11 @@ class Layout {
           icon: "fe:logout",
           helpingAttribute: "",
           customTitle: "Company Dashboard",
+          isFavourite: false,
+        }),
+        new MenuItem({
+          helpingAttribute: "/createCompany",
+          customTitle: "Create Company",
           isFavourite: false,
         }),
       ],
@@ -57,7 +62,6 @@ class Layout {
       permanent: true,
       default: "open",
     };
-
     this.defaultContainerSX = {
       backgroundColor: "background.default",
       display: "flex",
@@ -65,7 +69,6 @@ class Layout {
       minHeight: "calc(100% - 64px)",
     };
   }
-
   /**
    *
    * @param {String} userType

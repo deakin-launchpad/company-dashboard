@@ -161,12 +161,12 @@ const themesOptions = {
     },
     palette: {
       action: {
-        active: "#000000",
+        active: "#ffffff", //Icons
       },
       background: {
         default: "#122433",
         secondary: "#162A3C",
-        paper: "#000000",
+        paper: "#162A3C", //Modal and menu
       },
       error: {
         contrastText: "#ff0000",
@@ -175,7 +175,7 @@ const themesOptions = {
       mode: "light",
       primary: {
         contrastText: "#000000",
-        main: "#000000",
+        main: "#122433",
       },
       success: {
         contrastText: "#000000",
@@ -326,81 +326,3 @@ export const ThemeProvider = ({ children }) => {
 ThemeProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
-
-/*Orginal 
-
- <FieldArray name="directors">
-            {({ remove, insert }) => (
-              <Box>
-                {touched.directors && touched.directors.length > 0 ? (
-                  touched.directors.map((friend, index) => (
-                    <Box
-                      key={index}
-                      sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        mt: 1,
-                      }}
-                    >
-                      <Field
-                        as={TextField}
-                        label={`Directors Email ${index + 1}`}
-                        name={`directors.${index}`}
-                        type="text"
-                        variant="outlined"
-                        error={touched.directors && Boolean(errors.directors)}
-                        helperText={touched.directors && errors.directors}
-                      />
-                      <Field
-                        as={TextField}
-                        label={`Share amount`}
-                        name={`directorAmountOfShares.${index}`}
-                        type="text"
-                        variant="outlined"
-                        error={
-                          touched.directorAmountOfShares &&
-                          Boolean(errors.directorAmountOfShares)
-                        }
-                        helperText={
-                          touched.directorAmountOfShares &&
-                          errors.directorAmountOfShares
-                        }
-                      />
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "column",
-                          gap: 1,
-                        }}
-                      >
-                        <Button
-                          sx={{ height: 24 }}
-                          variant="contained"
-                          onClick={() => remove(index)}
-                        >
-                          -
-                        </Button>
-                        <Button
-                          sx={{ height: 24 }}
-                          variant="contained"
-                          onClick={() => insert(index + 1, "")}
-                        >
-                          +
-                        </Button>
-                      </Box>
-                    </Box>
-                  ))
-                ) : (
-                  <Button
-                    sx={{ mt: 1, width: 135 }}
-                    variant="contained"
-                    onClick={() => insert("")}
-                  >
-                    Add a Director
-                  </Button>
-                )}
-              </Box>
-            )}
-          </FieldArray>
-
-*/

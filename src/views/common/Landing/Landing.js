@@ -3,11 +3,9 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import logoImage from "../../../assets/logo.png";
 import welcomeImage from "../../../assets/welcome.png";
+import { Link } from 'react-router-dom';
 
 export const Landing = () => {
-  const handleLoginClick = () => {
-    window.location.href = "/login";
-  };
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   return (
@@ -64,18 +62,18 @@ export const Landing = () => {
         <Typography variant="h6">
           Serving company principals/shareholders to vote for the company
         </Typography>
-
-        <Button
-          variant="contained"
-          sx={{
-            marginTop: "30px",
-            width: "100%",
-            maxWidth: "240px",
-          }}
-          onClick={handleLoginClick}
-        >
-          Get started &gt;
-        </Button>
+        <Link to="/login" style={{ textDecoration: 'none', color: 'inherit', width: "100%" }}>
+          <Button
+            variant="contained"
+            sx={{
+              marginTop: "30px",
+              width: "100%",
+              maxWidth: "240px",
+            }}
+          >
+            Get started &gt;
+          </Button>
+        </Link>
       </Box>
     </Box>
   );
