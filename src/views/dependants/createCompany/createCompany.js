@@ -6,48 +6,38 @@ import { styled } from "@mui/styles";
 import { Box, Button, TextField, IconButton, Divider } from "@mui/material";
 
 import * as Yup from "yup";
-import { Formik, Form, FieldArray } from "formik";
+import { Formik, Form, Field /*FieldArray*/ } from "formik";
 import { API } from "helpers/index";
 import { onMessageListener } from "firebase";
 import { Typography } from "../../../../node_modules/@mui/material/index";
 import { EnhancedModal } from "components/index";
+
 import TrashIcon from "../../../assets/trash.png";
 
 export const CreateCompany = () => {
   const theme = useTheme();
-  //Notfication Modal
-  const [, /*modalIsOpen*/ setModalIsOpen] = useState(false);
-  const [, /*open*/ setOpen] = useState(false);
-  const [notificationData, setNotificationData] = useState([]);
-  //Founder Modal
+
   const [isFounderModalOpen, setIsFounderModalOpen] = useState(false);
-  const [modalFounderEmail, setModalFounderEmail] = useState("");
-  const [modalFounderAmountOfShares, setModalFounderAmountOfShares] =
-    useState("");
-  //Director Modal
-  const [modalDirectorEmail, setModalDirectorEmail] = useState("");
-  const [modalDirectorAmountOfShares, setModalDirectorAmountOfShares] =
-    useState("");
   const [isDirectorModalOpen, setIsDirectorModalOpen] = useState(false);
-  //Admin Modal
   const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
-  const [modalAdminEmail, setModalAdminEmail] = useState("");
 
   onMessageListener()
     .then((payload) => {
-      setNotificationData(payload.notification.body.split(","));
-      setOpen(true);
+      //setNotificationData(payload.notification.body.split(","));
+      //setOpen(true);
       console.log("payload", payload);
     })
     .catch((err) => console.log("failed: ", err));
 
   const initialValues = {
     name: "",
-    founders: [{ email: "aa", founderAmountOfShares: "yy" }],
-    directors: [{ email: "ok", directorAmountOfShares: "yes" }],
-    //founderAmountOfShares: [],
-    //directorAmountOfShares: [],
-    admins: [{ email: "no" }],
+    //founders: [{ email: "aa", founderAmountOfShares: "yy" }],
+    //directors: [{ email: "ok", directorAmountOfShares: "yes" }],
+    founders: [],
+    founderAmountOfShares: [],
+    directors: [],
+    directorAmountOfShares: [],
+    admins: "" /*[{ email: "no" }]*/,
     shareCountName: "",
     shareCount: "",
     stablecoinName: "",
@@ -96,16 +86,18 @@ export const CreateCompany = () => {
     let founders = [];
     let admins = [];
     let directors = [];
+    console.log("Founders:", values.founders);
+    console.log("Founder Amount Of Shares:", values.founderAmountOfShares);
     for (let i = 0; i < values.founders.length; i++) {
       founders.push({
         email: values.founders[i],
-        shares: parseInt(values.founderAmountOfShares),
+        shares: parseInt(values.founderAmountOfShares[i]),
       });
     }
     for (let i = 0; i < values.directors.length; i++) {
       directors.push({
         email: values.directors[i],
-        shares: parseInt(values.directorAmountOfShares),
+        shares: parseInt(values.directorAmountOfShares[i]),
       });
     }
     for (let i = 0; i < values.admins.length; i++) {
@@ -174,18 +166,18 @@ export const CreateCompany = () => {
       };
       await API.createCompany(data);
       resetForm();
-      setModalIsOpen(false);
+      //setModalIsOpen(false);
     } else {
       alert("Make sure all shares are accounted for!");
     }
   };
-
+  /*
   let companyData = (
     <Box>
       <Typography>{notificationData[0]}</Typography>
       <Typography>{notificationData[1]}</Typography>
     </Box>
-  );
+  );*/
 
   //TextFeild styles
   const CustomField = styled(TextField)({
@@ -216,13 +208,14 @@ export const CreateCompany = () => {
   };
 
   //IconButton style
+  /*
   const iconButtonStyles = {
     display: "flex",
     alignItems: "center",
     gap: "8px",
     marginRight: "22px",
     marginTop: "-9px",
-  };
+  };*/
   let createCompanyModal = (
     <Formik
       initialValues={initialValues}
@@ -231,7 +224,7 @@ export const CreateCompany = () => {
       validateOnChange={false}
       validateOnBlur={false}
     >
-      {({ errors, touched, isSubmitting, values }) => (
+      {({ errors, touched, isSubmitting, values, setFieldValue }) => (
         <Form style={{ marginTop: "50px" }}>
           <Box sx={{ ml: "30px", mr: "30px" }}>
             <Typography
@@ -245,8 +238,10 @@ export const CreateCompany = () => {
               Add New One
             </Typography>
 
-            <CustomField
+            <Field
               fullWidth
+              as={CustomField}
+              autoComplete="off"
               label="Company Name"
               margin="normal"
               name="name"
@@ -267,8 +262,10 @@ export const CreateCompany = () => {
               mr: "30px",
             }}
           >
-            <CustomField
+            <Field
               fullWidth
+              as={CustomField}
+              autoComplete="off"
               label="Share Count Name"
               margin="normal"
               name="shareCountName"
@@ -278,8 +275,10 @@ export const CreateCompany = () => {
               helperText={touched.shareCountName && errors.shareCountName}
               InputLabelProps={InputLabelStyle}
             />
-            <CustomField
+            <Field
               fullWidth
+              as={CustomField}
+              autoComplete="off"
               label="Share Count"
               margin="normal"
               name="shareCount"
@@ -289,7 +288,9 @@ export const CreateCompany = () => {
               helperText={touched.shareCount && errors.shareCount}
               InputLabelProps={InputLabelStyle}
             />
-            <CustomField
+            <Field
+              as={CustomField}
+              autoComplete="off"
               label="Decimal Shares"
               margin="normal"
               name="decimalShares"
@@ -300,7 +301,9 @@ export const CreateCompany = () => {
               InputLabelProps={InputLabelStyle}
             />
 
-            <CustomField
+            <Field
+              as={CustomField}
+              autoComplete="off"
               label="Stablecoin Name"
               margin="normal"
               name="stablecoinName"
@@ -310,7 +313,9 @@ export const CreateCompany = () => {
               helperText={touched.stablecoinName && errors.stablecoinName}
               InputLabelProps={InputLabelStyle}
             />
-            <CustomField
+            <Field
+              as={CustomField}
+              autoComplete="off"
               label="Stablecoin Count"
               margin="normal"
               name="stablecoinCount"
@@ -320,7 +325,9 @@ export const CreateCompany = () => {
               helperText={touched.stablecoinCount && errors.stablecoinCount}
               InputLabelProps={InputLabelStyle}
             />
-            <CustomField
+            <Field
+              as={CustomField}
+              autoComplete="off"
               label="Decimal Coins"
               margin="normal"
               name="decimalCoins"
@@ -343,182 +350,161 @@ export const CreateCompany = () => {
           >
             Founders
           </Typography>
-          <FieldArray name="founders">
-            {({ push, remove }) => (
-              <Box>
-                {values.founders.length > 0 && (
-                  <>
-                    {values.founders.map((founder, index) => (
-                      <Box
-                        key={index}
-                        style={{
-                          marginLeft: "3.5%",
-                          display: "flex",
-                          gap: "120px",
-                        }}
-                      >
-                        {index > 0 && (
-                          <>
-                            <Typography
-                              style={{
-                                fontFamily: "Roboto",
-                                color: "white",
-                                fontSize: "13px",
-                                flex: 2,
-                              }}
-                            >
-                              {index}.Founder
-                            </Typography>
-                            <Typography
-                              style={{
-                                fontFamily: "Roboto",
-                                color: "white",
-                                fontSize: "13px",
-                                flex: 2,
-                              }}
-                            >
-                              Email: {founder.email}
-                            </Typography>
-                            <Typography
-                              style={{
-                                fontFamily: "Roboto",
-                                color: "white",
-                                fontSize: "13px",
-                                flex: 3,
-                              }}
-                            >
-                              Amount Of Shares: {founder.founderAmountOfShares}
-                            </Typography>
-                            <Box
-                              sx={{
-                                display: "flex",
-                                flexDirection: "column",
-                                gap: 1,
-                              }}
-                            >
-                              <IconButton
-                                onClick={() => remove(index)}
-                                aria-label="Delete"
-                                style={iconButtonStyles}
-                              >
-                                <img src={TrashIcon} alt="Image" />
-                                <Typography
-                                  variant="body1"
-                                  sx={{
-                                    color: "#717F8B",
-                                    fontFamily: "Roboto",
-                                    fontSize: "12px",
-                                  }}
-                                >
-                                  Delete
-                                </Typography>
-                              </IconButton>
-                            </Box>
-                          </>
-                        )}
-                      </Box>
-                    ))}
-                  </>
-                )}
-
-                <Button
-                  sx={{
-                    ml: "43%",
-                    mt: "1%",
-                    paddingLeft: "15px",
-                    paddingRight: "15px",
+          {values.founders.length > 0 &&
+            values.founders.map((founder, index) => (
+              <Box
+                key={index}
+                style={{
+                  marginLeft: "3.5%",
+                  display: "flex",
+                  gap: "120px",
+                  alignItems: "center",
+                }}
+              >
+                <Typography
+                  style={{
+                    fontFamily: "Roboto",
+                    color: "white",
+                    fontSize: "13px",
+                    flex: 2,
                   }}
-                  type="button"
-                  onClick={() => setIsFounderModalOpen(true)}
                 >
-                  Add Founder
-                </Button>
-                <Divider sx={{ border: "0.5px solid", mt: "10px" }} />
-                <EnhancedModal
-                  isOpen={isFounderModalOpen}
-                  dialogTitle={`Add Founder`}
-                  dialogContent={
-                    <Box>
-                      <Box
+                  {`${index + 1}. Founder Email: ${founder}`}
+                </Typography>
+                <Typography
+                  style={{
+                    fontFamily: "Roboto",
+                    color: "white",
+                    fontSize: "13px",
+                    flex: 2,
+                  }}
+                >
+                  {`Share amount: ${values.founderAmountOfShares[index]}`}
+                </Typography>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+                  {index >= 0 && (
+                    <IconButton
+                      onClick={() => {
+                        const newFounders = [...values.founders];
+                        const newShares = [...values.founderAmountOfShares];
+                        newFounders.splice(index, 1);
+                        newShares.splice(index, 1);
+                        setFieldValue("founders", newFounders);
+                        setFieldValue("founderAmountOfShares", newShares);
+                      }}
+                      aria-label="Delete"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
+                      }}
+                    >
+                      <img
+                        src={TrashIcon}
+                        alt="Trash Icon"
+                        style={{ width: "16px", height: "16px" }}
+                      />
+                      <Typography
+                        variant="body1"
                         sx={{
-                          display: "flex",
-                          flexDirection: "row",
-                          alignItems: "center",
-                          gap: "20px",
-                          marginLeft: "8%",
-                          marginTop: "5%",
+                          color: "#717F8B",
+                          fontFamily: "Roboto",
+                          fontSize: "12px",
                         }}
                       >
-                        <CustomField
-                          type="text"
-                          label="Founder Email"
-                          onChange={(e) => {
-                            console.log(
-                              "Founder Email changed:",
-                              e.target.value
-                            );
-                            setModalFounderEmail(e.target.value);
-                          }}
-                          error={touched.founders && Boolean(errors.founders)}
-                          helperText={touched.founders && errors.founders}
-                          InputLabelProps={InputLabelStyle}
-                        />
-
-                        <CustomField
-                          type="text"
-                          label="Share Amount"
-                          onChange={(e) => {
-                            console.log(
-                              "Share Amount changed:",
-                              e.target.value
-                            );
-                            setModalFounderAmountOfShares(e.target.value);
-                          }}
-                          error={touched.founders && Boolean(errors.founders)}
-                          helperText={touched.founders && errors.founders}
-                          InputLabelProps={InputLabelStyle}
-                        />
-
-                        <Button
-                          sx={{ mt: "12px" }}
-                          type="button"
-                          onClick={() => {
-                            console.log(
-                              "modalFounderEmail:",
-                              modalFounderEmail
-                            );
-                            console.log(
-                              "modalFounderAmountOfShares:",
-                              modalFounderAmountOfShares
-                            );
-
-                            setModalFounderEmail((prevEmail) => {
-                              setModalFounderAmountOfShares((prevAmount) => {
-                                push({
-                                  email: prevEmail,
-                                  founderAmountOfShares: prevAmount,
-                                });
-
-                                setIsFounderModalOpen(false);
-                                return "";
-                              });
-                              return "";
-                            });
-                          }}
-                        >
-                          Add
-                        </Button>
-                      </Box>
-                    </Box>
-                  }
-                  options={{
-                    onClose: () => setIsFounderModalOpen(false),
-                    disableSubmit: true,
-                  }}
-                />
+                        Delete
+                      </Typography>
+                    </IconButton>
+                  )}
+                </Box>
               </Box>
-            )}
-          </FieldArray>
+            ))}
+          <Button
+            sx={{
+              ml: "43%",
+              mt: "1%",
+              paddingLeft: "15px",
+              paddingRight: "15px",
+            }}
+            type="button"
+            onClick={() => setIsFounderModalOpen(true)}
+          >
+            Add Founder
+          </Button>
+          <Divider sx={{ border: "0.5px solid", mt: "10px" }} />
+
+          <EnhancedModal
+            isOpen={isFounderModalOpen}
+            dialogTitle={`Add Founder`}
+            dialogContent={
+              <Box
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: "20px",
+                  marginLeft: "8%",
+                  marginTop: "5%",
+                }}
+              >
+                <Field
+                  as={CustomField}
+                  autoComplete="off"
+                  label={`Founder Email`}
+                  name={`newFounderEmail`}
+                  type="text"
+                  variant="outlined"
+                  error={touched.founders && Boolean(errors.founders)}
+                  helperText={touched.founders && errors.founders}
+                  InputLabelProps={InputLabelStyle}
+                />
+                <Field
+                  as={CustomField}
+                  autoComplete="off"
+                  label={`Share amount`}
+                  name={`newFounderShares`}
+                  type="text"
+                  variant="outlined"
+                  error={
+                    touched.founderAmountOfShares &&
+                    Boolean(errors.founderAmountOfShares)
+                  }
+                  helperText={
+                    touched.founderAmountOfShares &&
+                    errors.founderAmountOfShares
+                  }
+                  InputLabelProps={InputLabelStyle}
+                />
+                <Button
+                  sx={{ mt: 1, width: 135 }}
+                  variant="contained"
+                  type="button"
+                  onClick={() => {
+                    const newFounders = [
+                      ...values.founders,
+                      values.newFounderEmail,
+                    ];
+                    const newShares = [
+                      ...values.founderAmountOfShares,
+                      values.newFounderShares,
+                    ];
+                    setFieldValue("founders", newFounders);
+                    setFieldValue("founderAmountOfShares", newShares);
+                    setIsFounderModalOpen(false);
+                    setFieldValue("newFounderEmail", "");
+                    setFieldValue("newFounderShares", "");
+                  }}
+                >
+                  Add
+                </Button>
+              </Box>
+            }
+            options={{
+              onClose: () => setIsFounderModalOpen(false),
+              disableSubmit: true,
+            }}
+          />
+
           <Typography
             style={{
               marginTop: "5px",
@@ -531,186 +517,161 @@ export const CreateCompany = () => {
           >
             Directors
           </Typography>
-
-          <FieldArray name="directors">
-            {({ push, remove }) => (
-              <Box>
-                {values.directors.length > 0 && (
-                  <>
-                    {values.directors.map((director, index) => (
-                      <Box
-                        key={index}
-                        style={{
-                          marginLeft: "3.5%",
-                          display: "flex",
-                          gap: "120px",
-                        }}
-                      >
-                        {index > 0 && (
-                          <>
-                            <Typography
-                              style={{
-                                fontFamily: "Roboto",
-                                color: "white",
-                                fontSize: "13px",
-                                flex: 2,
-                              }}
-                            >
-                              {index}.Director
-                            </Typography>
-                            <Typography
-                              style={{
-                                fontFamily: "Roboto",
-                                color: "white",
-                                fontSize: "13px",
-                                flex: 2,
-                              }}
-                            >
-                              Email: {director.email}
-                            </Typography>
-                            <Typography
-                              style={{
-                                fontFamily: "Roboto",
-                                color: "white",
-                                fontSize: "13px",
-                                flex: 3,
-                              }}
-                            >
-                              Amount Of Shares:{" "}
-                              {director.directorAmountOfShares}
-                            </Typography>
-                            <Box
-                              sx={{
-                                display: "flex",
-                                flexDirection: "column",
-                                gap: 1,
-                              }}
-                            >
-                              <IconButton
-                                onClick={() => remove(index)}
-                                aria-label="Delete"
-                                style={iconButtonStyles}
-                              >
-                                <img src={TrashIcon} alt="Image" />
-                                <Typography
-                                  variant="body1"
-                                  sx={{
-                                    color: "#717F8B",
-                                    fontFamily: "Roboto",
-                                    fontSize: "12px",
-                                  }}
-                                >
-                                  Delete
-                                </Typography>
-                              </IconButton>
-                            </Box>
-                          </>
-                        )}
-                      </Box>
-                    ))}
-                  </>
-                )}
-
-                <Button
-                  sx={{
-                    ml: "43%",
-                    mt: "1%",
-                    paddingLeft: "15px",
-                    paddingRight: "15px",
+          {values.directors.length > 0 &&
+            values.directors.map((director, index) => (
+              <Box
+                key={index}
+                style={{
+                  marginLeft: "3.5%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginTop: "10px",
+                }}
+              >
+                <Typography
+                  style={{
+                    fontFamily: "Roboto",
+                    color: "white",
+                    fontSize: "13px",
+                    flex: 2,
                   }}
-                  type="button"
-                  onClick={() => setIsDirectorModalOpen(true)}
                 >
-                  Add Director
-                </Button>
-
-                <Divider sx={{ border: "0.5px solid", mt: "10px" }} />
-                <EnhancedModal
-                  isOpen={isDirectorModalOpen}
-                  dialogTitle={`Add Director`}
-                  dialogContent={
-                    <Box>
-                      <Box
+                  {`${index + 1}. Director Email: ${director}`}
+                </Typography>
+                <Typography
+                  style={{
+                    fontFamily: "Roboto",
+                    color: "white",
+                    fontSize: "13px",
+                    flex: 2,
+                  }}
+                >
+                  {`Share amount: ${values.directorAmountOfShares[index]}`}
+                </Typography>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+                  {index >= 0 && (
+                    <IconButton
+                      onClick={() => {
+                        const newDirectors = [...values.directors];
+                        const newShares = [...values.directorAmountOfShares];
+                        newDirectors.splice(index, 1);
+                        newShares.splice(index, 1);
+                        setFieldValue("directors", newDirectors);
+                        setFieldValue("directorAmountOfShares", newShares);
+                      }}
+                      aria-label="Delete"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
+                      }}
+                    >
+                      <img
+                        src={TrashIcon}
+                        alt="Trash Icon"
+                        style={{ width: "16px", height: "16px" }}
+                      />
+                      <Typography
+                        variant="body1"
                         sx={{
-                          display: "flex",
-                          flexDirection: "row",
-                          alignItems: "center",
-                          gap: "20px",
-                          marginLeft: "8%",
-                          marginTop: "5%",
+                          color: "#717F8B",
+                          fontFamily: "Roboto",
+                          fontSize: "12px",
                         }}
                       >
-                        <CustomField
-                          type="text"
-                          label="Director Email"
-                          onChange={(e) => {
-                            console.log(
-                              "Director Email changed:",
-                              e.target.value
-                            );
-
-                            setModalDirectorEmail(e.target.value);
-                          }}
-                          error={touched.directors && Boolean(errors.directors)}
-                          helperText={touched.directors && errors.directors}
-                          InputLabelProps={InputLabelStyle}
-                        />
-
-                        <CustomField
-                          type="text"
-                          label="Share Amount"
-                          onChange={(e) => {
-                            console.log(
-                              "Share Amount changed:",
-                              e.target.value
-                            );
-                            setModalDirectorAmountOfShares(e.target.value);
-                          }}
-                          error={touched.directors && Boolean(errors.directors)}
-                          helperText={touched.directors && errors.directors}
-                          InputLabelProps={InputLabelStyle}
-                        />
-
-                        <Button
-                          sx={{ mt: "12px" }}
-                          type="button"
-                          onClick={() => {
-                            console.log(
-                              "modalDirectorEmail:",
-                              modalDirectorEmail
-                            );
-                            console.log(
-                              "modalDirectorAmountOfShares:",
-                              modalDirectorAmountOfShares
-                            );
-
-                            setModalDirectorEmail((prevEmail) => {
-                              setModalDirectorAmountOfShares((prevAmount) => {
-                                push({
-                                  email: prevEmail,
-                                  directorAmountOfShares: prevAmount,
-                                });
-
-                                setIsDirectorModalOpen(false);
-                                return "";
-                              });
-                              return "";
-                            });
-                          }}
-                        >
-                          Add
-                        </Button>
-                      </Box>
-                    </Box>
-                  }
-                  options={{
-                    onClose: () => setIsDirectorModalOpen(false),
-                    disableSubmit: true,
-                  }}
-                />
+                        Delete
+                      </Typography>
+                    </IconButton>
+                  )}
+                </Box>
               </Box>
-            )}
-          </FieldArray>
+            ))}
+          <Button
+            sx={{
+              ml: "43%",
+              mt: "1%",
+              paddingLeft: "15px",
+              paddingRight: "15px",
+            }}
+            type="button"
+            onClick={() => setIsDirectorModalOpen(true)}
+          >
+            Add Director
+          </Button>
+          <Divider sx={{ border: "0.5px solid", mt: "10px" }} />
+
+          <EnhancedModal
+            isOpen={isDirectorModalOpen}
+            dialogTitle={`Add Director`}
+            dialogContent={
+              <Box
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: "20px",
+                  marginLeft: "8%",
+                  marginTop: "5%",
+                }}
+              >
+                <Field
+                  as={CustomField}
+                  autoComplete="off"
+                  label={`Director Email`}
+                  name={`newDirectorEmail`}
+                  type="text"
+                  variant="outlined"
+                  error={touched.directors && Boolean(errors.directors)}
+                  helperText={touched.directors && errors.directors}
+                  InputLabelProps={InputLabelStyle}
+                />
+                <Field
+                  as={CustomField}
+                  autoComplete="off"
+                  label={`Share amount`}
+                  name={`newDirectorShares`}
+                  type="text"
+                  variant="outlined"
+                  error={
+                    touched.directorAmountOfShares &&
+                    Boolean(errors.directorAmountOfShares)
+                  }
+                  helperText={
+                    touched.directorAmountOfShares &&
+                    errors.directorAmountOfShares
+                  }
+                  InputLabelProps={InputLabelStyle}
+                />
+                <Button
+                  sx={{ mt: 1, width: 135 }}
+                  variant="contained"
+                  type="button"
+                  onClick={() => {
+                    const newDirectors = [
+                      ...values.directors,
+                      values.newDirectorEmail,
+                    ];
+                    const newShares = [
+                      ...values.directorAmountOfShares,
+                      values.newDirectorShares,
+                    ];
+                    setFieldValue("directors", newDirectors);
+                    setFieldValue("directorAmountOfShares", newShares);
+                    setIsDirectorModalOpen(false);
+                    setFieldValue("newDirectorEmail", "");
+                    setFieldValue("newDirectorShares", "");
+                  }}
+                >
+                  Add
+                </Button>
+              </Box>
+            }
+            options={{
+              onClose: () => setIsDirectorModalOpen(false),
+              disableSubmit: true,
+            }}
+          />
           <Typography
             style={{
               marginTop: "5px",
@@ -723,145 +684,123 @@ export const CreateCompany = () => {
           >
             Admins
           </Typography>
-          <FieldArray name="admins">
-            {({ push, remove }) => (
-              <Box>
-                {values.admins.length > 0 && (
-                  <>
-                    {values.admins.map((admin, index) => (
-                      <Box
-                        key={index}
-                        style={{
-                          marginLeft: "3.5%",
-                          display: "flex",
-                          gap: "120px",
-                        }}
-                      >
-                        {index > 0 && (
-                          <>
-                            <Typography
-                              style={{
-                                fontFamily: "Roboto",
-                                color: "white",
-                                fontSize: "13px",
-                                flex: 2,
-                              }}
-                            >
-                              {index}.Admin
-                            </Typography>
-                            <Typography
-                              style={{
-                                fontFamily: "Roboto",
-                                color: "white",
-                                fontSize: "13px",
-                                flex: 6.8,
-                              }}
-                            >
-                              Email: {admin.email}
-                            </Typography>
-                            <Box
-                              sx={{
-                                display: "flex",
-                                flexDirection: "column",
-                                gap: 1,
-                              }}
-                            >
-                              <IconButton
-                                onClick={() => remove(index)}
-                                aria-label="Delete"
-                                style={iconButtonStyles}
-                              >
-                                <img src={TrashIcon} alt="Image" />
-                                <Typography
-                                  variant="body1"
-                                  sx={{
-                                    color: "#717F8B",
-                                    fontFamily: "Roboto",
-                                    fontSize: "12px",
-                                  }}
-                                >
-                                  Delete
-                                </Typography>
-                              </IconButton>
-                            </Box>
-                          </>
-                        )}
-                      </Box>
-                    ))}
-                  </>
-                )}
-
-                <Button
-                  sx={{
-                    ml: "43%",
-                    mt: "1%",
-                    paddingLeft: "18px",
-                    paddingRight: "18px",
+          {values.admins.length > 0 &&
+            values.admins.map((admin, index) => (
+              <Box
+                key={index}
+                style={{
+                  marginLeft: "3.5%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginTop: "10px",
+                }}
+              >
+                <Typography
+                  style={{
+                    fontFamily: "Roboto",
+                    color: "white",
+                    fontSize: "13px",
+                    flex: 2,
                   }}
-                  type="button"
-                  onClick={() => setIsAdminModalOpen(true)}
                 >
-                  Add Admin
-                </Button>
-                <Divider sx={{ border: "0.5px solid", mt: "10px" }} />
-                <EnhancedModal
-                  isOpen={isAdminModalOpen}
-                  dialogTitle={`Add Admin`}
-                  dialogContent={
-                    <Box>
-                      <Box
+                  {`${index + 1}. Admin Email: ${admin}`}
+                </Typography>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+                  {index >= 0 && (
+                    <IconButton
+                      onClick={() => {
+                        const newAdmins = [...values.admins];
+                        newAdmins.splice(index, 1);
+                        setFieldValue("admins", newAdmins);
+                      }}
+                      aria-label="Delete"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
+                      }}
+                    >
+                      <img
+                        src={TrashIcon}
+                        alt="Trash Icon"
+                        style={{ width: "16px", height: "16px" }}
+                      />
+                      <Typography
+                        variant="body1"
                         sx={{
-                          display: "flex",
-                          flexDirection: "row",
-                          alignItems: "center",
-                          gap: "20px",
-                          marginLeft: "25%",
-                          marginTop: "5%",
+                          color: "#717F8B",
+                          fontFamily: "Roboto",
+                          fontSize: "12px",
                         }}
                       >
-                        <CustomField
-                          type="text"
-                          label="Admin Email"
-                          onChange={(e) => {
-                            console.log("Admin Email changed:", e.target.value);
-                            setModalAdminEmail(e.target.value);
-                          }}
-                          error={touched.admins && Boolean(errors.admins)}
-                          helperText={touched.admins && errors.admins}
-                          InputLabelProps={InputLabelStyle}
-                        />
-
-                        <Button
-                          sx={{ mt: "12px" }}
-                          type="button"
-                          onClick={() => {
-                            console.log("modalAdminEmail:", modalAdminEmail);
-
-                            setModalAdminEmail((prevEmail) => {
-                              push({
-                                email: prevEmail,
-                              });
-
-                              setIsAdminModalOpen(false);
-                              return "";
-                            });
-                          }}
-                        >
-                          Add
-                        </Button>
-                      </Box>
-                    </Box>
-                  }
-                  options={{
-                    onClose: () => setIsAdminModalOpen(false),
-                    disableSubmit: true,
-                  }}
-                />
+                        Delete
+                      </Typography>
+                    </IconButton>
+                  )}
+                </Box>
               </Box>
-            )}
-          </FieldArray>
+            ))}
+          <Button
+            sx={{
+              ml: "43%",
+              mt: "1%",
+              paddingLeft: "18px",
+              paddingRight: "18px",
+            }}
+            type="button"
+            onClick={() => setIsAdminModalOpen(true)}
+          >
+            Add Admin
+          </Button>
+          <Divider sx={{ border: "0.5px solid", mt: "10px" }} />
 
-          {/*<pre>{JSON.stringify(values, null, 2)}</pre>*/}
+          <EnhancedModal
+            isOpen={isAdminModalOpen}
+            dialogTitle={`Add Admin`}
+            dialogContent={
+              <Box
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: "20px",
+                  marginLeft: "20%",
+                  marginTop: "5%",
+                }}
+              >
+                <Field
+                  as={CustomField}
+                  autoComplete="off"
+                  label={`Admin Email`}
+                  name={`newAdminEmail`}
+                  type="text"
+                  variant="outlined"
+                  error={touched.admins && Boolean(errors.admins)}
+                  helperText={touched.admins && errors.admins}
+                  InputLabelProps={InputLabelStyle}
+                />
+                <Button
+                  sx={{ mt: 1, width: 135 }}
+                  variant="contained"
+                  type="button"
+                  onClick={() => {
+                    const newAdmins = [...values.admins, values.newAdminEmail];
+                    setFieldValue("admins", newAdmins);
+                    setIsAdminModalOpen(false);
+                    setFieldValue("newAdminEmail", "");
+                  }}
+                >
+                  Add
+                </Button>
+              </Box>
+            }
+            options={{
+              onClose: () => setIsAdminModalOpen(false),
+              disableSubmit: true,
+            }}
+          />
+
           <Box sx={{ mt: 2, ml: "40%" }}>
             <Button
               color="primary"
@@ -900,16 +839,12 @@ export const CreateCompany = () => {
         }}
       >
         {createCompanyModal}
-        <EnhancedModal
-          isOpen={false}
-          dialogTitle={`Company Notification Details`}
-          dialogContent={companyData}
-          options={{
-            onClose: () => setOpen(false),
-            disableSubmit: true,
-          }}
-        />
       </Box>
     </Box>
   );
 };
+{
+  {
+    /*<pre>{JSON.stringify(values, null, 2)}</pre>*/
+  }
+}
