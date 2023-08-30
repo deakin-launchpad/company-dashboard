@@ -1,21 +1,19 @@
 /* eslint-disable no-unused-vars */
 import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
   TextField,
   Typography,
   Button,
   Box,
-  Divider,
-  Container,
-  Card,
-  CardContent,
-  Link,
+  InputLabel,
+  styled,
   Checkbox,
   FormControlLabel,
 } from "@mui/material";
+import logoImage from "../../../assets/logo.png";
+import authImage from "../../../assets/register.png";
 import { notify } from "components";
-import { Link as RouterLink } from "react-router-dom";
 import { DeviceInfoContext } from "contexts/index";
 import { API } from "helpers/index";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
@@ -142,64 +140,78 @@ export const Register = () => {
   };
 
   let form = (
-    <form noValidate>
+    <form
+      noValidate
+      style={{
+        maxHeight: "90%",
+        overflowY: "hidden",
+        maxWidth: "80%",
+        marginLeft: "9%",
+      }}
+      autoComplete="off"
+    >
+      <InputLabel htmlFor="firstname">First Name</InputLabel>
       <TextField
         variant="outlined"
         margin="normal"
         required
         fullWidth
-        id="firstName"
-        label="First Name"
-        name="firstName"
-        autoComplete="email"
+        id="firstname"
+        name="firstname"
+        autoComplete="off"
         onChange={(e) => setFirstName(e.target.value)}
         autoFocus
+        size="small"
       />
+
+      <InputLabel htmlFor="lastname">Last Name</InputLabel>
       <TextField
         variant="outlined"
         margin="normal"
         required
         fullWidth
-        id="lastName"
-        label="Last Name"
-        name="lastName"
-        autoComplete="email"
+        id="lastname"
+        name="lastname"
+        autoComplete="off"
         onChange={(e) => setLastName(e.target.value)}
       />
+
+      <InputLabel htmlFor="email">Email</InputLabel>
       <TextField
         variant="outlined"
         margin="normal"
         required
         fullWidth
         id="email"
-        label="Email Address"
         name="email"
-        autoComplete="email"
+        autoComplete="off"
         onChange={(e) => setEmailId(e.target.value)}
       />
+
+      <InputLabel htmlFor="password">Password</InputLabel>
       <TextField
         variant="outlined"
         margin="normal"
         required
         fullWidth
-        name="password"
-        label="Password"
-        type="password"
         id="password"
+        type="password"
+        name="password"
+        autoComplete="off"
         onChange={(e) => setPassword(e.target.value)}
-        autoComplete="current-password"
       />
+
+      <InputLabel htmlFor="confirmpassword">Account Address</InputLabel>
       <TextField
         variant="outlined"
         margin="normal"
         required
         fullWidth
-        name="confirmPassword"
-        label="Confirm Password"
+        id="confirmpassword"
+        name="confirmpassword"
+        autoComplete="off"
         type="password"
-        id="confirmPassword"
         onChange={(e) => setConfirmPassword(e.target.value)}
-        autoComplete="current-password"
       />
 
       <Box sx={{ mt: 2 }}>
@@ -239,7 +251,9 @@ export const Register = () => {
             />
           }
           label={
-            <Typography sx={{ fontSize: 12, fontWeight: "bold" }}>
+            <Typography
+              sx={{ fontSize: 12, fontWeight: "bold", color: "white" }}
+            >
               Please confirm terms and conditions to allow control on your
               behalf.
             </Typography>
@@ -247,16 +261,7 @@ export const Register = () => {
         />
       </Box>
 
-      <Box sx={{ mt: 0 }}>
-        <Button
-          fullWidth
-          variant="contained"
-          color="primary"
-          onClick={validationCheck}
-        >
-          Register
-        </Button>
-      </Box>
+      <Box sx={{ mt: 0 }}></Box>
     </form>
   );
   let content = (
@@ -264,56 +269,74 @@ export const Register = () => {
       sx={{
         backgroundColor: "background.default",
         display: "flex",
-        flexDirection: "column",
         minHeight: "100vh",
       }}
     >
-      <Container maxWidth="sm" sx={{ py: "80px" }}>
-        <Card>
-          <CardContent
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              p: 4,
-            }}
-          >
-            <Box
-              sx={{
-                alignItems: "center",
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <div>
-                <Typography color="textPrimary" gutterBottom variant="h4">
-                  {pageHeading}
-                </Typography>
-                <Typography color="textSecondary" variant="body2">
-                  Register for the Company Platform
-                </Typography>
-              </div>
-            </Box>
-            <Box
-              sx={{
-                flexGrow: 1,
-                mt: 1,
-              }}
-            >
-              {form}
-            </Box>
-            <Divider sx={{ my: 3 }} />
+      {/* Left-side container for logo and form */}
+      <Box sx={{ flex: 1, padding: "20px" }}>
+        <Box
+          component="img"
+          src={logoImage}
+          alt="Image Not Found"
+          style={{
+            width: "152px",
+            height: "30px",
+          }}
+        />
+
+        <Typography
+          variant="h5"
+          style={{ marginBottom: "5%", marginTop: "2%", marginLeft: "9%" }}
+        >
+          Welcome to Blocconi<br></br>
+          Create User to Continue
+        </Typography>
+
+        {/* Form */}
+        {form}
+
+        <Typography
+          sx={{
+            textAlign: "center",
+            color: "white",
+            mt: "20px",
+            fontSize: "12px",
+          }}
+        >
+          Already a member?{" "}
+          <strong>
             <Link
-              color="textSecondary"
-              component={RouterLink}
               to="/login"
-              variant="body2"
+              style={{ color: "inherit", textDecoration: "none" }}
             >
-              Have an account?
+              Login Now
             </Link>
-          </CardContent>
-        </Card>
-      </Container>
+          </strong>
+        </Typography>
+      </Box>
+
+      <Box
+        sx={{
+          flex: 1,
+          display: "flex",
+          justifyContent: "flex-end",
+          maxHeight: "100%",
+          maxWidth: "150%",
+        }}
+      >
+        <Box
+          component="img"
+          src={authImage}
+          alt="Welcome Image"
+          style={{
+            maxHeight: "100%",
+            width: "680px",
+            overflow: "hidden",
+          }}
+        />
+      </Box>
     </Box>
   );
+
   return content;
 };

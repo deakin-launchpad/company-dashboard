@@ -1,17 +1,23 @@
 /* eslint-disable no-unused-vars */
 import { useState, useCallback, useEffect } from "react";
+import { Link } from 'react-router-dom';
+import { useTheme } from "@mui/material/styles";
 import { Box, Container, Button, TextField } from "@mui/material";
 import { LayoutConfig } from "constants/index";
 import { EnhancedModal, notify } from "components/index";
+import HomeImage from "../../../assets/home.png";
 import * as Yup from "yup";
 import { Formik, Form, Field, FieldArray } from "formik";
 import { API } from "helpers/index";
 import { onMessageListener } from "firebase";
 import { Typography } from "../../../../node_modules/@mui/material/index";
+import { values } from "lodash";
 
 export const Home = () => {
   const [algorandCompanyModalIsOpen, setAlgorandCompanyModalIsOpen] = useState(false);
   const [ethereumCompanyModalIsOpen, setEthereumCompanyModalIsOpen] = useState(false);
+  const theme = useTheme();
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [notificationData, setNotificationData] = useState([]);
   const [user, setUser] = useState([]);
@@ -35,7 +41,7 @@ export const Home = () => {
       notify("Failed to Fetch User Profile");
     }
   }, []);
-  
+
   useEffect(() => {
     getUser();
   }, [getUser]);
@@ -77,8 +83,7 @@ export const Home = () => {
   const algorandValidationSchema = () => {
     return Yup.object().shape({
       name: Yup.string().max(255).required("Company Name Is Required"),
-      founders: Yup.array()
-        .required("Founders must be added"),
+      founders: Yup.array().required("Founders must be added"),
       // .test("Email Exists", async function (value) {
       //   return await API.doesUserExist(value)
       //     .then((response) => {
@@ -466,6 +471,7 @@ export const Home = () => {
                           errors.founderAmountOfShares
                         }
                       />
+
                       <Box
                         sx={{
                           display: "flex",
@@ -972,59 +978,79 @@ export const Home = () => {
 
   return (
     <Box sx={LayoutConfig.defaultContainerSX}>
-      {(() => {
-        if ("accountAddress" in user && "logicSignature" in user && user.logicSignature.length > 0) {
-          return (
-            <Container sx={{ mt: 2 }}>
-              <Button variant="contained" onClick={() => setAlgorandCompanyModalIsOpen(true)}>
-                Create Algorand Company
+      <Box
+        sx={{
+          backgroundColor: theme.palette.background.default,
+          height: "89vh",
+
+          position: "relative",
+        }}
+      >
+        <Box
+          sx={{
+            width: "93%",
+            height: "90%",
+            overflowY: "hidden",
+            backgroundColor: theme.palette.background.secondary,
+            position: "absolute", // Add this line
+            top: "50%",
+            borderRadius: "5px",
+            bottom: "50%", // Add this line
+            left: "50%", // Add this line
+            transform: "translate(-50%, -50%)", // Add this line
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              position: "absolute", // Add this line
+              top: "50%", // Add this line
+              left: "50%", // Add this line
+              transform: "translate(-50%, -50%)", // Add this line
+            }}
+          >
+            <img
+              src={HomeImage}
+              alt="Your Image"
+              style={{ width: "150px", height: "170px", marginBottom: "20px" }}
+            />
+            <Typography
+              variant="h6"
+              color="white"
+              sx={{ fontWeight: "800", mb: "2px" }}
+            >
+              Please create a company now!
+            </Typography>
+            <Typography
+              variant="body2"
+              //color="textSecondary"
+              sx={{ fontSize: "12px" }}
+            >
+              Create a company in just a few minutes
+            </Typography>
+            <Link to="/createCompany" style={{ textDecoration: 'none', color: 'inherit', width: "100%" }}>
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                sx={{
+                  mt: "30px",
+                  width: "100%",
+                  height: "27px",
+                }}
+
+              >
+
+                Create Now &gt;
+
               </Button>
-            </Container>
-          );
-        }
-      })()}
-      {(() => {
-        if ("ethereumAddress" in user) {
-          return (
-            <Container sx={{ mt: 2 }}>
-              <Button variant="contained" onClick={() => setEthereumCompanyModalIsOpen(true)}>
-                Create Ethereum Company
-              </Button>
-            </Container>
-          );
-        }
-      })()}
-      
-      {/* CREATE ALGORAND COMPANY MODAL */}
-      <EnhancedModal
-        isOpen={algorandCompanyModalIsOpen}
-        dialogTitle={`Create an Algorand Company`}
-        dialogContent={createAlgorandCompanyModal}
-        options={{
-          onClose: () => setAlgorandCompanyModalIsOpen(false),
-          disableSubmit: true,
-        }}
-      />
-      {/* CREATE ETHEREUM COMPANY MODAL */}
-      <EnhancedModal
-        isOpen={ethereumCompanyModalIsOpen}
-        dialogTitle={`Create an Ethereum Company`}
-        dialogContent={createEthereumCompanyModal}
-        options={{
-          onClose: () => setEthereumCompanyModalIsOpen(false),
-          disableSubmit: true,
-        }}
-      />
-      {/* NOTIFICATION MODAL */}
-      <EnhancedModal
-        isOpen={open}
-        dialogTitle={`Company Notification Details`}
-        dialogContent={companyData}
-        options={{
-          onClose: () => setOpen(false),
-          disableSubmit: true,
-        }}
-      />
+            </Link>
+          </Box>
+        </Box>
+      </Box>
     </Box>
   );
 };

@@ -3,12 +3,21 @@ import { useState, useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Box, Button, FormHelperText, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormHelperText,
+  TextField,
+  styled,
+  InputLabel,
+} from "@mui/material";
 import { LoginContext, DeviceInfoContext } from "contexts";
 import { ConnectionConfig, DeveloperConfig } from "constants/index";
 import { fetchToken } from "../../../firebase";
+import { useTheme } from "@mui/material/styles";
 
 export const LoginForm = (props) => {
+  const theme = useTheme();
   const { devMode, setAccessToken } = useContext(LoginContext);
   const { deviceUUID } = useContext(DeviceInfoContext);
   const [messagingToken, setMessagingToken] = useState();
@@ -69,14 +78,24 @@ export const LoginForm = (props) => {
   });
 
   let form = (
-    <form noValidate onSubmit={formik.handleSubmit}>
+    <form
+      noValidate
+      onSubmit={formik.handleSubmit}
+      style={{
+        maxHeight: "90%",
+        overflowY: "hidden",
+        maxWidth: "80%",
+        marginLeft: "9%",
+      }}
+    >
+      <InputLabel htmlFor="email">Email Address</InputLabel>
       <TextField
         error={formik.touched.emailId && Boolean(formik.errors.emailId)}
         fullWidth
         helperText={formik.touched.emailId && formik.errors.emailId}
-        label="Email Address"
         margin="normal"
         name="emailId"
+        autoComplete="off"
         onBlur={formik.handleBlur}
         onChange={formik.handleChange}
         type="email"
@@ -85,13 +104,14 @@ export const LoginForm = (props) => {
         }
         variant="outlined"
       />
+      <InputLabel htmlFor="password">Password</InputLabel>
       <TextField
         error={formik.touched.password && Boolean(formik.errors.password)}
         fullWidth
         helperText={formik.touched.password && formik.errors.password}
-        label="Password"
         margin="normal"
         name="password"
+        autoComplete="off"
         onBlur={formik.handleBlur}
         onChange={formik.handleChange}
         type="password"
@@ -110,11 +130,15 @@ export const LoginForm = (props) => {
           color="primary"
           disabled={formik.isSubmitting}
           fullWidth
-          size="large"
           type="submit"
           variant="contained"
+          sx={{
+            marginTop: "20px",
+            width: "100%",
+            height: "27px",
+          }}
         >
-          Log In
+          Log In &gt;
         </Button>
       </Box>
     </form>

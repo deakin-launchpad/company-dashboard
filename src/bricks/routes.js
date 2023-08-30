@@ -11,11 +11,13 @@ import {
   AuthCallback,
   FourOFour,
   Home,
+  Landing,
   Login,
   MobileMenu,
   Register,
 } from "views";
 import { Layout } from "./layout";
+import { CreateCompany } from "views/index";
 
 const AuthRoute = ({ children, redirectTo, parentProps, loginStatus }) => {
   return loginStatus === false ? (
@@ -67,7 +69,7 @@ export const AppRoutes = (props) => {
             loginStatus={loginStatus}
             parentProps={props}
           >
-            <Navigate to={{ pathname: "/login" }} {...props} />
+            <Landing {...props} />
           </UnauthRoute>
         }
       />
@@ -121,6 +123,22 @@ export const AppRoutes = (props) => {
           >
             <Layout>
               <Home {...props} />
+            </Layout>
+          </AuthRoute>
+        }
+      />
+      <Route
+        exact
+        path="/createCompany"
+        element={
+          <AuthRoute
+            redirectTo="/login"
+            loginStatus={loginStatus}
+            parentProps={props}
+          >
+            <Layout>
+              {" "}
+              <CreateCompany {...props} />
             </Layout>
           </AuthRoute>
         }
