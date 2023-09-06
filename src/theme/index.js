@@ -1,90 +1,145 @@
 import {
-  createTheme as createMuiTheme, responsiveFontSizes, ThemeProvider as MuiThemeProvider
-} from '@mui/material/styles';
-import { LoadingScreen } from 'components/index';
-import { LayoutContext } from 'contexts/index';
-import merge from 'lodash/merge';
-import PropTypes from 'prop-types';
-import { useContext, useEffect, useState } from 'react';
-import { THEMES } from '../constants/theme';
-import { darkShadows, lightShadows } from './shadows';
-
+  createTheme as createMuiTheme,
+  responsiveFontSizes,
+  ThemeProvider as MuiThemeProvider,
+} from "@mui/material/styles";
+import { LoadingScreen } from "components/index";
+import { LayoutContext } from "contexts/index";
+import "@fontsource/montserrat";
+import merge from "lodash/merge";
+import PropTypes from "prop-types";
+import { useContext, useEffect, useState } from "react";
+import { THEMES } from "../constants/theme";
+import { darkShadows, lightShadows } from "./shadows";
 
 const baseOptions = {
-  direction: 'ltr',
+  direction: "ltr",
   components: {
     MuiAvatar: {
       styleOverrides: {
         fallback: {
-          height: '75%',
-          width: '75%'
-        }
-      }
+          height: "75%",
+          width: "75%",
+        },
+      },
     },
+
     MuiButton: {
       styleOverrides: {
         root: {
-          textTransform: 'none'
-        }
-      }
+          textTransform: "none",
+          "&:hover": {
+            backgroundColor: "transparent",
+          },
+          backgroundColor: "#0D539B",
+          fontFamily: "Roboto, sans-serif",
+          color: "white",
+          borderRadius: "8px",
+        },
+      },
     },
+    MuiCheckbox: {
+      styleOverrides: {
+        root: {
+          color: "#ffffff",
+          "&$checked": {
+            color: "#ffffff",
+          },
+        },
+      },
+    },
+
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          "& .MuiOutlinedInput-root": {
+            height: "30px",
+            borderRadius: "2px",
+            marginTop: "-3%",
+            fontSize: "12px",
+            backgroundColor: "#162A3C",
+          },
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          fontSize: "12px",
+          color: "#ffffff",
+          fontWeight: "300",
+        },
+      },
+    },
+
     MuiCardHeader: {
       defaultProps: {
         titleTypographyProps: {
-          variant: 'h6'
-        }
-      }
+          variant: "h6",
+        },
+      },
     },
     MuiLinearProgress: {
       styleOverrides: {
         root: {
           borderRadius: 3,
-          overflow: 'hidden'
-        }
-      }
+          overflow: "hidden",
+        },
+      },
     },
     MuiListItemIcon: {
       styleOverrides: {
         root: {
-          minWidth: 'auto',
-          marginRight: '16px'
-        }
-      }
-    }
+          minWidth: "auto",
+          marginRight: "16px",
+        },
+      },
+    },
   },
   typography: {
     button: {
-      fontWeight: 600
+      fontWeight: 400,
+      fontSize: "12px",
     },
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"',
+    fontFamily: "Montserrat, sans-serif",
     h1: {
-      fontWeight: 600,
-      fontSize: '3.5rem'
+      fontWeight: 700,
+      fontSize: "3.5rem",
+      color: "#ffffff",
     },
     h2: {
       fontWeight: 600,
-      fontSize: '3rem'
+      fontSize: "3rem",
+      color: "#000000",
     },
     h3: {
       fontWeight: 600,
-      fontSize: '2.25rem'
+      fontSize: "2.25rem",
+      color: "#000000",
     },
     h4: {
       fontWeight: 600,
-      fontSize: '2rem'
+      fontSize: "2rem",
+      color: "#000000",
     },
     h5: {
       fontWeight: 600,
-      fontSize: '1.5rem'
+      fontSize: "1.5rem",
+      color: "#ffffff",
     },
     h6: {
-      fontWeight: 600,
-      fontSize: '1.125rem'
+      fontWeight: 500,
+      fontSize: "1rem",
+      color: "#717F8B",
     },
     overline: {
-      fontWeight: 600
-    }
-  }
+      fontWeight: 600,
+    },
+    body2: {
+      color: "#717F8B",
+      fontSize: "12px",
+    },
+  },
 };
 
 const themesOptions = {
@@ -93,126 +148,133 @@ const themesOptions = {
       MuiInputBase: {
         styleOverrides: {
           input: {
-            '&::placeholder': {
+            "&::placeholder": {
               opacity: 0.86,
-              color: '#42526e'
-            }
-          }
-        }
-      }
+              color: "#000000",
+            },
+            "&:focus": {
+              borderColor: "transparent",
+            },
+          },
+        },
+      },
     },
     palette: {
       action: {
-        active: '#6b778c'
+        active: "#ffffff", //Icons
       },
       background: {
-        default: '#f4f5f7',
-        paper: '#ffffff'
+        default: "#122433",
+        secondary: "#162A3C",
+        paper: "#162A3C", //Modal and menu
       },
       error: {
-        contrastText: '#ffffff',
-        main: '#f44336'
+        contrastText: "#ff0000",
+        main: "#ff0000",
       },
-      mode: 'light',
+      mode: "light",
       primary: {
-        contrastText: '#ffffff',
-        main: '#5664d2'
+        contrastText: "#000000",
+        main: "#122433",
       },
       success: {
-        contrastText: '#ffffff',
-        main: '#4caf50'
+        contrastText: "#000000",
+        main: "#000000",
       },
       text: {
-        primary: '#172b4d',
-        secondary: '#6b778c'
+        primary: "#ffffff",
+        secondary: "#000000",
       },
       warning: {
-        contrastText: '#ffffff',
-        main: '#ff9800'
-      }
+        contrastText: "#000000",
+        main: "#000000",
+      },
     },
-    shadows: lightShadows
+    shadows: lightShadows,
   },
   [THEMES.DARK]: {
     components: {
       MuiTableCell: {
         styleOverrides: {
           root: {
-            borderBottom: '1px solid rgba(145, 158, 171, 0.24)'
-          }
-        }
-      }
+            borderBottom: "1px solid rgba(145, 158, 171, 0.24)",
+          },
+        },
+      },
     },
     palette: {
       background: {
-        default: '#171c24',
-        paper: '#222b36'
+        default: "#171c24",
+        paper: "#222b36",
       },
-      divider: 'rgba(145, 158, 171, 0.24)',
+      button: {
+        default: "#0D539B",
+      },
+      divider: "rgba(145, 158, 171, 0.24)",
       error: {
-        contrastText: '#ffffff',
-        main: '#f44336'
+        contrastText: "#ffffff",
+        main: "#f44336",
       },
-      mode: 'dark',
+      mode: "dark",
       primary: {
-        contrastText: '#ffffff',
-        main: '#688eff'
+        contrastText: "#ffffff",
+        main: "#688eff",
       },
       success: {
-        contrastText: '#ffffff',
-        main: '#4caf50'
+        contrastText: "#ffffff",
+        main: "#4caf50",
       },
       text: {
-        primary: '#ffffff',
-        secondary: '#919eab'
+        primary: "#ffffff",
+        secondary: "#717F8B",
       },
       warning: {
-        contrastText: '#ffffff',
-        main: '#ff9800'
-      }
+        contrastText: "#ffffff",
+        main: "#ff9800",
+      },
     },
-    shadows: darkShadows
+    shadows: darkShadows,
   },
   [THEMES.NATURE]: {
     components: {
       MuiTableCell: {
         styleOverrides: {
           root: {
-            borderBottom: '1px solid rgba(145, 158, 171, 0.24)'
-          }
-        }
-      }
+            borderBottom: "1px solid rgba(145, 158, 171, 0.24)",
+          },
+        },
+      },
     },
     palette: {
       background: {
-        default: '#1c2531',
-        paper: '#293142'
+        default: "#1c2531",
+        paper: "#293142",
       },
-      divider: 'rgba(145, 158, 171, 0.24)',
+      divider: "rgba(145, 158, 171, 0.24)",
       error: {
-        contrastText: '#ffffff',
-        main: '#f44336'
+        contrastText: "#ffffff",
+        main: "#f44336",
       },
-      mode: 'dark',
+      mode: "dark",
       primary: {
-        contrastText: '#ffffff',
-        main: '#01ab56'
+        contrastText: "#ffffff",
+        main: "#01ab56",
       },
       success: {
-        contrastText: '#ffffff',
-        main: '#4caf50'
+        contrastText: "#ffffff",
+        main: "#4caf50",
       },
       text: {
-        primary: '#ffffff',
-        secondary: '#919eab'
+        primary: "#ffffff",
+        secondary: "#919eab",
       },
       warning: {
-        contrastText: '#ffffff',
-        main: '#ff9800'
-      }
+        contrastText: "#ffffff",
+        main: "#ff9800",
+      },
     },
-    shadows: darkShadows
-  }
+    shadows: darkShadows,
+  },
 };
 
 export const createTheme = (config = {}) => {
@@ -223,15 +285,23 @@ export const createTheme = (config = {}) => {
     themeOptions = themesOptions[THEMES.LIGHT];
   }
 
-  let theme = createMuiTheme(merge({}, baseOptions, themeOptions, {
-    ...(config.roundedCorners && {
-      shape: {
-        borderRadius: 16
+  let theme = createMuiTheme(
+    merge(
+      {},
+      baseOptions,
+      themeOptions,
+      {
+        ...(config.roundedCorners && {
+          shape: {
+            borderRadius: 16,
+          },
+        }),
+      },
+      {
+        direction: config.direction,
       }
-    })
-  }, {
-    direction: config.direction
-  }));
+    )
+  );
 
   if (config.responsiveFontSizes) {
     theme = responsiveFontSizes(theme);
@@ -239,7 +309,6 @@ export const createTheme = (config = {}) => {
 
   return theme;
 };
-
 
 export const ThemeProvider = ({ children }) => {
   const [appTheme, changeAppTheme] = useState();
@@ -249,12 +318,11 @@ export const ThemeProvider = ({ children }) => {
       if (layoutContext.currentTheme !== undefined)
         changeAppTheme(createTheme(layoutContext.currentTheme));
   }, [layoutContext]);
-  if (appTheme === undefined) return <LoadingScreen loadingText='loading theme' />;
-  return <MuiThemeProvider theme={appTheme} >
-    {children}
-  </MuiThemeProvider>;
+  if (appTheme === undefined)
+    return <LoadingScreen loadingText="loading theme" />;
+  return <MuiThemeProvider theme={appTheme}>{children}</MuiThemeProvider>;
 };
 
 ThemeProvider.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };

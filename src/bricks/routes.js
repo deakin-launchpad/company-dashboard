@@ -11,9 +11,12 @@ import {
   AuthCallback,
   FourOFour,
   Home,
+  Landing,
   Login,
   MobileMenu,
   Register,
+  AlgoCreateCompany,
+  EthCreateCompany,
 } from "views";
 import { Layout } from "./layout";
 
@@ -67,7 +70,7 @@ export const AppRoutes = (props) => {
             loginStatus={loginStatus}
             parentProps={props}
           >
-            <Navigate to={{ pathname: "/login" }} {...props} />
+            <Landing {...props} />
           </UnauthRoute>
         }
       />
@@ -121,6 +124,36 @@ export const AppRoutes = (props) => {
           >
             <Layout>
               <Home {...props} />
+            </Layout>
+          </AuthRoute>
+        }
+      />
+      <Route
+        exact
+        path="/createAlgoCompany"
+        element={
+          <AuthRoute
+            redirectTo="/login"
+            loginStatus={loginStatus}
+            parentProps={props}
+          >
+            <Layout>
+              <AlgoCreateCompany {...props} />
+            </Layout>
+          </AuthRoute>
+        }
+      />
+      <Route
+        exact
+        path="/createEthCompany"
+        element={
+          <AuthRoute
+            redirectTo="/login"
+            loginStatus={loginStatus}
+            parentProps={props}
+          >
+            <Layout>
+              <EthCreateCompany {...props} />
             </Layout>
           </AuthRoute>
         }
