@@ -8,7 +8,8 @@ import { FourOFour } from "./common/FourOFour/FourOFour";
 import { Register } from "./common/Register/Register";
 import { Home } from "./dependants/Home/Home";
 import { MobileMenu } from "./dependants/mobileMenu/mobileMenu";
-import { CreateCompany } from "./dependants/CreateCompany/algoCreateCompany";
+import { AlgoCreateCompany } from "./dependants/CreateCompany/algoCreateCompany";
+import { EthCreateCompany } from "./dependants/CreateCompany/ethCreateCompany";
 
 export {
   Landing,
@@ -18,5 +19,6 @@ export {
   MobileMenu,
   FourOFour,
   AuthCallback,
-  CreateCompany,
+  AlgoCreateCompany,
+  EthCreateCompany,
 };

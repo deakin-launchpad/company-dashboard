@@ -15,9 +15,10 @@ import {
   Login,
   MobileMenu,
   Register,
+  AlgoCreateCompany,
+  EthCreateCompany,
 } from "views";
 import { Layout } from "./layout";
-import { CreateCompany } from "views/index";
 
 const AuthRoute = ({ children, redirectTo, parentProps, loginStatus }) => {
   return loginStatus === false ? (
@@ -129,7 +130,7 @@ export const AppRoutes = (props) => {
       />
       <Route
         exact
-        path="/createCompany"
+        path="/createAlgoCompany"
         element={
           <AuthRoute
             redirectTo="/login"
@@ -137,8 +138,22 @@ export const AppRoutes = (props) => {
             parentProps={props}
           >
             <Layout>
-              {" "}
-              <CreateCompany {...props} />
+              <AlgoCreateCompany {...props} />
+            </Layout>
+          </AuthRoute>
+        }
+      />
+      <Route
+        exact
+        path="/createEthCompany"
+        element={
+          <AuthRoute
+            redirectTo="/login"
+            loginStatus={loginStatus}
+            parentProps={props}
+          >
+            <Layout>
+              <EthCreateCompany {...props} />
             </Layout>
           </AuthRoute>
         }
