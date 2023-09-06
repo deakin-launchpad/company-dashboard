@@ -49,8 +49,8 @@ export const Register = () => {
 
     if (ethereumAddress !== "") {
       userData.ethereumAddress = ethereumAddress;
-    } 
-    
+    }
+
     if (accountAddress !== "" && logicSignature !== null) {
       userData.accountAddress = accountAddress;
       userData.logicSignature = logicSignature;
@@ -201,7 +201,7 @@ export const Register = () => {
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <InputLabel htmlFor="confirmpassword">Account Address</InputLabel>
+      <InputLabel htmlFor="confirmpassword">Confirm Password</InputLabel>
       <TextField
         variant="outlined"
         margin="normal"
@@ -236,8 +236,18 @@ export const Register = () => {
             {"Connect Ethereum Account"}
           </Button>
         ) : typeof window.ethereum !== 'undefined' && ethereumAddress.length !== 0 ? (
-          <Button disabled={true} size="middle" variant="contained" onClick={handleConnectEthereumClick}>
-            {"Connected Ethereum Account"}
+          <Button
+            disabled={true}
+            size="middle"
+            variant="contained"
+            onClick={handleConnectEthereumClick}
+            sx={{
+              "&.Mui-disabled": {
+                color: "grey"
+              }
+            }}
+          >
+            {"Ethereum Account Connected"}
           </Button>
         ) : (<></>)}
       </Box>
@@ -248,6 +258,7 @@ export const Register = () => {
             <Checkbox
               checked={checked}
               onChange={(event) => setChecked(event.target.checked)}
+              color="default"
             />
           }
           label={
@@ -261,9 +272,19 @@ export const Register = () => {
         />
       </Box>
 
-      <Box sx={{ mt: 0 }}></Box>
+      <Box sx={{ mt: 0 }}>
+        <Button
+          fullWidth
+          variant="contained"
+          color="primary"
+          onClick={validationCheck}
+        >
+          Register
+        </Button>
+      </Box>
     </form>
   );
+
   let content = (
     <Box
       sx={{
