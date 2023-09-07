@@ -74,12 +74,10 @@ export const AlgoCreateCompany = () => {
         .integer()
         .required("Stablecoin count must be added"),
       decimalShares: Yup.number()
-        .positive()
-        .integer()
+        .min(0)
         .required("Decimal is required"),
       decimalCoins: Yup.number()
-        .positive()
-        .integer()
+        .min(0)
         .required("Decimal is required"),
     });
   };

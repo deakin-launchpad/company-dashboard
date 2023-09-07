@@ -59,8 +59,7 @@ export const EthCreateCompany = () => {
         .integer()
         .required("Share count must be added"),
       decimalShares: Yup.number()
-        .positive()
-        .integer()
+        .min(0)
         .required("Decimal is required"),
       coinName: Yup.string().max(50).required("Coin name Is Required"),
       coinUnitName: Yup.string().max(50).required("Coin unit name Is Required"),
@@ -69,8 +68,7 @@ export const EthCreateCompany = () => {
         .integer()
         .required("Coin count must be added"),
       decimalCoins: Yup.number()
-        .positive()
-        .integer()
+        .min(0)
         .required("Decimal is required"),
     });
   };
@@ -293,11 +291,11 @@ export const EthCreateCompany = () => {
               autoComplete="off"
               label="Stablecoin Name"
               margin="normal"
-              name="stablecoinName"
+              name="coinName"
               type="text"
               variant="outlined"
-              error={touched.stablecoinName && Boolean(errors.stablecoinName)}
-              helperText={touched.stablecoinName && errors.stablecoinName}
+              error={touched.coinName && Boolean(errors.coinName)}
+              helperText={touched.coinName && errors.coinName}
               InputLabelProps={InputLabelStyle}
             />
             <Field
@@ -305,11 +303,11 @@ export const EthCreateCompany = () => {
               autoComplete="off"
               label="Stablecoin Unit Name"
               margin="normal"
-              name="stablecoinUnitName"
+              name="coinUnitName"
               type="text"
               variant="outlined"
-              error={touched.stablecoinUnitName && Boolean(errors.stablecoinUnitName)}
-              helperText={touched.stablecoinUnitName && errors.stablecoinUnitName}
+              error={touched.coinUnitName && Boolean(errors.coinUnitName)}
+              helperText={touched.coinUnitName && errors.coinUnitName}
               InputLabelProps={InputLabelStyle}
             />
             <Field
@@ -317,11 +315,11 @@ export const EthCreateCompany = () => {
               autoComplete="off"
               label="Stablecoin Count"
               margin="normal"
-              name="stablecoinCount"
+              name="coinCount"
               type="text"
               variant="outlined"
-              error={touched.stablecoinCount && Boolean(errors.stablecoinCount)}
-              helperText={touched.stablecoinCount && errors.stablecoinCount}
+              error={touched.coinCount && Boolean(errors.coinCount)}
+              helperText={touched.coinCount && errors.coinCount}
               InputLabelProps={InputLabelStyle}
             />
             <Field
