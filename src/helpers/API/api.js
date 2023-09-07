@@ -156,9 +156,17 @@ class API {
   }
 
   async createEthereumCompany(data) {
-    console.log(data);
     return axiosInstance
       .put("company/createEthereum", data, {
+        headers: { authorization: "Bearer " + AccessToken },
+      })
+      .then((response) => generateSuccess(response.data.data))
+      .catch((error) => errorHelper(error));
+  }
+
+  async getUserCompanies() {
+    return axiosInstance
+      .get("user/getCompanies", {
         headers: { authorization: "Bearer " + AccessToken },
       })
       .then((response) => generateSuccess(response.data.data))
