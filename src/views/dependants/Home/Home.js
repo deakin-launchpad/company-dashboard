@@ -134,7 +134,7 @@ export const Home = () => {
 
         <EnhancedModal
           isOpen={open}
-          dialogTitle={`Create Company On...`}
+          dialogTitle={`Create A Company On...`}
           dialogContent={createOptions}
           options={{
             onClose: () => setOpen(false),

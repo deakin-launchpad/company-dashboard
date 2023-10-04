@@ -10,6 +10,8 @@ import { Home } from "./dependants/Home/Home";
 import { MobileMenu } from "./dependants/mobileMenu/mobileMenu";
 import { AlgoCreateCompany } from "./dependants/CreateCompany/algoCreateCompany";
 import { EthCreateCompany } from "./dependants/CreateCompany/ethCreateCompany";
+import { EthCompanyDetails } from "./dependants/CompanyDetails/ethCompanyDetails";
+import { AlgoCompanyDetails } from "./dependants/CompanyDetails/algoCompanyDetails";
 
 export {
   Landing,
@@ -21,4 +23,6 @@ export {
   AuthCallback,
   AlgoCreateCompany,
   EthCreateCompany,
+  EthCompanyDetails,
+  AlgoCompanyDetails
 };

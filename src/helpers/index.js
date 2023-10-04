@@ -4,6 +4,8 @@ import TextHelper from './data/TextHelper';
 import OutputHelper from './data/OutputHelper';
 import { useKeyPress, useLocalStorage, useGeoLocation } from './hooks';
 import { socketInstance, useSocket, socketAuthCallback } from './socket';
+import { web3 } from './eth/eth';
+
 export {
   axiosInstance,
   API,
@@ -14,5 +16,6 @@ export {
   useGeoLocation,
   socketInstance,
   useSocket,
-  socketAuthCallback
+  socketAuthCallback,
+  web3,
 };

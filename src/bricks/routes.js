@@ -17,6 +17,8 @@ import {
   Register,
   AlgoCreateCompany,
   EthCreateCompany,
+  EthCompanyDetails,
+  AlgoCompanyDetails
 } from "views";
 import { Layout } from "./layout";
 
@@ -124,6 +126,36 @@ export const AppRoutes = (props) => {
           >
             <Layout>
               <Home {...props} />
+            </Layout>
+          </AuthRoute>
+        }
+      />
+      <Route
+        exact
+        path="/ethCompany/:appId"
+        element={
+          <AuthRoute
+            redirectTo="/login"
+            loginStatus={loginStatus}
+            parentProps={props}
+          >
+            <Layout>
+              <EthCompanyDetails {...props} />
+            </Layout>
+          </AuthRoute>
+        }
+      />
+      <Route
+        exact
+        path="/algoCompany/:appId"
+        element={
+          <AuthRoute
+            redirectTo="/login"
+            loginStatus={loginStatus}
+            parentProps={props}
+          >
+            <Layout>
+              <AlgoCompanyDetails {...props} />
             </Layout>
           </AuthRoute>
         }

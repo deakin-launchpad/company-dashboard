@@ -88,5 +88,5 @@ export const BlankHome = (props) => {
 };
 
 BlankHome.propTypes = {
-  user: PropTypes.object.isRequired,
+  user: PropTypes.any.isRequired,
 };

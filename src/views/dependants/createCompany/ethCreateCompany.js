@@ -8,7 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import * as Yup from "yup";
 import { Formik, Form, Field } from "formik";
 import { API } from "helpers/index";
-import { onMessageListener } from "firebase";
+import { onMessageListener } from "../../../firebase";
 import { EnhancedModal } from "components/index";
 
 export const EthCreateCompany = () => {
