@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useTheme } from "@mui/material/styles";
-import { Box, Typography, Grid } from "@mui/material";
+import { Box, Typography, Grid, Button } from "@mui/material";
 import { useParams } from 'react-router-dom';
 import algosdk from 'algosdk';
 
@@ -36,7 +36,7 @@ export const AlgoCompanyDetails = () => {
       console.log(scDetails.params);
       if (scDetails?.params['global-state']?.length > 0) {
         const sortedScDetails = sortScDetails(scDetails.params['global-state']);
-        setRawScDetails(scDetails.params['global-state']);
+        setRawScDetails(sortedScDetails);
         setCreatorAddress(scDetails.params.creator);
       } else {
         setRawScDetails([]);
@@ -51,7 +51,7 @@ export const AlgoCompanyDetails = () => {
   }, [getContractDetails]);
 
   const bytesToAddress = (rawBytesAddress) => {
-    const bytes = new Uint8Array(Buffer.from(rawBytesAddress));
+    const bytes = Buffer.from(rawBytesAddress, 'base64');
     const address = algosdk.encodeAddress(bytes);
     return address;
   };
@@ -66,11 +66,18 @@ export const AlgoCompanyDetails = () => {
         padding: theme.spacing(2), // Adding some padding for better spacing
       }}
     >
-      <Typography variant="h5" gutterBottom>
-        Creator&apos;s address: {creatorAddress}
-      </Typography>
 
       <Grid container spacing={2}>
+        <Grid item xs={3}>
+          <Typography variant="body1" color="white">
+            Creator&apos;s address:
+          </Typography>
+        </Grid>
+        <Grid item xs={9}>
+          <Typography variant="body1" color="white">
+            {creatorAddress}
+          </Typography>
+        </Grid>
         {scRawDetails.map((item, index) => {
           return (
             <React.Fragment key={index}>
@@ -94,6 +101,9 @@ export const AlgoCompanyDetails = () => {
           );
         })}
       </Grid>
+      <Button href={`https://testnet.algoexplorer.io/application/${appId}`} target="_blank" sx={{ mt: 5 }}>
+        Explore Smart Contract on AlgoExplorer
+      </Button>
     </Box>
   );
 };
