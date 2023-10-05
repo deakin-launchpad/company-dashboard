@@ -6,7 +6,6 @@ import algosdk from 'algosdk';
 
 const algod = new algosdk.Algodv2('', 'https://testnet-api.algonode.cloud', 443);
 
-
 export const AlgoCompanyDetails = () => {
   const theme = useTheme();
   const { appId } = useParams();

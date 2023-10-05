@@ -1,8 +1,7 @@
-/* eslint-disable no-unused-vars */
-import { useState, useCallback, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useTheme } from "@mui/material/styles";
-import { Box } from "@mui/material";
-import { useParams, Link } from 'react-router-dom';
+import { Box, Grid, Typography, Button } from "@mui/material";
+import { useParams, } from 'react-router-dom';
 import companyABI from '../../../ABI/Company.json';
 import { web3 } from '../../../helpers/index';
 
@@ -10,22 +9,64 @@ import { web3 } from '../../../helpers/index';
 export const EthCompanyDetails = () => {
   const theme = useTheme();
   const { appId } = useParams();
+  const [companyName, setCompanyName] = useState("");
+  const [companyCoins, setCompanyCoins] = useState("");
+  const [companyShares, setCompanyShares] = useState("");
+  const [totalCoins, setTotalCoins] = useState(0);
+  const [totalShares, setTotalShares] = useState(0);
+
+  const DECIMALS = Math.pow(10, 18);
 
   useEffect(() => {
-    // let accounts = [];
-    // web3.eth.getAccounts().then((_accounts) => {
-    //   accounts = _accounts;
-    // });
+    let accounts = [];
 
-    // const contract = new web3.eth.Contract(companyABI, appId, {
-    //   from: accounts[0],
-    //   gas: 1500000,
-    //   gasPrice: '20000000000'
-    // });
+    const eth = window.ethereum;
+    eth.request({ method: 'eth_requestAccounts', params: [] })
+      .then((_accounts) => {
+        accounts = _accounts;
+      })
+      .catch((error) => console.error(error));
 
-    // console.log(accounts);
-    // console.log(contract);
-  });
+    const companyContract = new web3.eth.Contract(companyABI, appId);
+
+    console.log(companyContract.methods);
+
+    companyContract.methods.companyName().call({ from: accounts[0] }).then((result) => {
+      setCompanyName(result);
+    }).catch((error) => {
+      console.error(error);
+    });
+
+    companyContract.methods.coins().call({ from: accounts[0] }).then((result) => {
+      setCompanyCoins(result);
+    }).catch((error) => {
+      console.error(error);
+    });
+
+    companyContract.methods.shares().call({ from: accounts[0] }).then((result) => {
+      setCompanyShares(result);
+    }).catch((error) => {
+      console.error(error);
+    });
+
+    companyContract.methods.getTotalCoins().call({ from: accounts[0] }).then((result) => {
+      setTotalCoins(result);
+    }).catch((error) => {
+      console.error(error);
+    });
+
+    companyContract.methods.getTotalShares().call({ from: accounts[0] }).then((result) => {
+      setTotalShares(result);
+    }).catch((error) => {
+      console.error(error);
+    });
+
+    // companyContract.methods.getNumberOfFounders().call({ from: accounts[0] }).then((result) => {
+    //   console.log(result);
+    // }).catch((error) => {
+    //   console.error(error);
+    // });
+  }, [appId]);
 
   return (
     <Box
@@ -36,7 +77,71 @@ export const EthCompanyDetails = () => {
         position: "relative",
       }}
     >
-      Test {appId}
+      <Grid container spacing={2}>
+        <Grid item xs={3}>
+          <Typography variant="body1" color="white">
+            Company Smart Contract Address:
+          </Typography>
+        </Grid>
+        <Grid item xs={9} >
+          <Typography variant="body1" color="white">
+            {appId}
+          </Typography>
+        </Grid>
+        <Grid item xs={3}>
+          <Typography variant="body1" color="white">
+            Company Name:
+          </Typography>
+        </Grid>
+        <Grid item xs={9} >
+          <Typography variant="body1" color="white">
+            {companyName}
+          </Typography>
+        </Grid>
+        <Grid item xs={3}>
+          <Typography variant="body1" color="white">
+            Coins Address:
+          </Typography>
+        </Grid>
+        <Grid item xs={9} >
+          <Typography variant="body1" color="white">
+            {companyCoins}
+          </Typography>
+        </Grid>
+        <Grid item xs={3}>
+          <Typography variant="body1" color="white">
+            Coins Total Supply:
+          </Typography>
+        </Grid>
+        <Grid item xs={9} >
+          <Typography variant="body1" color="white">
+            {totalCoins / DECIMALS}
+          </Typography>
+        </Grid>
+        <Grid item xs={3}>
+          <Typography variant="body1" color="white">
+            Shares Address:
+          </Typography>
+        </Grid>
+        <Grid item xs={9} >
+          <Typography variant="body1" color="white">
+            {companyShares}
+          </Typography>
+        </Grid>
+        <Grid item xs={3}>
+          <Typography variant="body1" color="white">
+            Shares Total Supply:
+          </Typography>
+        </Grid>
+        <Grid item xs={9} >
+          <Typography variant="body1" color="white">
+            {totalShares / DECIMALS}
+          </Typography>
+        </Grid>
+      </Grid>
+      <Button href={`https://sepolia.etherscan.io/address/${appId}`} target="_blank" sx={{ mt: 5 }}>
+        Explore Smart Contract on EtherScan
+      </Button>
     </Box>
   );
 };

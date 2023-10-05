@@ -42,19 +42,6 @@
 	},
 	{
 		"inputs": [],
-		"name": "coinsAddress",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
 		"name": "companyName",
 		"outputs": [
 			{
@@ -117,6 +104,19 @@
 	},
 	{
 		"inputs": [],
+		"name": "getNumberOfFounders",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "getTotalCoins",
 		"outputs": [
 			{
@@ -165,19 +165,6 @@
 		"outputs": [
 			{
 				"internalType": "contract Share",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "sharesAddress",
-		"outputs": [
-			{
-				"internalType": "address",
 				"name": "",
 				"type": "address"
 			}
