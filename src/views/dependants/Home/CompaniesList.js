@@ -8,14 +8,14 @@ export const CompaniesList = (props) => {
       return (
         <Card variant="outlined" key={company._id}>
           <CardContent>
-            <Typography sx={{ fontSize: 14 }} color="grey" gutterBottom>
-              {company.appId}
+            <Typography sx={{ fontSize: 16 }} color="grey" gutterBottom>
+              {company.blockchain}
             </Typography>
             <Typography variant="h5" component="div">
               {company.companyName}
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="grey">
-              {company.role}
+              ID: {company.appId}
             </Typography>
             <Typography variant="body2">
               {company.blockchain === "ALGORAND" ? `Vault Address: ${company.vaultAddress}` : ""}
