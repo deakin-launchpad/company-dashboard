@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useTheme } from "@mui/material/styles";
 import { Box, Grid, Typography, Button } from "@mui/material";
 import { useParams, } from 'react-router-dom';
@@ -14,6 +14,7 @@ export const EthCompanyDetails = () => {
   const [companyShares, setCompanyShares] = useState("");
   const [totalCoins, setTotalCoins] = useState(0);
   const [totalShares, setTotalShares] = useState(0);
+  const [founders, setFounders] = useState([]);
 
   const DECIMALS = Math.pow(10, 18);
 
@@ -61,11 +62,12 @@ export const EthCompanyDetails = () => {
       console.error(error);
     });
 
-    // companyContract.methods.getNumberOfFounders().call({ from: accounts[0] }).then((result) => {
-    //   console.log(result);
-    // }).catch((error) => {
-    //   console.error(error);
-    // });
+    // TODO: Check again! Implemented but not working
+    companyContract.methods.getFounders().call({ from: accounts[0] }).then((result) => {
+      setFounders(result);
+    }).catch((error) => {
+      console.error(error);
+    });
   }, [appId]);
 
   return (
@@ -98,6 +100,22 @@ export const EthCompanyDetails = () => {
             {companyName}
           </Typography>
         </Grid>
+        {founders.map((founder, index) => {
+          return (
+            <React.Fragment key={index}>
+              <Grid item xs={3}>
+                <Typography variant="body1" color="white">
+                  Founder {index + 1}:
+                </Typography>
+              </Grid>
+              <Grid item xs={9} >
+                <Typography variant="body1" color="white">
+                  {founder}
+                </Typography>
+              </Grid>
+            </React.Fragment>
+          );
+        })}
         <Grid item xs={3}>
           <Typography variant="body1" color="white">
             Coins Address:
