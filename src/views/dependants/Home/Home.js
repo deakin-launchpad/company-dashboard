@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useState, useCallback, useEffect } from "react";
 import { useTheme } from "@mui/material/styles";
 import { Box, Button, } from "@mui/material";
@@ -6,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { EnhancedModal, notify } from "components/index";
 import { API } from "helpers/index";
 import { BlankHome } from "./BlankHome";
-import { CompaniesList } from "./CompaniesList";
+import { CompanyCard } from 'components/index';
 
 export const Home = () => {
   const theme = useTheme();
@@ -118,17 +117,19 @@ export const Home = () => {
         sx={{
           width: "93%",
           height: "90%",
-          backgroundColor: theme.palette.background.secondary,
           borderRadius: "5px",
           margin: "auto",
-
         }}
       >
         {
           companies?.length === 0 ? (
             <BlankHome user={user} />
           ) : (
-            <CompaniesList companies={companies} />
+            companies.map((company) => {
+              return (
+                <CompanyCard company={company} key={company._id} />
+              );
+            })
           )
         }
 
