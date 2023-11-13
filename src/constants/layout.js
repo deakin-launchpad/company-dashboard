@@ -34,6 +34,14 @@ class Layout {
           isFavourite: true,
         }),
         new MenuItem({
+          name: "Voting",
+          type: "button",
+          icon: "ant-design:project-filled",
+          helpingAttribute: "/proposals",
+          customTitle: "Voting",
+          isFavourite: true,
+        }),
+        new MenuItem({
           name: "Logout",
           type: "logout",
           icon: "fe:logout",

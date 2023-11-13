@@ -12,6 +12,7 @@ import { AlgoCreateCompany } from "./dependants/CreateCompany/algoCreateCompany"
 import { EthCreateCompany } from "./dependants/CreateCompany/ethCreateCompany";
 import { EthCompanyDetails } from "./dependants/CompanyDetails/ethCompanyDetails";
 import { AlgoCompanyDetails } from "./dependants/CompanyDetails/algoCompanyDetails";
+import { Proposal } from "./dependants/Proposal/Proposal";
 
 export {
   Landing,
@@ -24,5 +25,6 @@ export {
   AlgoCreateCompany,
   EthCreateCompany,
   EthCompanyDetails,
-  AlgoCompanyDetails
+  AlgoCompanyDetails,
+  Proposal,
 };

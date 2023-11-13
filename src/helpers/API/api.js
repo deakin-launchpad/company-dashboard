@@ -173,6 +173,15 @@ class API {
       .catch((error) => errorHelper(error));
   }
 
+  async getProposals() {
+    return axiosInstance
+      .get("proposal/getProposals", {
+        headers: { authorization: "Bearer " + AccessToken },
+      })
+      .then((response) => generateSuccess(response.data.data))
+      .catch((error) => errorHelper(error));
+  }
+
   async refreshFirebaseMessageToken(data) {
     return axiosInstance
       .put("user/messagingToken", data, {

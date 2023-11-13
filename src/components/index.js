@@ -15,6 +15,8 @@ import { LoginCheck } from './helpers/LoginCheck.js';
 import { LoginForm } from './dependants/login/loginForm';
 import { GlobalStyles } from './helpers/GlobalStyles';
 import { SsoLogin } from './dependants/login/ssoLogin';
+import { CompanyCard } from './dependants/CompanyCard';
+import { ProposalCard } from './dependants/ProposalCard';
 
 export {
   EnhancedNotification as Notification,
@@ -34,5 +36,7 @@ export {
   LoginCheck,
   LoginForm,
   GlobalStyles,
-  SsoLogin
+  SsoLogin,
+  CompanyCard,
+  ProposalCard,
 };
