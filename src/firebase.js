@@ -2,13 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 
 var firebaseConfig = {
-  apiKey: "AIzaSyCUWd5ZmYfRxH3TvwwcZKzfvmJ8GfhQNOI",
-  authDomain: "company-application-a5a71.firebaseapp.com",
-  projectId: "company-application-a5a71",
-  storageBucket: "company-application-a5a71.appspot.com",
-  messagingSenderId: "987099544772",
-  appId: "1:987099544772:web:45b35ef039747ddd181d91",
-  measurementId: "G-2HBZKSRXZ8",
+  apiKey: "AIzaSyCr2jmgu37IZ8GxsaMdEJ9GothFbK-We90",
+  authDomain: "company-finance-d8861.firebaseapp.com",
+  projectId: "company-finance-d8861",
+  storageBucket: "company-finance-d8861.appspot.com",
+  messagingSenderId: "1067828391977",
+  appId: "1:1067828391977:web:f1bb2da8106e6adda72c38",
+  measurementId: "G-1BYSFVVMGK"
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
