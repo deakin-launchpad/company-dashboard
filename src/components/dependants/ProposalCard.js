@@ -20,17 +20,18 @@ export const ProposalCard = (props) => {
           Governance Token: {props.proposal.governanceToken}
         </Typography>
       </CardContent>
-      {/* <CardActions>
-        <Link to={props.proposal.blockchain === "ALGORAND" ? `/algoCompany/${props.proposal.appId}` : `/ethCompany/${props.proposal.appId}`} style={{ textDecoration: 'none', color: 'inherit', width: "100%" }}>
-          <Button size="small" >Learn More</Button>
+      <CardActions>
+        <Link to={`${props.proposal._id}`} style={{ textDecoration: 'none', color: 'inherit', width: "100%" }}>
+          <Button size="small" >Details</Button>
         </Link>
-      </CardActions> */}
+      </CardActions>
     </Card>
   );
 };
 
 ProposalCard.propTypes = {
   proposal: PropTypes.shape({
+    _id: PropTypes.string,
     phase: PropTypes.string,
     name: PropTypes.string,
     description: PropTypes.string,

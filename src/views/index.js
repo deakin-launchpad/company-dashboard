@@ -13,6 +13,7 @@ import { EthCreateCompany } from "./dependants/CreateCompany/ethCreateCompany";
 import { EthCompanyDetails } from "./dependants/CompanyDetails/ethCompanyDetails";
 import { AlgoCompanyDetails } from "./dependants/CompanyDetails/algoCompanyDetails";
 import { Proposal } from "./dependants/Proposal/Proposal";
+import { AlgoProposalDetails } from "./dependants/ProposalDetails/algoProposalDetails";
 
 export {
   Landing,
@@ -27,4 +28,5 @@ export {
   EthCompanyDetails,
   AlgoCompanyDetails,
   Proposal,
+  AlgoProposalDetails,
 };

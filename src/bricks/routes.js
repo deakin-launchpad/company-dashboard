@@ -20,6 +20,7 @@ import {
   EthCompanyDetails,
   AlgoCompanyDetails,
   Proposal,
+  AlgoProposalDetails
 } from "views";
 import { Layout } from "./layout";
 
@@ -206,6 +207,23 @@ export const AppRoutes = (props) => {
           </AuthRoute>
         }
       />
+
+      <Route
+        exact
+        path="/proposals/:proposalId"
+        element={
+          <AuthRoute
+            redirectTo="/login"
+            loginStatus={loginStatus}
+            parentProps={props}
+          >
+            <Layout>
+              <AlgoProposalDetails {...props} />
+            </Layout>
+          </AuthRoute>
+        }
+      />
+
       <Route
         exact
         path="/menu"
