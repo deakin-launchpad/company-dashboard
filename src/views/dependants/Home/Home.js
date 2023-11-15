@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { useTheme } from "@mui/material/styles";
 import { Box, Button, } from "@mui/material";
 import { Link } from 'react-router-dom';
@@ -12,28 +12,42 @@ export const Home = () => {
   const [companies, setCompanies] = useState([]);
   const [user, setUser] = useState([]);
   const [open, setOpen] = useState(false);
+  const isMounted = useRef(true);
+
+  useEffect(() => {
+    // This function gets called when the component is mounted
+    // and before the component gets unmounted
+    return () => {
+      // Component will unmount
+      isMounted.current = false;
+    };
+  }, []);
 
   const getUser = useCallback(async () => {
     const response = await API.getUserProfile();
-    if (response.success) {
-      const res = response.data.customerData;
-      setUser(res);
-      // console.log(user);
-    } else {
-      setUser([]);
-      notify("Failed to Fetch User Profile");
+    if (isMounted.current) {
+      if (response.success) {
+        const res = response.data.customerData;
+        setUser(res);
+        // console.log(user);
+      } else {
+        setUser([]);
+        notify("Failed to Fetch User Profile");
+      }
     }
   }, []);
 
   const getUserCompanies = useCallback(async () => {
     const response = await API.getUserCompanies();
-    if (response.success) {
-      const res = response.data;
-      setCompanies(res);
-      // console.log(companies);
-    } else {
-      setCompanies([]);
-      notify("Failed to Fetch User Companies");
+    if (isMounted.current) {
+      if (response.success) {
+        const res = response.data;
+        setCompanies(res);
+        // console.log(companies);
+      } else {
+        setCompanies([]);
+        notify("Failed to Fetch User Companies");
+      }
     }
   }, []);
 
